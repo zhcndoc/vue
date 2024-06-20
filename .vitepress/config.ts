@@ -594,7 +594,8 @@ export default defineConfigWithTheme<ThemeConfig>({
   extends: baseConfig,
 
   lang: 'zh-CN',
-  title: 'Vue.js',
+  title: 'Vue.js 中文文档',
+  titleTemplate: ':title - Vue.js 中文文档',
   description: 'Vue.js - 渐进式的 JavaScript 框架',
   srcDir: 'src',
   srcExclude: ['tutorial/**/description.md'],
@@ -643,22 +644,22 @@ export default defineConfigWithTheme<ThemeConfig>({
         'utf-8'
       )
     ],
-    [
-      'script',
-      {
-        src: 'https://cdn.usefathom.com/script.js',
-        'data-site': 'ZPMMDSYA',
-        'data-spa': 'auto',
-        defer: ''
-      }
-    ],
-    [
-      'script',
-      {
-        src: 'https://vueschool.io/banner.js?affiliate=vuejs&type=top',
-        async: 'true'
-      }
-    ]
+    // [
+    //   'script',
+    //   {
+    //     src: 'https://cdn.usefathom.com/script.js',
+    //     'data-site': 'ZPMMDSYA',
+    //     'data-spa': 'auto',
+    //     defer: ''
+    //   }
+    // ],
+    // [
+    //   'script',
+    //   {
+    //     src: 'https://vueschool.io/banner.js?affiliate=vuejs&type=top',
+    //     async: 'true'
+    //   }
+    // ]
   ],
 
   themeConfig: {

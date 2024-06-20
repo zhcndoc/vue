@@ -1,18 +1,9 @@
 {
-  "license": "CC BY-NC-SA 4.0",
-  "engines": {
-    "node": ">=14.0.0",
-    "pnpm": ">=7.4.0"
-  },
   "type": "module",
   "scripts": {
     "dev": "vitepress",
     "build": "vitepress build",
-    "preview": "vitepress preview",
-    "lint": "zhlint 'src/{api,about,guide,sponsor,translations,tutorial}/**/*.md'",
-    "clean": "rm -rf .vitepress/dist",
-    "sync": "node scripts/sync.js",
-    "preinstall": "npx only-allow pnpm"
+    "preview": "vitepress preview"
   },
   "dependencies": {
     "@vue/repl": "^4.0.1",

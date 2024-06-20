@@ -20,8 +20,8 @@ export default Object.assign({}, VPTheme, {
     return h(VPTheme.Layout, null, {
       // banner: () => h(VueMasteryBanner),
       'sidebar-top': () => h(PreferenceSwitch),
-      'aside-mid': () => h(SponsorsAside),
-      'aside-bottom': () => h(WwAds),
+      // 'aside-mid': () => h(SponsorsAside),
+      // 'aside-bottom': () => h(WwAds),
       // 'content-top': () => h(TextAd)
     })
   },

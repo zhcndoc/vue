@@ -42,7 +42,7 @@ onMounted(load)
     </p>
   </section>
 
-  <section id="special-sponsor">
+  <!-- <section id="special-sponsor">
     <template v-if="data && data.platinum_china">
       <h3>中国区铂金赞助</h3>
       <div id="special-sponsor-container">
@@ -88,7 +88,7 @@ onMounted(load)
     <a v-else-if="data" class="lead" href="/sponsor/"
       >中国区铂金赞助位 点击了解更多</a
     >
-  </section>
+  </section> -->
 
   <section id="highlights" class="vt-box-container">
     <div class="vt-box">
@@ -110,12 +110,12 @@ onMounted(load)
     </div>
   </section>
 
-  <section id="sponsors">
+  <!-- <section id="sponsors">
     <h2>Platinum Sponsors</h2>
     <SponsorsGroup tier="platinum" placement="landing" />
     <h2>Gold Sponsors</h2>
     <SponsorsGroup tier="gold" placement="landing" />
-  </section>
+  </section> -->
 
   <SiteMap />
   <!-- <NewsLetter /> -->
