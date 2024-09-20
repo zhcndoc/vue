@@ -153,7 +153,7 @@ const open = ref(false)
 
 ## 搭配组件使用 {#using-with-components}
 
-`<Teleport>` 只改变了渲染的 DOM 结构，它不会影响组件间的逻辑关系。也就是说，如果 `<Teleport>` 包含了一个组件，那么该组件始终和这个使用了 `<teleport>` 的组件保持逻辑上的父子关系。传入的 props 和触发的事件也会照常工作。
+`<Teleport>` 只改变了渲染的 DOM 结构，它不会影响组件间的逻辑关系。也就是说，如果 `<Teleport>` 包含了一个组件，那么该组件始终和这个使用了 `<Teleport>` 的组件保持逻辑上的父子关系。传入的 props 和触发的事件也会照常工作。
 
 这也意味着来自父组件的注入也会按预期工作，子组件将在 Vue Devtools 中嵌套在父级组件下面，而不是放在实际内容移动到的地方。
 
@@ -192,6 +192,19 @@ const open = ref(false)
   <div>B</div>
 </div>
 ```
+
+## 延迟解析的 Teleport <sup class="vt-badge" data-text="3.5+" /> {#deferred-teleport}
+
+在 Vue 3.5 及更高版本中，我们可以使用 `defer` prop 推迟 Teleport 的目标解析，直到应用的其他部分挂载。这允许 Teleport 将由 Vue 渲染且位于组件树之后部分的容器元素作为目标：
+
+```vue-html
+<Teleport defer to="#late-div">...</Teleport>
+
+<!-- 稍后出现于模板中的某处 -->
+<div id="late-div"></div>
+```
+
+请注意，目标元素必须与 Teleport 在同一个挂载/更新周期内渲染，即如果 `<div>` 在一秒后才挂载，Teleport 仍然会报错。延迟 Teleport 的原理与 `mounted` 生命周期钩子类似。
 
 ---
 

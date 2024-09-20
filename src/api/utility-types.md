@@ -34,15 +34,15 @@
 
 ## MaybeRef\<T> {#mayberef}
 
-`T | Ref<T>` 的别名。对于标注[组合式函数](/guide/reusability/composables.html)的参数很有用。
-
 - 仅在 3.3+ 版本中支持。
+
+`T | Ref<T>` 的别名。对于标注[组合式函数](/guide/reusability/composables.html)的参数很有用。
 
 ## MaybeRefOrGetter\<T> {#maybereforgetter}
 
-`T | Ref<T> | (() => T)` 的别名。对于标注[组合式函数](/guide/reusability/composables.html)的参数很有用。
-
 - 仅在 3.3+ 版本中支持。
+
+`T | Ref<T> | (() => T)` 的别名。对于标注[组合式函数](/guide/reusability/composables.html)的参数很有用。
 
 ## ExtractPropTypes\<T> {#extractproptypes}
 
@@ -77,9 +77,9 @@
 
 ## ExtractPublicPropTypes\<T> {#extractpublicproptypes}
 
-从运行时的 props 选项对象中提取 prop。提取的类型是面向外部的，即父组件允许传递的 props。
+- 仅在 3.3+ 版本中支持。
 
-- 仅在 3.3+ 中支持
+从运行时的 props 选项对象中提取 prop。提取的类型是面向外部的，即父组件允许传递的 props。
 
 - **示例**
 
@@ -205,7 +205,7 @@
 :::
 
 :::info 参考
-SFC `<style>` 标签支持通过 `v-bind` CSS 函数来链接 CSS 值与组件状态。这允许在没有类型扩展的情况下自定义属性。
+单文件组件 `<style>` 标签支持通过 `v-bind` CSS 函数来链接 CSS 值与组件状态。这允许在没有类型扩展的情况下自定义属性。
 
 - [CSS 中的 v-bind()](/api/sfc-css-features#v-bind-in-css)
 :::
