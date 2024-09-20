@@ -594,7 +594,7 @@ export default defineConfigWithTheme<ThemeConfig>({
   extends: baseConfig,
 
   sitemap: {
-    hostname: 'https://cn.vuejs.org'
+    hostname: 'https://vue.zhcndoc.com'
   },
 
   lang: 'zh-CN',
@@ -606,7 +606,7 @@ export default defineConfigWithTheme<ThemeConfig>({
 
   head: [
     ['meta', { name: 'theme-color', content: '#3c8772' }],
-    ['meta', { property: 'og:url', content: 'https://vuejs.org/' }],
+    ['meta', { property: 'og:url', content: 'https://vue.zhcndoc.com/' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:title', content: 'Vue.js' }],
     [
@@ -620,7 +620,7 @@ export default defineConfigWithTheme<ThemeConfig>({
       'meta',
       {
         property: 'og:image',
-        content: 'https://vuejs.org/images/logo.png'
+        content: 'https://vue.zhcndoc.com/images/logo.png'
       }
     ],
     ['meta', { name: 'twitter:site', content: '@vuejs' }],
@@ -631,6 +631,29 @@ export default defineConfigWithTheme<ThemeConfig>({
         rel: 'preconnect',
         href: 'https://sponsors.vuejs.org'
       }
+    ],
+    [
+      'script',
+      {
+        'defer': '',
+        'src': 'https://analytics.ikxin.com/script.js',
+        'data-website-id': 'f0e90b0d-e086-4fdc-b173-de4857b71900',
+      },
+    ],
+    [
+      'script',
+      {
+        async: '',
+        src: 'https://www.googletagmanager.com/gtag/js?id=G-HYH4TH7PWM',
+      },
+    ],
+    [
+      'script',
+      {},
+      `window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HYH4TH7PWM');`,
     ],
     [
       'script',
@@ -804,11 +827,11 @@ export default defineConfigWithTheme<ThemeConfig>({
 
     footer: {
       license: {
-        text: '版权声明',
-        link: 'https://github.com/vuejs-translations/docs-zh-cn#%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E'
+        text: '沪ICP备2024070610号-3',
+        link: 'https://beian.miit.gov.cn'
       },
-      copyright:
-        '本中文文档采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议  (CC BY-NC-SA 4.0) 进行许可。'
+      // copyright:
+      //   '本中文文档采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议  (CC BY-NC-SA 4.0) 进行许可。'
     }
   },
 
