@@ -1,6 +1,5 @@
 {
   "build_command": "pnpm run build",
   "framework": "vitepress",
-  "output_dir": ".vitepress/dist",
-  "serverless": true
+  "output_dir": ".vitepress/dist"
 }
