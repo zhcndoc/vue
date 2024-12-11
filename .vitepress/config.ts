@@ -639,29 +639,6 @@ export default defineConfigWithTheme<ThemeConfig>({
     ],
     [
       'script',
-      {
-        'defer': '',
-        'src': 'https://analytics.ikxin.com/script.js',
-        'data-website-id': 'f0e90b0d-e086-4fdc-b173-de4857b71900',
-      },
-    ],
-    [
-      'script',
-      {
-        async: '',
-        src: 'https://www.googletagmanager.com/gtag/js?id=G-HYH4TH7PWM',
-      },
-    ],
-    [
-      'script',
-      {},
-      `window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-HYH4TH7PWM');`,
-    ],
-    [
-      'script',
       {},
       fs.readFileSync(
         path.resolve(__dirname, './inlined-scripts/restorePreference.js'),
@@ -685,13 +662,13 @@ export default defineConfigWithTheme<ThemeConfig>({
     //     defer: ''
     //   }
     // ],
-    // [
-    //   'script',
-    //   {
-    //     src: 'https://vueschool.io/banner.js?affiliate=vuejs&type=top',
-    //     async: 'true'
-    //   }
-    // ]
+    [
+      'script',
+      {
+        src: 'https://www.zhcndoc.com/js/common.js',
+        async: 'true'
+      }
+    ]
   ],
 
   themeConfig: {
@@ -835,8 +812,8 @@ export default defineConfigWithTheme<ThemeConfig>({
         text: '沪ICP备2024070610号-3',
         link: 'https://beian.miit.gov.cn'
       },
-      // copyright:
-      //   '本中文文档采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议  (CC BY-NC-SA 4.0) 进行许可。'
+      copyright:
+        '本中文文档采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议  (CC BY-NC-SA 4.0) 进行许可。'
     }
   },
 
