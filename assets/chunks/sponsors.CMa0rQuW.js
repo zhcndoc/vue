@@ -1,0 +1,1 @@
+import{r as s}from"./framework.B2oIMGqn.js";const t=s(),a=s(!1),o="https://sponsors.vuejs.org",n=async()=>{a.value||(a.value=!0,t.value=await(await fetch(`${o}/data.json`)).json())};export{o as b,t as d,n as l};
