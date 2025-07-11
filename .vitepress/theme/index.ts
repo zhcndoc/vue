@@ -11,7 +11,7 @@ import {
 // import SponsorsAside from './components/SponsorsAside.vue'
 // import VueSchoolLink from './components/VueSchoolLink.vue'
 // import WwAds from './components/WwAds.vue'
-// import Banner from './components/Banner.vue'
+// // import Banner from './components/Banner.vue'
 // import TextAd from './components/TextAd.vue'
 
 export default Object.assign({}, VPTheme, {
