@@ -55,14 +55,13 @@ import { VTCodeGroup, VTCodeGroupTab } from '@vue/theme'
 
 ## 单元测试 {#unit-testing}
 
-编写单元测试是为了验证小的、独立的代码单元是否按预期工作。一个单元测试通常覆盖一个单个函数、类、组合式函数或模块。单元测试侧重于逻辑上的正确性，只关注应用整体功能的一小部分。他们可能会模拟你的应用环境的很大一部分（如初始状态、复杂的类、第三方模块和网络请求）。
+编写单元测试是为了验证小的、独立的代码单元是否按预期工作。一个单元测试通常覆盖一个单个函数、类、组合式函数或模块。单元测试侧重于逻辑上的正确性，只关注应用整体功能的一小部分。他们可能会模拟你的应用环境的很大一部分(如初始状态、复杂的类、第三方模块和网络请求)。
 
 一般来说，单元测试将捕获函数的业务逻辑和逻辑正确性的问题。
 
 以这个 `increment` 函数为例：
 
-```js
-// helpers.js
+```js [helpers.js]
 export function increment(current, max = 10) {
   if (current < max) {
     return current + 1
@@ -75,8 +74,7 @@ export function increment(current, max = 10) {
 
 如果任何一条断言失败了，那么问题一定是出在 `increment` 函数上。
 
-```js{4-16}
-// helpers.spec.js
+```js{3-15} [helpers.spec.js]
 import { increment } from './helpers'
 
 describe('increment', () => {
@@ -114,7 +112,7 @@ describe('increment', () => {
 
 1. 白盒：单元测试
 
-   白盒测试知晓一个组件的实现细节和依赖关系。它们更专注于将组件进行更 **独立** 的测试。这些测试通常会涉及到模拟一些组件的部分子组件，以及设置插件的状态和依赖性（例如 Pinia）。
+   白盒测试知晓一个组件的实现细节和依赖关系。它们更专注于将组件进行更 **独立** 的测试。这些测试通常会涉及到模拟一些组件的部分子组件，以及设置插件的状态和依赖性(例如 Pinia)。
 
 2. 黑盒：组件测试
 
@@ -145,14 +143,13 @@ describe('increment', () => {
   - 对于 **视图** 的测试：根据输入 prop 和插槽断言渲染输出是否正确。
   - 对于 **交互** 的测试：断言渲染的更新是否正确或触发的事件是否正确地响应了用户输入事件。
 
-  在下面的例子中，我们展示了一个步进器（Stepper）组件，它拥有一个标记为 `increment` 的可点击的 DOM 元素。我们还传入了一个名为 `max` 的 prop 防止步进器增长超过 `2`，因此如果我们点击了按钮 3 次，视图将仍然显示 `2`。
+  在下面的例子中，我们展示了一个步进器 (Stepper) 组件，它拥有一个标记为 `increment` 的可点击的 DOM 元素。我们还传入了一个名为 `max` 的 prop 防止步进器增长超过 `2`，因此如果我们点击了按钮 3 次，视图将仍然显示 `2`。
 
   我们不了解这个步进器的实现细节，只知道“输入”是这个 `max` prop，“输出”是这个组件状态所呈现出的视图。
 
-<VTCodeGroup>
-  <VTCodeGroupTab label="Vue Test Utils">
+::: code-group
 
-```js
+```js [Vue Test Utils]
 const valueSelector = '[data-testid=stepper-value]'
 const buttonSelector = '[data-testid=increment]'
 
@@ -169,10 +166,7 @@ await wrapper.find(buttonSelector).trigger('click')
 expect(wrapper.find(valueSelector).text()).toContain('1')
 ```
 
-  </VTCodeGroupTab>
-  <VTCodeGroupTab label="Cypress">
-
-```js
+```js [Cypress]
 const valueSelector = '[data-testid=stepper-value]'
 const buttonSelector = '[data-testid=increment]'
 
@@ -191,10 +185,7 @@ cy.get(valueSelector)
   .should('contain.text', '1')
 ```
 
-  </VTCodeGroupTab>
-  <VTCodeGroupTab label="Testing Library">
-
-```js
+```js [Testing Library]
 const { getByText } = render(Stepper, {
   props: {
     max: 1
@@ -213,14 +204,13 @@ getByText('1')
 await fireEvent.click(button)
 ```
 
-  </VTCodeGroupTab>
-</VTCodeGroup>
+:::
 
 **应避免的做法**
 
 - 不要去断言一个组件实例的私有状态或测试一个组件的私有方法。测试实现细节会使测试代码太脆弱，因为当实现发生变化时，它们更有可能失败并需要更新重写。
 
-  组件的最终工作是渲染正确的 DOM 输出，所以专注于 DOM 输出的测试提供了足够的正确性保证（如果你不需要更多其他方面测试的话），同时更加健壮、需要的改动更少。
+  组件的最终工作是渲染正确的 DOM 输出，所以专注于 DOM 输出的测试提供了足够的正确性保证(如果你不需要更多其他方面测试的话)，同时更加健壮、需要的改动更少。
 
   不要完全依赖快照测试。断言 HTML 字符串并不能完全说明正确性。应当编写有意图的测试。
 
@@ -232,7 +222,7 @@ await fireEvent.click(button)
 
 - [Cypress 组件测试](https://on.cypress.io/component) 会预期其准确地渲染样式或者触发原生 DOM 事件。它可以搭配 [@testing-library/cypress](https://testing-library.com/docs/cypress-testing-library/intro) 这个库一同进行测试。
 
-Vitest 和基于浏览器的运行器之间的主要区别是速度和执行上下文。简而言之，基于浏览器的运行器，如 Cypress，可以捕捉到基于 Node 的运行器（如 Vitest）所不能捕捉的问题（比如样式问题、原生 DOM 事件、Cookies、本地存储和网络故障），但基于浏览器的运行器比 Vitest *慢几个数量级*，因为它们要执行打开浏览器，编译样式表以及其他步骤。Cypress 是一个基于浏览器的运行器，支持组件测试。请阅读 [Vitest 文档的“比较”这一章](https://vitest.dev/guide/comparisons.html#cypress) 了解 Vitest 和 Cypress 最新的比较信息。
+Vitest 和基于浏览器的运行器之间的主要区别是速度和执行上下文。简而言之，基于浏览器的运行器，如 Cypress，可以捕捉到基于 Node 的运行器(如 Vitest) 所不能捕捉的问题(比如样式问题、原生 DOM 事件、Cookies、本地存储和网络故障)，但基于浏览器的运行器比 Vitest *慢几个数量级*，因为它们要执行打开浏览器，编译样式表以及其他步骤。Cypress 是一个基于浏览器的运行器，支持组件测试。请阅读 [Vitest 文档的“比较”这一章](https://vitest.dev/guide/comparisons.html#cypress) 了解 Vitest 和 Cypress 最新的比较信息。
 
 ### 组件挂载库 {#mounting-libraries}
 
@@ -250,13 +240,13 @@ Vitest 和基于浏览器的运行器之间的主要区别是速度和执行上�
 
 - [WebdriverIO](https://webdriver.io/docs/component-testing/vue) 用于跨浏览器组件测试，该测试依赖于基于标准自动化的原生用户交互。它也可以与测试库一起使用。
 
-## 端到端（E2E）测试 {#e2e-testing}
+## 端到端 (E2E) 测试 {#e2e-testing}
 
 虽然单元测试为所写的代码提供了一定程度的验证，但单元测试和组件测试在部署到生产时，对应用整体覆盖的能力有限。因此，端到端测试针对的可以说是应用最重要的方面：当用户实际使用你的应用时发生了什么。
 
 端到端测试的重点是多页面的应用表现，针对你的应用在生产环境下进行网络请求。他们通常需要建立一个数据库或其他形式的后端，甚至可能针对一个预备上线的环境运行。
 
-端到端测试通常会捕捉到路由、状态管理库、顶级组件（常见为 App 或 Layout）、公共资源或任何请求处理方面的问题。如上所述，它们可以捕捉到单元测试或组件测试无法捕捉的关键问题。
+端到端测试通常会捕捉到路由、状态管理库、顶级组件(常见为 App 或 Layout)、公共资源或任何请求处理方面的问题。如上所述，它们可以捕捉到单元测试或组件测试无法捕捉的关键问题。
 
 端到端测试不导入任何 Vue 应用的代码，而是完全依靠在真实浏览器中浏览整个页面来测试你的应用。
 
@@ -276,7 +266,7 @@ Vitest 和基于浏览器的运行器之间的主要区别是速度和执行上�
 
 #### 更快的反馈 {#faster-feedback-loops}
 
-端到端测试和相应开发过程的主要问题之一是，运行整个套件需要很长的时间。通常情况下，这只在持续集成和部署（CI/CD）管道中进行。现代的端到端测试框架通过增加并行化等功能来帮助解决这个问题，这使得 CI/CD 管道的运行速度比以前快了几倍。此外，在本地开发时，能够有选择地为你正在工作的页面运行单个测试，同时还提供测试的热重载，大大提高了开发者的工作流程和生产力。
+端到端测试和相应开发过程的主要问题之一是，运行整个套件需要很长的时间。通常情况下，这只在持续集成和部署 (CI/CD) 管道中进行。现代的端到端测试框架通过增加并行化等功能来帮助解决这个问题，这使得 CI/CD 管道的运行速度比以前快了几倍。此外，在本地开发时，能够有选择地为你正在工作的页面运行单个测试，同时还提供测试的热重载，大大提高了开发者的工作流程和生产力。
 
 #### 第一优先级的调试体验 {#first-class-debugging-experience}
 
@@ -284,11 +274,11 @@ Vitest 和基于浏览器的运行器之间的主要区别是速度和执行上�
 
 #### 无头模式下的可见性 {#visibility-in-headless-mode}
 
-当端到端测试在 CI/CD 管道中运行时，它们通常在无头浏览器（即不带界面的浏览器）中运行。因此，当错误发生时，现代端到端测试框架的一个关键特性是能够在不同的测试阶段查看应用的快照、视频，从而深入了解错误的原因。而在很早以前，要手动维护这些集成是非常繁琐的。
+当端到端测试在 CI/CD 管道中运行时，它们通常在无头浏览器(即不带界面的浏览器)中运行。因此，当错误发生时，现代端到端测试框架的一个关键特性是能够在不同的测试阶段查看应用的快照、视频，从而深入了解错误的原因。而在很早以前，要手动维护这些集成是非常繁琐的。
 
 ### 推荐方案 {#recommendation-2}
 
-- [Playwright](https://playwright.dev/) 是一个非常好的端到端测试解决方案，支持 Chromium、WebKit 和 Firefox。在 Windows、Linux 和 macOS 上进行本地或 CI 测试、无头测试，或使用适用于 Android 和 Mobile Safari 的 Google Chrome 的原生移动端模拟测试。它拥有信息丰富的用户界面、出色的调试能力、内置断言、并行处理功能以及追踪功能，旨在消除不稳定的测试。它还提供对[组件测试](https://docs.cypress.io/guides/component-testing/introduction)的支持，但目前处于实验阶段。Playwright 由微软开源并维护。
+- [Playwright](https://playwright.dev/) 是一个非常好的端到端测试解决方案，支持 Chromium、WebKit 和 Firefox。在 Windows、Linux 和 macOS 上进行本地或 CI 测试、无头测试，或使用适用于 Android 和 Mobile Safari 的 Google Chrome 的原生移动端模拟测试。它拥有信息丰富的用户界面、出色的调试能力、内置断言、并行处理功能以及追踪功能，旨在消除不稳定的测试。它还提供对[组件测试](https://playwright.dev/docs/test-components)的支持，但目前处于实验阶段。Playwright 由微软开源并维护。
 
 - [Cypress](https://www.cypress.io/) 具有信息丰富的图形界面、出色的调试性、内置断言、存根、抗剥落性、并行化和快照等诸多特性。而且如上所述，它还提供对 [组件测试](https://docs.cypress.io/guides/component-testing/introduction) 的支持。它支持基于 Chromium 的浏览器、Firefox 和 Electron。但 WebKit 被标记为实验性支持。Cypress 采用 MIT 许可，但并行化等部分功能需要订阅 Cypress Cloud。
 
@@ -320,8 +310,7 @@ Vitest 和基于浏览器的运行器之间的主要区别是速度和执行上�
 
 接着，更新你的 Vite 配置，添加上 `test` 选项：
 
-```js{6-12}
-// vite.config.js
+```js{5-11} [vite.config.js]
 import { defineConfig } from 'vite'
 
 export default defineConfig({
@@ -330,7 +319,7 @@ export default defineConfig({
     // 启用类似 jest 的全局测试 API
     globals: true,
     // 使用 happy-dom 模拟 DOM
-    // 这需要你安装 happy-dom 作为对等依赖（peer dependency）
+    // 这需要你安装 happy-dom 作为对等依赖 (peer dependency)
     environment: 'happy-dom'
   }
 })
@@ -339,9 +328,7 @@ export default defineConfig({
 :::tip
 如果使用 TypeScript，请将 `vitest/globals` 添加到 `tsconfig.json` 的 `types` 字段当中。
 
-```json
-// tsconfig.json
-
+```json [tsconfig.json]
 {
   "compilerOptions": {
     "types": ["vitest/globals"]
@@ -353,8 +340,7 @@ export default defineConfig({
 
 接着，在你的项目中创建名字以 `*.test.js` 结尾的文件。你可以把所有的测试文件放在项目根目录下的 `test` 目录中，或者放在源文件旁边的 `test` 目录中。Vitest 会使用命名规则自动搜索它们。
 
-```js
-// MyComponent.test.js
+```js [MyComponent.test.js]
 import { render } from '@testing-library/vue'
 import MyComponent from './MyComponent.vue'
 
@@ -372,7 +358,7 @@ test('it should work', () => {
 
 最后，在 `package.json` 之中添加测试命令，然后运行它：
 
-```json{4}
+```json{4} [package.json]
 {
   // ...
   "scripts": {
@@ -398,8 +384,7 @@ test('it should work', () => {
 
 如果一个组合式程序只使用响应式 API，那么它可以通过直接调用并断言其返回的状态或方法来进行测试。
 
-```js
-// counter.js
+```js [counter.js]
 import { ref } from 'vue'
 
 export function useCounter() {
@@ -413,8 +398,7 @@ export function useCounter() {
 }
 ```
 
-```js
-// counter.test.js
+```js [counter.test.js]
 import { useCounter } from './counter.js'
 
 test('useCounter', () => {
@@ -428,8 +412,7 @@ test('useCounter', () => {
 
 一个依赖生命周期钩子或供给/注入的组合式函数需要被包装在一个宿主组件中才可以测试。我们可以创建下面这样的帮手函数：
 
-```js
-// test-utils.js
+```js [test-utils.js]
 import { createApp } from 'vue'
 
 export function withSetup(composable) {
@@ -448,7 +431,7 @@ export function withSetup(composable) {
 }
 ```
 
-```js
+```js [foo.test.js]
 import { withSetup } from './test-utils'
 import { useFoo } from './foo'
 

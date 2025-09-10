@@ -18,10 +18,10 @@ outline: deep
 <Suspense>
 └─ <Dashboard>
    ├─ <Profile>
-   │  └─ <FriendStatus>（组件有异步的 setup()）
+   │  └─ <FriendStatus> (组件有异步的 setup())
    └─ <Content>
-      ├─ <ActivityFeed> （异步组件）
-      └─ <Stats>（异步组件）
+      ├─ <ActivityFeed> (异步组件)
+      └─ <Stats> (异步组件)
 ```
 
 在这个组件树中有多个嵌套组件，要渲染出它们，首先得解析一些异步资源。如果没有 `<Suspense>`，则它们每个都需要处理自己的加载、报错和完成状态。在最坏的情况下，我们可能会在页面上看到三个旋转的加载态，在不同的时间显示出内容。
@@ -91,7 +91,7 @@ const posts = await res.json()
 
 进入完成状态后，只有当默认插槽的根节点被替换时，`<Suspense>` 才会回到挂起状态。组件树中新的更深层次的异步依赖**不会**造成 `<Suspense>` 回退到挂起状态。
 
-发生回退时，后备内容不会立即展示出来。相反，`<Suspense>` 在等待新内容和异步依赖完成时，会展示之前 `#default` 插槽的内容。这个行为可以通过一个 `timeout` prop 进行配置：在等待渲染新内容耗时超过 `timeout` 之后，`<Suspense>` 将会切换为展示后备内容。若 `timeout` 值为 `0` 将导致在替换默认内容时立即显示后备内容。
+发生回退时，后备内容不会立即展示出来。相反，`<Suspense>` 在等待新内容和异步依赖完成时，会展示之前 `#default` 插槽的内容。这个行为可以通过一个 `timeout` prop 进行配置：在等待渲染新内容耗时超过 `timeout` 毫秒之后，`<Suspense>` 将会切换为展示后备内容。若 `timeout` 值为 `0` 将导致在替换默认内容时立即显示后备内容。
 
 ## 事件 {#events}
 

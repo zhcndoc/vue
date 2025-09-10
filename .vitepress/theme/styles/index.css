@@ -5,6 +5,7 @@
 @import "./inline-demo.css";
 @import "./utilities.css";
 @import "./style-guide.css";
+@import "./vars.css";
 
 .wwads-cn {
   background-color: var(--vt-c-bg-soft) !important;

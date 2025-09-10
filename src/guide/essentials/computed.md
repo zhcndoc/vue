@@ -1,5 +1,13 @@
 # 计算属性 {#computed-properties}
 
+<div class="options-api">
+  <VueSchoolLink href="https://vueschool.io/lessons/computed-properties-in-vue-3" title="免费的 Vue.js 计算属性课程"/>
+</div>
+
+<div class="composition-api">
+  <VueSchoolLink href="https://vueschool.io/lessons/vue-fundamentals-capi-computed-properties-in-vue-with-the-composition-api" title="免费的 Vue.js 计算属性课程"/>
+</div>
+
 ## 基础示例 {#basic-example}
 
 模板中的表达式虽然方便，但也只能用来做简单的操作。如果在模板中写太多逻辑，会让模板变得臃肿，难以维护。比如说，我们有这样一个包含嵌套数组的对象：
@@ -255,7 +263,13 @@ const fullName = computed({
 
 - 仅 3.4+ 支持
 
+<p class="options-api">
+如果需要，可以通过访问计算属性的 getter 的第二个参数来获取计算属性返回的上一个值：
+</p>
+
+<p class="composition-api">
 如果需要，可以通过访问计算属性的 getter 的第一个参数来获取计算属性返回的上一个值：
+</p>
 
 <div class="options-api">
 
@@ -317,7 +331,7 @@ export default {
   },
   computed: {
     alwaysSmall: {
-      get(previous) {
+      get(_, previous) {
         if (this.count <= 3) {
           return this.count
         }
