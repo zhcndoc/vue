@@ -33,10 +33,10 @@ Vue 使用一种基于 HTML 的模板语法，使我们能够声明式地将其�
   const rawHtml = '<span style="color: red">This should be red.</span>'
 </script>
 
-<p class="demo">
+<div class="demo">
   <p>Using text interpolation: {{ rawHtml }}</p>
   <p>Using v-html directive: <span v-html="rawHtml"></span></p>
-</p>
+</div>
 
 这里我们遇到了一个新的概念。这里看到的 `v-html` attribute 被称为一个**指令**。指令由 `v-` 作为前缀，表明它们是一些由 Vue 提供的特殊 attribute，你可能已经猜到了，它们将为渲染的 DOM 应用特殊的响应式行为。这里我们做的事情简单来说就是：在当前组件实例上，将此元素的 innerHTML 与 `rawHtml` 属性保持同步。
 
