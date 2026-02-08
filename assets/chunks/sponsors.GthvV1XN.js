@@ -1,0 +1,1 @@
+import{i as t}from"./framework.HSrij3vb.js";const s=t(),a=t(!1),o="https://automation.vuejs.org",n=async()=>{a.value||(a.value=!0,s.value=await(await fetch(`${o}/data.json`)).json())};export{o as b,s as d,n as l};
