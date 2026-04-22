@@ -1,35 +1,35 @@
-# Creating a Vue Application {#creating-a-vue-application}
+# 创建一个 Vue 应用程序 {#creating-a-vue-application}
 
-## The Application Instance {#the-application-instance}
+## 应用程序实例 {#the-application-instance}
 
-Every Vue application starts by creating a new **application instance** with the [`createApp`](/api/application#createapp) function:
+每个 Vue 应用程序都从使用 [`createApp`](/api/application#createapp) 函数创建一个新的 **应用程序实例** 开始：
 
 ```js
 import { createApp } from 'vue'
 
 const app = createApp({
-  /* root component options */
+  /* 根组件选项 */
 })
 ```
 
-## The Root Component {#the-root-component}
+## 根组件 {#the-root-component}
 
-The object we are passing into `createApp` is in fact a component. Every app requires a "root component" that can contain other components as its children.
+我们传入 `createApp` 的对象实际上是一个组件。每个应用都需要一个“根组件”，它可以包含其他组件作为其子组件。
 
-If you are using Single-File Components, we typically import the root component from another file:
+如果你正在使用单文件组件，我们通常会从另一个文件中导入根组件：
 
 ```js
 import { createApp } from 'vue'
-// import the root component App from a single-file component.
+// 从单文件组件中导入根组件 App。
 import App from './App.vue'
 
 const app = createApp(App)
 ```
 
-While many examples in this guide only need a single component, most real applications are organized into a tree of nested, reusable components. For example, a Todo application's component tree might look like this:
+虽然本指南中的许多示例只需要一个组件，但大多数真实应用程序都组织成由可复用组件嵌套而成的树。例如，一个 Todo 应用的组件树可能如下所示：
 
 ```
-App (root component)
+App (根组件)
 ├─ TodoList
 │  └─ TodoItem
 │     ├─ TodoDeleteButton
@@ -39,11 +39,11 @@ App (root component)
    └─ TodoStatistics
 ```
 
-In later sections of the guide, we will discuss how to define and compose multiple components together. Before that, we will focus on what happens inside a single component.
+在本指南后面的章节中，我们将讨论如何定义多个组件并将它们组合在一起。在那之前，我们将先聚焦于单个组件内部会发生什么。
 
-## Mounting the App {#mounting-the-app}
+## 挂载应用程序 {#mounting-the-app}
 
-An application instance won't render anything until its `.mount()` method is called. It expects a "container" argument, which can either be an actual DOM element or a selector string:
+在调用应用程序实例的 `.mount()` 方法之前，它不会渲染任何内容。它需要一个“容器”参数，该参数既可以是真实的 DOM 元素，也可以是选择器字符串：
 
 ```html
 <div id="app"></div>
@@ -53,13 +53,13 @@ An application instance won't render anything until its `.mount()` method is cal
 app.mount('#app')
 ```
 
-The content of the app's root component will be rendered inside the container element. The container element itself is not considered part of the app.
+应用程序根组件的内容将被渲染到容器元素内部。容器元素本身不被视为应用的一部分。
 
-The `.mount()` method should always be called after all app configurations and asset registrations are done. Also note that its return value, unlike the asset registration methods, is the root component instance instead of the application instance.
+`.mount()` 方法应始终在完成所有应用配置和资源注册之后调用。另外请注意，它的返回值不同于资源注册方法，返回的是根组件实例，而不是应用程序实例。
 
-### In-DOM Root Component Template {#in-dom-root-component-template}
+### 直接在 DOM 中编写的根组件模板 {#in-dom-root-component-template}
 
-The template for the root component is usually part of the component itself, but it is also possible to provide the template separately by writing it directly inside the mount container:
+根组件的模板通常是组件自身的一部分，但也可以通过直接写在挂载容器中的方式单独提供模板：
 
 ```html
 <div id="app">
@@ -81,33 +81,33 @@ const app = createApp({
 app.mount('#app')
 ```
 
-Vue will automatically use the container's `innerHTML` as the template if the root component does not already have a `template` option.
+如果根组件还没有 `template` 选项，Vue 会自动使用容器的 `innerHTML` 作为模板。
 
-In-DOM templates are often used in applications that are [using Vue without a build step](/guide/quick-start.html#using-vue-from-cdn). They can also be used in conjunction with server-side frameworks, where the root template might be generated dynamically by the server.
+直接在 DOM 中编写的模板通常用于 [不经过构建步骤而使用 Vue 的应用程序](/guide/quick-start.html#using-vue-from-cdn)。它们也可以与服务器端框架结合使用，此时根模板可能由服务器动态生成。
 
-## App Configurations {#app-configurations}
+## 应用程序配置 {#app-configurations}
 
-The application instance exposes a `.config` object that allows us to configure a few app-level options, for example, defining an app-level error handler that captures errors from all descendant components:
+应用程序实例暴露了一个 `.config` 对象，它允许我们配置一些应用级选项，例如，定义一个应用级错误处理器，用来捕获所有后代组件中的错误：
 
 ```js
 app.config.errorHandler = (err) => {
-  /* handle error */
+  /* 处理错误 */
 }
 ```
 
-The application instance also provides a few methods for registering app-scoped assets. For example, registering a component:
+应用程序实例还提供了一些方法，用于注册应用作用域的资源。例如，注册一个组件：
 
 ```js
 app.component('TodoDeleteButton', TodoDeleteButton)
 ```
 
-This makes the `TodoDeleteButton` available for use anywhere in our app. We will discuss registration for components and other types of assets in later sections of the guide. You can also browse the full list of application instance APIs in its [API reference](/api/application).
+这会使 `TodoDeleteButton` 可在应用中的任何地方使用。我们将在本指南后面的章节中讨论组件以及其他类型资源的注册。你也可以在其 [API 参考](/api/application) 中浏览应用程序实例 API 的完整列表。
 
-Make sure to apply all app configurations before mounting the app!
+请务必在挂载应用之前完成所有应用配置！
 
-## Multiple Application Instances {#multiple-application-instances}
+## 多个应用程序实例 {#multiple-application-instances}
 
-You are not limited to a single application instance on the same page. The `createApp` API allows multiple Vue applications to co-exist on the same page, each with its own scope for configuration and global assets:
+你不必局限于在同一页面上只使用一个应用程序实例。`createApp` API 允许多个 Vue 应用共存于同一页面，每个应用都拥有自己配置和全局资源的作用域：
 
 ```js
 const app1 = createApp({
@@ -121,4 +121,4 @@ const app2 = createApp({
 app2.mount('#container-2')
 ```
 
-If you are using Vue to enhance server-rendered HTML and only need Vue to control specific parts of a large page, avoid mounting a single Vue application instance on the entire page. Instead, create multiple small application instances and mount them on the elements they are responsible for.
+如果你使用 Vue 来增强服务器渲染的 HTML，并且只需要 Vue 控制大型页面中的特定部分，请避免将单个 Vue 应用程序实例挂载到整个页面上。相反，应创建多个较小的应用程序实例，并将它们挂载到各自负责的元素上。

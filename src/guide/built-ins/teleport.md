@@ -1,27 +1,27 @@
 # Teleport {#teleport}
 
- <VueSchoolLink href="https://vueschool.io/lessons/vue-3-teleport" title="Free Vue.js Teleport Lesson"/>
+ <VueSchoolLink href="https://vueschool.io/lessons/vue-3-teleport" title="免费 Vue.js Teleport 课程"/>
 
-`<Teleport>` is a built-in component that allows us to "teleport" a part of a component's template into a DOM node that exists outside the DOM hierarchy of that component.
+`<Teleport>` 是一个内置组件，它允许我们将组件模板的一部分“传送”到该组件 DOM 层级之外存在的某个 DOM 节点中。
 
-## Basic Usage {#basic-usage}
+## 基本用法 {#basic-usage}
 
-Sometimes a part of a component's template belongs to it logically, but from a visual standpoint, it should be displayed somewhere else in the DOM, perhaps even outside of the Vue application.
+有时，组件模板中的一部分在逻辑上属于它，但从视觉上看，它应该显示在 DOM 的其他位置，甚至可能是在 Vue 应用之外。
 
-The most common example of this is when building a full-screen modal. Ideally, we want the code for the modal's button and the modal itself to be written within the same single-file component, since they are both related to the open / close state of the modal. But that means the modal will be rendered alongside the button, deeply nested in the application's DOM hierarchy. This can create some tricky issues when positioning the modal via CSS.
+最常见的例子就是构建全屏模态框时。理想情况下，我们希望模态框按钮和模态框本身的代码写在同一个单文件组件中，因为它们都与模态框的打开 / 关闭状态相关。但这也意味着模态框会和按钮一起渲染，深深嵌套在应用的 DOM 层级中。这会在通过 CSS 定位模态框时带来一些棘手的问题。
 
-Consider the following HTML structure.
+考虑以下 HTML 结构。
 
 ```vue-html
 <div class="outer">
-  <h3>Vue Teleport Example</h3>
+  <h3>Vue Teleport 示例</h3>
   <div>
     <MyModal />
   </div>
 </div>
 ```
 
-And here is the implementation of `<MyModal>`:
+下面是 `<MyModal>` 的实现：
 
 <div class="composition-api">
 
@@ -33,11 +33,11 @@ const open = ref(false)
 </script>
 
 <template>
-  <button @click="open = true">Open Modal</button>
+  <button @click="open = true">打开模态框</button>
 
   <div v-if="open" class="modal">
-    <p>Hello from the modal!</p>
-    <button @click="open = false">Close</button>
+    <p>来自模态框的问候！</p>
+    <button @click="open = false">关闭</button>
   </div>
 </template>
 
@@ -68,11 +68,11 @@ export default {
 </script>
 
 <template>
-  <button @click="open = true">Open Modal</button>
+  <button @click="open = true">打开模态框</button>
 
   <div v-if="open" class="modal">
-    <p>Hello from the modal!</p>
-    <button @click="open = false">Close</button>
+    <p>来自模态框的问候！</p>
+    <button @click="open = false">关闭</button>
   </div>
 </template>
 
@@ -90,30 +90,30 @@ export default {
 
 </div>
 
-The component contains a `<button>` to trigger the opening of the modal, and a `<div>` with a class of `.modal`, which will contain the modal's content and a button to self-close.
+该组件包含一个用于触发模态框打开的 `<button>`，以及一个带有 `.modal` 类的 `<div>`，其中包含模态框的内容和一个用于自行关闭的按钮。
 
-When using this component inside the initial HTML structure, there are a number of potential issues:
+当在最初的 HTML 结构中使用这个组件时，可能会出现一些问题：
 
-- `position: fixed` only places the element relative to the viewport when no ancestor element has `transform`, `perspective` or `filter` property set. If, for example, we intend to animate the ancestor `<div class="outer">` with a CSS transform, it would break the modal layout!
+- `position: fixed` 只有在没有祖先元素设置了 `transform`、`perspective` 或 `filter` 属性时，才会将元素相对于视口定位。如果例如我们打算给祖先 `<div class="outer">` 添加 CSS transform 动画，那就会破坏模态框布局！
 
-- The modal's `z-index` is constrained by its containing elements. If there is another element that overlaps with `<div class="outer">` and has a higher `z-index`, it would cover our modal.
+- 模态框的 `z-index` 会受到其包含元素的限制。如果有另一个元素与 `<div class="outer">` 重叠，并且具有更高的 `z-index`，它就会遮住我们的模态框。
 
-`<Teleport>` provides a clean way to work around these, by allowing us to break out of the nested DOM structure. Let's modify `<MyModal>` to use `<Teleport>`:
+`<Teleport>` 提供了一种简洁的方式来规避这些问题，它允许我们跳出嵌套的 DOM 结构。让我们修改 `<MyModal>` 以使用 `<Teleport>`：
 
 ```vue-html{3,8}
-<button @click="open = true">Open Modal</button>
+<button @click="open = true">打开模态框</button>
 
 <Teleport to="body">
   <div v-if="open" class="modal">
-    <p>Hello from the modal!</p>
-    <button @click="open = false">Close</button>
+    <p>来自模态框的问候！</p>
+    <button @click="open = false">关闭</button>
   </div>
 </Teleport>
 ```
 
-The `to` target of `<Teleport>` expects a CSS selector string or an actual DOM node. Here, we are essentially telling Vue to "**teleport** this template fragment **to** the **`body`** tag".
+`<Teleport>` 的 `to` 目标可以是一个 CSS 选择器字符串，也可以是一个真实的 DOM 节点。这里，我们实际上是在告诉 Vue 将这个模板片段“**传送**”到 **`body`** 标签中。
 
-You can click the button below and inspect the `<body>` tag via your browser's devtools:
+你可以点击下面的按钮，并通过浏览器开发者工具检查 `<body>` 标签：
 
 <script setup>
 import { ref } from 'vue'
@@ -121,12 +121,12 @@ const open = ref(false)
 </script>
 
 <div class="demo">
-  <button @click="open = true">Open Modal</button>
+  <button @click="open = true">打开模态框</button>
   <ClientOnly>
     <Teleport to="body">
       <div v-if="open" class="demo modal-demo">
-        <p style="margin-bottom:20px">Hello from the modal!</p>
-        <button @click="open = false">Close</button>
+        <p style="margin-bottom:20px">来自模态框的问候！</p>
+        <button @click="open = false">关闭</button>
       </div>
     </Teleport>
   </ClientOnly>
@@ -147,21 +147,21 @@ const open = ref(false)
 }
 </style>
 
-You can combine `<Teleport>` with [`<Transition>`](./transition) to create animated modals - see [Example here](/examples/#modal).
+你可以将 `<Teleport>` 与 [`<Transition>`](./transition) 结合起来创建带动画的模态框 - 参见[这里的示例](/examples/#modal)。
 
 :::tip
-The teleport `to` target must be already in the DOM when the `<Teleport>` component is mounted. Ideally, this should be an element outside the entire Vue application. If targeting another element rendered by Vue, you need to make sure that element is mounted before the `<Teleport>`. If you are using SSR, see [Handling Teleports in SSR](/guide/scaling-up/ssr#teleports).
+teleport 的 `to` 目标在 `<Teleport>` 组件挂载时必须已经存在于 DOM 中。理想情况下，它应该是整个 Vue 应用之外的一个元素。如果目标是由 Vue 渲染的另一个元素，则需要确保该元素在 `<Teleport>` 之前挂载。如果你正在使用 SSR，请参见 [在 SSR 中处理 Teleports](/guide/scaling-up/ssr#teleports)。
 :::
 
-## Using with Components {#using-with-components}
+## 与组件一起使用 {#using-with-components}
 
-`<Teleport>` only alters the rendered DOM structure - it does not affect the logical hierarchy of the components. That is to say, if `<Teleport>` contains a component, that component will remain a logical child of the parent component containing the `<Teleport>`. Props passing and event emitting will continue to work the same way.
+`<Teleport>` 只会改变渲染后的 DOM 结构——它不会影响组件的逻辑层级。也就是说，如果 `<Teleport>` 中包含一个组件，那么该组件在逻辑上仍然是包含 `<Teleport>` 的父组件的子组件。props 传递和事件触发将继续以相同的方式工作。
 
-This also means that injections from a parent component work as expected, and that the child component will be nested below the parent component in the Vue Devtools, instead of being placed where the actual content moved to.
+这也意味着来自父组件的注入会按预期工作，并且该子组件会在 Vue Devtools 中嵌套在父组件下面，而不是显示在实际内容被移动到的位置。
 
-## Disabling Teleport {#disabling-teleport}
+## 禁用 Teleport {#disabling-teleport}
 
-In some cases, we may want to conditionally disable `<Teleport>`. For example, we may want to render a component as an overlay for desktop, but inline on mobile. `<Teleport>` supports the `disabled` prop which can be dynamically toggled:
+在某些情况下，我们可能希望有条件地禁用 `<Teleport>`。例如，我们可能希望在桌面端将某个组件渲染为覆盖层，而在移动端则以内联方式渲染。`<Teleport>` 支持 `disabled` prop，可以动态切换：
 
 ```vue-html
 <Teleport :disabled="isMobile">
@@ -169,13 +169,13 @@ In some cases, we may want to conditionally disable `<Teleport>`. For example, w
 </Teleport>
 ```
 
-We could then dynamically update `isMobile`.
+然后我们就可以动态更新 `isMobile`。
 
-## Multiple Teleports on the Same Target {#multiple-teleports-on-the-same-target}
+## 同一目标上的多个 Teleport {#multiple-teleports-on-the-same-target}
 
-A common use case would be a reusable `<Modal>` component, with the potential for multiple instances to be active at the same time. For this kind of scenario, multiple `<Teleport>` components can mount their content to the same target element. The order will be a simple append, with later mounts located after earlier ones, but all within the target element.
+一个常见用例是可复用的 `<Modal>` 组件，并且可能会同时存在多个实例处于活动状态。对于这种场景，多个 `<Teleport>` 组件可以将它们的内容挂载到同一个目标元素上。顺序将是简单的追加，后挂载的内容位于先挂载的内容之后，但都位于目标元素内部。
 
-Given the following usage:
+给定以下用法：
 
 ```vue-html
 <Teleport to="#modals">
@@ -186,7 +186,7 @@ Given the following usage:
 </Teleport>
 ```
 
-The rendered result would be:
+渲染结果将是：
 
 ```html
 <div id="modals">
@@ -195,22 +195,22 @@ The rendered result would be:
 </div>
 ```
 
-## Deferred Teleport <sup class="vt-badge" data-text="3.5+" /> {#deferred-teleport}
+## 延迟 Teleport <sup class="vt-badge" data-text="3.5+" /> {#deferred-teleport}
 
-In Vue 3.5 and above, we can use the `defer` prop to defer the target resolving of a Teleport until other parts of the application have mounted. This allows the Teleport to target a container element that is rendered by Vue, but in a later part of the component tree:
+在 Vue 3.5 及以上版本中，我们可以使用 `defer` prop 将 Teleport 的目标解析延迟到应用的其他部分挂载之后。这使得 Teleport 可以指向由 Vue 渲染、但位于组件树更后面部分的容器元素：
 
 ```vue-html
 <Teleport defer to="#late-div">...</Teleport>
 
-<!-- somewhere later in the template -->
+<!-- 在模板后面的某处 -->
 <div id="late-div"></div>
 ```
 
-Note that the target element must be rendered in the same mount / update tick with the Teleport - i.e. if the `<div>` is only mounted a second later, the Teleport will still report an error. The defer works similarly to the `mounted` lifecycle hook.
+请注意，目标元素必须与 Teleport 在同一个挂载 / 更新 tick 中渲染——也就是说，如果 `<div>` 要晚一秒才挂载，Teleport 仍然会报错。`defer` 的工作方式类似于 `mounted` 生命周期钩子。
 
 ---
 
-**Related**
+**相关**
 
-- [`<Teleport>` API reference](/api/built-in-components#teleport)
-- [Handling Teleports in SSR](/guide/scaling-up/ssr#teleports)
+- [`<Teleport>` API 参考](/api/built-in-components#teleport)
+- [在 SSR 中处理 Teleports](/guide/scaling-up/ssr#teleports)

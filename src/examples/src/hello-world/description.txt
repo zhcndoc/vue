@@ -1,1 +1,1 @@
-Say Hello World with Vue!
+用 Vue 输出 Hello World！

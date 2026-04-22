@@ -1,10 +1,10 @@
-# Options: Composition {#options-composition}
+# 选项：组合式 {#options-composition}
 
 ## provide {#provide}
 
-Provide values that can be injected by descendant components.
+提供可由后代组件注入的值。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentOptions {
@@ -12,15 +12,15 @@ Provide values that can be injected by descendant components.
   }
   ```
 
-- **Details**
+- **详细信息**
 
-  `provide` and [`inject`](#inject) are used together to allow an ancestor component to serve as a dependency injector for all its descendants, regardless of how deep the component hierarchy is, as long as they are in the same parent chain.
+  `provide` 和 [`inject`](#inject) 一起使用，允许祖先组件作为其所有后代的依赖注入器，而不管组件层级有多深，只要它们处于同一父链中即可。
 
-  The `provide` option should be either an object or a function that returns an object. This object contains the properties that are available for injection into its descendants. You can use Symbols as keys in this object.
+  `provide` 选项应为一个对象，或者返回对象的函数。这个对象包含可供其后代注入的属性。你可以在这个对象中使用 Symbols 作为键。
 
-- **Example**
+- **示例**
 
-  Basic usage:
+  基本用法：
 
   ```js
   const s = Symbol()
@@ -33,7 +33,7 @@ Provide values that can be injected by descendant components.
   }
   ```
 
-  Using a function to provide per-component state:
+  使用函数为每个组件提供状态：
 
   ```js
   export default {
@@ -50,15 +50,15 @@ Provide values that can be injected by descendant components.
   }
   ```
 
-  Note in the above example, the provided `msg` will NOT be reactive. See [Working with Reactivity](/guide/components/provide-inject#working-with-reactivity) for more details.
+  注意，在上面的示例中，提供的 `msg` **不会**是响应式的。更多细节请参见[处理响应式](/guide/components/provide-inject#working-with-reactivity)。
 
-- **See also** [Provide / Inject](/guide/components/provide-inject)
+- **另请参见** [Provide / Inject](/guide/components/provide-inject)
 
 ## inject {#inject}
 
-Declare properties to inject into the current component by locating them from ancestor providers.
+声明要通过从祖先提供者中查找而注入到当前组件的属性。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentOptions {
@@ -75,24 +75,24 @@ Declare properties to inject into the current component by locating them from an
   }
   ```
 
-- **Details**
+- **详细信息**
 
-  The `inject` option should be either:
+  `inject` 选项应为以下两种形式之一：
 
-  - An array of strings, or
-  - An object where the keys are the local binding name and the value is either:
-    - The key (string or Symbol) to search for in available injections, or
-    - An object where:
-      - The `from` property is the key (string or Symbol) to search for in available injections, and
-      - The `default` property is used as fallback value. Similar to props default values, a factory function is needed for object types to avoid value sharing between multiple component instances.
+  - 字符串数组，或
+  - 一个对象，其中键是本地绑定名，值则是以下之一：
+    - 用于在可用注入中查找的键（字符串或 Symbol），或
+    - 一个对象，其中：
+      - `from` 属性是用于在可用注入中查找的键（字符串或 Symbol），并且
+      - `default` 属性用作回退值。与 props 默认值类似，对于对象类型需要使用工厂函数，以避免多个组件实例之间共享值。
 
-  An injected property will be `undefined` if neither a matching property nor a default value was provided.
+  如果既没有提供匹配的属性，也没有提供默认值，那么注入的属性将是 `undefined`。
 
-  Note that injected bindings are NOT reactive. This is intentional. However, if the injected value is a reactive object, properties on that object do remain reactive. See [Working with Reactivity](/guide/components/provide-inject#working-with-reactivity) for more details.
+  请注意，注入的绑定**不是**响应式的。这是有意为之。不过，如果注入的值是一个响应式对象，那么该对象上的属性仍然会保持响应式。更多细节请参见[处理响应式](/guide/components/provide-inject#working-with-reactivity)。
 
-- **Example**
+- **示例**
 
-  Basic usage:
+  基本用法：
 
   ```js
   export default {
@@ -103,7 +103,7 @@ Declare properties to inject into the current component by locating them from an
   }
   ```
 
-  Using an injected value as the default for a prop:
+  将注入的值作为 prop 的默认值：
 
   ```js
   const Child = {
@@ -118,7 +118,7 @@ Declare properties to inject into the current component by locating them from an
   }
   ```
 
-  Using an injected value as data entry:
+  将注入的值作为 data 项：
 
   ```js
   const Child = {
@@ -131,7 +131,7 @@ Declare properties to inject into the current component by locating them from an
   }
   ```
 
-  Injections can be optional with default value:
+  注入可以带有默认值，从而成为可选项：
 
   ```js
   const Child = {
@@ -141,7 +141,7 @@ Declare properties to inject into the current component by locating them from an
   }
   ```
 
-  If it needs to be injected from a property with a different name, use `from` to denote the source property:
+  如果需要从一个不同名称的属性中注入，请使用 `from` 来表示源属性：
 
   ```js
   const Child = {
@@ -154,7 +154,7 @@ Declare properties to inject into the current component by locating them from an
   }
   ```
 
-  Similar to prop defaults, you need to use a factory function for non-primitive values:
+  与 prop 默认值类似，对于非原始值，你需要使用工厂函数：
 
   ```js
   const Child = {
@@ -167,13 +167,13 @@ Declare properties to inject into the current component by locating them from an
   }
   ```
 
-- **See also** [Provide / Inject](/guide/components/provide-inject)
+- **另请参见** [Provide / Inject](/guide/components/provide-inject)
 
 ## mixins {#mixins}
 
-An array of option objects to be mixed into the current component.
+要混入当前组件的一个选项对象数组。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentOptions {
@@ -181,17 +181,17 @@ An array of option objects to be mixed into the current component.
   }
   ```
 
-- **Details**
+- **详细信息**
 
-  The `mixins` option accepts an array of mixin objects. These mixin objects can contain instance options like normal instance objects, and they will be merged against the eventual options using the certain option merging logic. For example, if your mixin contains a `created` hook and the component itself also has one, both functions will be called.
+  `mixins` 选项接受一个 mixin 对象数组。这些 mixin 对象可以像普通实例对象一样包含实例选项，并且它们会通过特定的选项合并逻辑与最终选项进行合并。例如，如果你的 mixin 包含一个 `created` 钩子，而组件本身也有一个，那么这两个函数都会被调用。
 
-  Mixin hooks are called in the order they are provided, and called before the component's own hooks.
+  mixin 钩子会按照提供的顺序调用，并且在组件自身的钩子之前调用。
 
-  :::warning No Longer Recommended
-  In Vue 2, mixins were the primary mechanism for creating reusable chunks of component logic. While mixins continue to be supported in Vue 3, [Composable functions using Composition API](/guide/reusability/composables) is now the preferred approach for code reuse between components.
+  :::warning 不再推荐
+  在 Vue 2 中，mixin 是创建可复用组件逻辑块的主要机制。虽然 Vue 3 仍然支持 mixin，但现在在组件之间复用代码时，[使用 Composition API 的组合式函数](/guide/reusability/composables)是更推荐的方法。
   :::
 
-- **Example**
+- **示例**
 
   ```js
   const mixin = {
@@ -213,9 +213,9 @@ An array of option objects to be mixed into the current component.
 
 ## extends {#extends}
 
-A "base class" component to extend from.
+一个要继承的“基类”组件。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentOptions {
@@ -223,17 +223,17 @@ A "base class" component to extend from.
   }
   ```
 
-- **Details**
+- **详细信息**
 
-  Allows one component to extend another, inheriting its component options.
+  允许一个组件扩展另一个组件，并继承其组件选项。
 
-  From an implementation perspective, `extends` is almost identical to `mixins`. The component specified by `extends` will be treated as though it were the first mixin.
+  从实现角度看，`extends` 几乎与 `mixins` 完全相同。由 `extends` 指定的组件会被视为第一个 mixin。
 
-  However, `extends` and `mixins` express different intents. The `mixins` option is primarily used to compose chunks of functionality, whereas `extends` is primarily concerned with inheritance.
+  不过，`extends` 和 `mixins` 表达的意图不同。`mixins` 选项主要用于组合功能块，而 `extends` 主要关注继承。
 
-  As with `mixins`, any options (except for `setup()`) will be merged using the relevant merge strategy.
+  与 `mixins` 一样，任何选项（`setup()` 除外）都会使用相应的合并策略进行合并。
 
-- **Example**
+- **示例**
 
   ```js
   const CompA = { ... }
@@ -244,12 +244,12 @@ A "base class" component to extend from.
   }
   ```
 
-  :::warning Not Recommended for Composition API
-  `extends` is designed for Options API and does not handle the merging of the `setup()` hook.
+  :::warning 不建议在 Composition API 中使用
+  `extends` 是为 Options API 设计的，并不处理 `setup()` 钩子的合并。
 
-  In Composition API, the preferred mental model for logic reuse is "compose" over "inheritance". If you have logic from a component that needs to be reused in another one, consider extracting the relevant logic into a [Composable](/guide/reusability/composables#composables).
+  在 Composition API 中，更推荐的逻辑复用思维模型是“组合”而不是“继承”。如果你有某个组件中的逻辑需要在另一个组件中复用，可以考虑将相关逻辑提取到一个[组合式函数](/guide/reusability/composables#composables)中。
 
-  If you still intend to "extend" a component using Composition API, you can call the base component's `setup()` in the extending component's `setup()`:
+  如果你仍然打算使用 Composition API 来“扩展”某个组件，可以在扩展组件的 `setup()` 中调用基组件的 `setup()`：
 
   ```js
   import Base from './Base.js'
@@ -258,7 +258,7 @@ A "base class" component to extend from.
     setup(props, ctx) {
       return {
         ...Base.setup(props, ctx),
-        // local bindings
+        // 本地绑定
       }
     }
   }

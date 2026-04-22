@@ -7,7 +7,7 @@ export default {
     // in order to display it, but we will see in the next
     // example why it is needed if we ever intend to change
     // the value.
-    const message = ref('Hello World!')
+    const message = ref('你好，世界！')
 
     return {
       message

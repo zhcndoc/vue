@@ -2,44 +2,44 @@
 outline: deep
 ---
 
-# Style Guide {#style-guide}
+# 风格指南 {#style-guide}
 
-::: warning Note
-This Vue.js Style Guide is outdated and needs to be reviewed. If you have any questions or suggestions, please [open an issue](https://github.com/vuejs/docs/issues/new).
+::: warning 注意
+这份 Vue.js 风格指南已经过时，需要重新审阅。如果你有任何问题或建议，请 [提交 issue](https://github.com/vuejs/docs/issues/new)。
 :::
 
-This is the official style guide for Vue-specific code. If you use Vue in a project, it's a great reference to avoid errors, bikeshedding, and anti-patterns. However, we don't believe that any style guide is ideal for all teams or projects, so mindful deviations are encouraged based on past experience, the surrounding tech stack, and personal values.
+这是 Vue 特定代码的官方风格指南。如果你在项目中使用 Vue，它是一个很好的参考，可以帮助你避免错误、无谓争论和反模式。不过，我们并不认为任何风格指南都适用于所有团队或项目，因此建议基于过往经验、周边技术栈和个人价值观进行适当调整。
 
-For the most part, we also avoid suggestions about JavaScript or HTML in general. We don't mind whether you use semicolons or trailing commas. We don't mind whether your HTML uses single-quotes or double-quotes for attribute values. Some exceptions will exist however, where we've found that a particular pattern is helpful in the context of Vue.
+在大多数情况下，我们也会避免对 JavaScript 或 HTML 的一般性写法提出建议。我们并不在意你是否使用分号或末尾逗号，也不在意你的 HTML 属性值是使用单引号还是双引号。不过也会有一些例外，因为我们发现某些模式在 Vue 的上下文中是有帮助的。
 
-Finally, we've split rules into four categories:
+最后，我们将规则分成四类：
 
-## Rule Categories {#rule-categories}
+## 规则类别 {#rule-categories}
 
-### Priority A: Essential (Error Prevention) {#priority-a-essential-error-prevention}
+### A 级优先：必须遵守（防止错误） {#priority-a-essential-error-prevention}
 
-These rules help prevent errors, so learn and abide by them at all costs. Exceptions may exist, but should be very rare and only be made by those with expert knowledge of both JavaScript and Vue.
+这些规则有助于防止错误，因此请务必学习并严格遵守。可能存在例外，但应非常少见，而且只有同时精通 JavaScript 和 Vue 的人才能做出这些例外。
 
-- [See all priority A rules](./rules-essential)
+- [查看所有 A 级规则](./rules-essential)
 
-### Priority B: Strongly Recommended {#priority-b-strongly-recommended}
+### B 级优先：强烈推荐 {#priority-b-strongly-recommended}
 
-These rules have been found to improve readability and/or developer experience in most projects. Your code will still run if you violate them, but violations should be rare and well-justified.
+这些规则已被证明在大多数项目中能够提升可读性和/或开发体验。即使违反它们，代码仍然可以运行，但违反情况应该很少见，并且必须有充分理由。
 
-- [See all priority B rules](./rules-strongly-recommended)
+- [查看所有 B 级规则](./rules-strongly-recommended)
 
-### Priority C: Recommended {#priority-c-recommended}
+### C 级优先：推荐 {#priority-c-recommended}
 
-Where multiple, equally good options exist, an arbitrary choice can be made to ensure consistency. In these rules, we describe each acceptable option and suggest a default choice. That means you can feel free to make a different choice in your own codebase, as long as you're consistent and have a good reason. Please do have a good reason though! By adapting to the community standard, you will:
+当存在多个同样优秀的选项时，可以任意选择一种以确保一致性。在这些规则中，我们会描述每个可接受的选项，并建议一个默认选择。这意味着，只要你保持一致并且有充分理由，你完全可以在自己的代码库中选择不同的方式。不过，请务必有充分理由！通过遵循社区标准，你将：
 
-1. Train your brain to more easily parse most of the community code you encounter
-2. Be able to copy and paste most community code examples without modification
-3. Often find new hires are already accustomed to your preferred coding style, at least in regards to Vue
+1. 让大脑更容易解析你遇到的大多数社区代码
+2. 能够不加修改地复制和粘贴大多数社区代码示例
+3. 常常会发现新加入的同事已经习惯了你偏好的编码风格，至少在 Vue 方面如此
 
-- [See all priority C rules](./rules-recommended)
+- [查看所有 C 级规则](./rules-recommended)
 
-### Priority D: Use with Caution {#priority-d-use-with-caution}
+### D 级优先：谨慎使用 {#priority-d-use-with-caution}
 
-Some features of Vue exist to accommodate rare edge cases or smoother migrations from a legacy code base. When overused however, they can make your code more difficult to maintain or even become a source of bugs. These rules shine a light on potentially risky features, describing when and why they should be avoided.
+Vue 的某些特性是为了适配罕见的边缘情况，或让从旧代码库迁移更加平滑而存在的。然而，若过度使用，它们会让你的代码更难维护，甚至可能成为 bug 的来源。这些规则会突出展示一些潜在的高风险特性，并说明何时以及为何应避免使用它们。
 
-- [See all priority D rules](./rules-use-with-caution)
+- [查看所有 D 级规则](./rules-use-with-caution)

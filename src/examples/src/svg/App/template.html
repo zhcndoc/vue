@@ -7,12 +7,12 @@
   <label>{{stat.label}}</label>
   <input type="range" v-model="stat.value" min="0" max="100">
   <span>{{stat.value}}</span>
-  <button @click="remove(stat)" class="remove">X</button>
+  <button @click="remove(stat)" class="remove">删除</button>
 </div>
 
 <form id="add">
   <input name="newlabel" v-model="newLabel">
-  <button @click="add">Add a Stat</button>
+  <button @click="add">添加一项指标</button>
 </form>
 
 <pre id="raw">{{ stats }}</pre>

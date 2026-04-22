@@ -1,17 +1,17 @@
-# Composition API: setup() {#composition-api-setup}
+# Composition API：setup() {#composition-api-setup}
 
-## Basic Usage {#basic-usage}
+## 基本用法 {#basic-usage}
 
-The `setup()` hook serves as the entry point for Composition API usage in components in the following cases:
+`setup()` 钩子在以下情况下充当组件中使用 Composition API 的入口点：
 
-1. Using Composition API without a build step;
-2. Integrating with Composition-API-based code in an Options API component.
+1. 在不使用构建步骤的情况下使用 Composition API；
+2. 在 Options API 组件中集成基于 Composition API 的代码。
 
-:::info Note
-If you are using Composition API with Single-File Components, [`<script setup>`](/api/sfc-script-setup) is strongly recommended for a more succinct and ergonomic syntax.
+:::info 注意
+如果你在单文件组件中使用 Composition API，强烈建议使用 [`<script setup>`](/api/sfc-script-setup)，以获得更简洁、更易用的语法。
 :::
 
-We can declare reactive state using [Reactivity APIs](./reactivity-core) and expose them to the template by returning an object from `setup()`. The properties on the returned object will also be made available on the component instance (if other options are used):
+我们可以使用 [响应式 API](./reactivity-core) 声明响应式状态，并通过从 `setup()` 返回一个对象将其暴露给模板。返回对象上的属性也会在组件实例上可用（如果使用了其他选项）：
 
 ```vue
 <script>
@@ -21,7 +21,7 @@ export default {
   setup() {
     const count = ref(0)
 
-    // expose to template and other options API hooks
+    // 暴露给模板和其他 Options API 钩子
     return {
       count
     }
@@ -38,15 +38,15 @@ export default {
 </template>
 ```
 
-[refs](/api/reactivity-core#ref) returned from `setup` are [automatically shallow unwrapped](/guide/essentials/reactivity-fundamentals#deep-reactivity) when accessed in the template so you do not need to use `.value` when accessing them. They are also unwrapped in the same way when accessed on `this`.
+`setup` 返回的 [ref](/api/reactivity-core#ref) 在模板中访问时会被[自动浅层解包](/guide/essentials/reactivity-fundamentals#deep-reactivity)，因此访问它们时无需使用 `.value`。当在 `this` 上访问时，它们也会以相同方式被解包。
 
-`setup()` itself does not have access to the component instance - `this` will have a value of `undefined` inside `setup()`. You can access Composition-API-exposed values from Options API, but not the other way around.
+`setup()` 本身无法访问组件实例——在 `setup()` 内部，`this` 的值将是 `undefined`。你可以从 Options API 中访问通过 Composition API 暴露的值，但不能反过来。
 
-`setup()` should return an object _synchronously_. The only case when `async setup()` can be used is when the component is a descendant of a [Suspense](../guide/built-ins/suspense) component.
+`setup()` 应该**同步**返回一个对象。只有当组件是 [Suspense](../guide/built-ins/suspense) 组件的后代时，才能使用 `async setup()`。
 
-## Accessing Props {#accessing-props}
+## 访问 Props {#accessing-props}
 
-The first argument in the `setup` function is the `props` argument. Just as you would expect in a standard component, `props` inside of a `setup` function are reactive and will be updated when new props are passed in.
+传递给 `setup` 函数的第一个参数是 `props` 参数。与标准组件中的预期一致，`setup` 函数内部的 `props` 是响应式的，并且在传入新的 props 时会更新。
 
 ```js
 export default {
@@ -59,49 +59,49 @@ export default {
 }
 ```
 
-Note that if you destructure the `props` object, the destructured variables will lose reactivity. It is therefore recommended to always access props in the form of `props.xxx`.
+请注意，如果你解构了 `props` 对象，解构得到的变量将失去响应性。因此建议始终以 `props.xxx` 的形式访问 props。
 
-If you really need to destructure the props, or need to pass a prop into an external function while retaining reactivity, you can do so with the [toRefs()](./reactivity-utilities#torefs) and [toRef()](/api/reactivity-utilities#toref) utility APIs:
+如果你确实需要解构 props，或者需要在保持响应性的同时将某个 prop 传递给外部函数，可以使用 [toRefs()](./reactivity-utilities#torefs) 和 [toRef()](/api/reactivity-utilities#toref) 工具 API：
 
 ```js
 import { toRefs, toRef } from 'vue'
 
 export default {
   setup(props) {
-    // turn `props` into an object of refs, then destructure
+    // 将 `props` 转换为 refs 对象，然后再解构
     const { title } = toRefs(props)
-    // `title` is a ref that tracks `props.title`
+    // `title` 是一个 ref，用来追踪 `props.title`
     console.log(title.value)
 
-    // OR, turn a single property on `props` into a ref
+    // 或者，将 `props` 上的单个属性转换为 ref
     const title = toRef(props, 'title')
   }
 }
 ```
 
-## Setup Context {#setup-context}
+## Setup 上下文 {#setup-context}
 
-The second argument passed to the `setup` function is a **Setup Context** object. The context object exposes other values that may be useful inside `setup`:
+传递给 `setup` 函数的第二个参数是一个 **Setup Context** 对象。该上下文对象暴露了在 `setup` 内部可能有用的其他值：
 
 ```js
 export default {
   setup(props, context) {
-    // Attributes (Non-reactive object, equivalent to $attrs)
+    // 属性（非响应式对象，等同于 $attrs）
     console.log(context.attrs)
 
-    // Slots (Non-reactive object, equivalent to $slots)
+    // 插槽（非响应式对象，等同于 $slots）
     console.log(context.slots)
 
-    // Emit events (Function, equivalent to $emit)
+    // 触发事件（函数，等同于 $emit）
     console.log(context.emit)
 
-    // Expose public properties (Function)
+    // 暴露公共属性（函数）
     console.log(context.expose)
   }
 }
 ```
 
-The context object is not reactive and can be safely destructured:
+上下文对象不是响应式的，因此可以安全地进行解构：
 
 ```js
 export default {
@@ -111,30 +111,30 @@ export default {
 }
 ```
 
-`attrs` and `slots` are stateful objects that are always updated when the component itself is updated. This means you should avoid destructuring them and always reference properties as `attrs.x` or `slots.x`. Also note that, unlike `props`, the properties of `attrs` and `slots` are **not** reactive. If you intend to apply side effects based on changes to `attrs` or `slots`, you should do so inside an `onBeforeUpdate` lifecycle hook.
+`attrs` 和 `slots` 是有状态的对象，当组件本身更新时它们总会同步更新。这意味着你应该避免对它们进行解构，并始终以 `attrs.x` 或 `slots.x` 的形式引用属性。还要注意，与 `props` 不同，`attrs` 和 `slots` 的属性**不是**响应式的。如果你打算根据 `attrs` 或 `slots` 的变化应用副作用，你应该在 `onBeforeUpdate` 生命周期钩子中进行。
 
-### Exposing Public Properties {#exposing-public-properties}
+### 暴露公共属性 {#exposing-public-properties}
 
-`expose` is a function that can be used to explicitly limit the properties exposed when the component instance is accessed by a parent component via [template refs](/guide/essentials/template-refs#ref-on-component):
+`expose` 是一个函数，可用于在父组件通过 [模板 ref](/guide/essentials/template-refs#ref-on-component) 访问组件实例时，显式限制所暴露的属性：
 
 ```js{5,10}
 export default {
   setup(props, { expose }) {
-    // make the instance "closed" -
-    // i.e. do not expose anything to the parent
+    // 将实例“关闭”-
+    // 即不向父组件暴露任何内容
     expose()
 
     const publicCount = ref(0)
     const privateCount = ref(0)
-    // selectively expose local state
+    // 有选择地暴露局部状态
     expose({ count: publicCount })
   }
 }
 ```
 
-## Usage with Render Functions {#usage-with-render-functions}
+## 与渲染函数一起使用 {#usage-with-render-functions}
 
-`setup` can also return a [render function](/guide/extras/render-function) which can directly make use of the reactive state declared in the same scope:
+`setup` 也可以返回一个[渲染函数](/guide/extras/render-function)，它可以直接使用在同一作用域中声明的响应式状态：
 
 ```js{6}
 import { h, ref } from 'vue'
@@ -147,9 +147,9 @@ export default {
 }
 ```
 
-Returning a render function prevents us from returning anything else. Internally that shouldn't be a problem, but it can be problematic if we want to expose methods of this component to the parent component via template refs.
+返回渲染函数会阻止我们再返回任何其他内容。从内部来说这不会有问题，但如果我们想通过模板 ref 将此组件的方法暴露给父组件，这就可能成为问题。
 
-We can solve this problem by calling [`expose()`](#exposing-public-properties):
+我们可以通过调用 [`expose()`](#exposing-public-properties) 来解决这个问题：
 
 ```js{8-10}
 import { h, ref } from 'vue'
@@ -168,4 +168,4 @@ export default {
 }
 ```
 
-The `increment` method would then be available in the parent component via a template ref.
+这样，`increment` 方法就可以通过模板 ref 在父组件中使用。

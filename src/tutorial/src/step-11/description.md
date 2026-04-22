@@ -1,8 +1,8 @@
-# Components {#components}
+# 组件 {#components}
 
-So far, we've only been working with a single component. Real Vue applications are typically created with nested components.
+到目前为止，我们只使用了单个组件。真实的 Vue 应用通常由嵌套组件构成。
 
-A parent component can render another component in its template as a child component. To use a child component, we need to first import it:
+父组件可以在其模板中将另一个组件渲染为子组件。要使用子组件，我们需要先导入它：
 
 <div class="composition-api">
 <div class="sfc">
@@ -27,14 +27,14 @@ export default {
 }
 ```
 
-We also need to register the component using the `components` option. Here we are using the object property shorthand to register the `ChildComp` component under the `ChildComp` key.
+我们还需要使用 `components` 选项来注册该组件。这里我们使用对象属性简写，将 `ChildComp` 组件注册到 `ChildComp` 键下。
 
 </div>
 </div>
 
 <div class="sfc">
 
-Then, we can use the component in the template as:
+然后，我们就可以在模板中像这样使用该组件：
 
 ```vue-html
 <ChildComp />
@@ -54,9 +54,9 @@ createApp({
 })
 ```
 
-We also need to register the component using the `components` option. Here we are using the object property shorthand to register the `ChildComp` component under the `ChildComp` key.
+我们还需要使用 `components` 选项来注册该组件。这里我们使用对象属性简写，将 `ChildComp` 组件注册到 `ChildComp` 键下。
 
-Because we are writing the template in the DOM, it will be subject to browser's parsing rules, which is case-insensitive for tag names. Therefore, we need to use the kebab-cased name to reference the child component:
+由于我们是在 DOM 中编写模板，它将受到浏览器解析规则的影响，而标签名是大小写不敏感的。因此，我们需要使用 kebab-case 命名来引用子组件：
 
 ```vue-html
 <child-comp></child-comp>
@@ -65,4 +65,4 @@ Because we are writing the template in the DOM, it will be subject to browser's 
 </div>
 
 
-Now try it yourself - import the child component and render it in the template.
+现在轮到你来试试了——导入子组件并在模板中渲染它。

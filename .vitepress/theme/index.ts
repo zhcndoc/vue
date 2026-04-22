@@ -21,17 +21,27 @@ export default Object.assign({}, VPTheme, {
   Layout: () => {
     // @ts-ignore
     return h(VPTheme.Layout, null, {
-      banner: () => h(Banner),
+      // banner: () => h(Banner),
       'sidebar-top': () => h(PreferenceSwitch),
       'sidebar-bottom': () => h(SecurityUpdateBtn),
-      'aside-mid': () => h(SponsorsAside)
+      'aside-mid': () => h(SponsorsAside),
+      'aside-bottom': () =>
+        h('div', {
+          class: 'wwads-cn wwads-vertical',
+          'data-id': '354'
+        }),
+      'content-bottom': () =>
+        h('div', {
+          class: 'wwads-cn wwads-horizontal',
+          'data-id': '354'
+        })
     })
   },
   enhanceApp({ app }: { app: App }) {
     app.provide('prefer-composition', preferComposition)
     app.provide('prefer-sfc', preferSFC)
     app.provide('filter-headers', filterHeadersByPreference)
-    app.component('VueSchoolLink', VueSchoolLink)
+    // app.component('VueSchoolLink', VueSchoolLink)
     app.component('ScrimbaLink', ScrimbaLink)
     // app.component('TextAd', TextAd)
   }

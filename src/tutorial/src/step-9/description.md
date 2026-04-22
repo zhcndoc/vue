@@ -1,8 +1,8 @@
-# Lifecycle and Template Refs {#lifecycle-and-template-refs}
+# 生命周期和模板引用 {#lifecycle-and-template-refs}
 
-So far, Vue has been handling all the DOM updates for us, thanks to reactivity and declarative rendering. However, inevitably there will be cases where we need to manually work with the DOM.
+到目前为止，得益于响应式和声明式渲染，Vue 一直在为我们处理所有 DOM 更新。然而，不可避免地会有一些情况，我们需要手动操作 DOM。
 
-We can request a **template ref** - i.e. a reference to an element in the template - using the <a target="_blank" href="/api/built-in-special-attributes.html#ref">special `ref` attribute</a>:
+我们可以使用 <a target="_blank" href="/api/built-in-special-attributes.html#ref">特殊的 `ref` 属性</a> 来请求一个 **模板引用**——也就是模板中某个元素的引用：
 
 ```vue-html
 <p ref="pElementRef">hello</p>
@@ -10,7 +10,7 @@ We can request a **template ref** - i.e. a reference to an element in the templa
 
 <div class="composition-api">
 
-To access the ref, we need to declare<span class="html"> and expose</span> a ref with matching name:
+要访问该 ref，我们需要声明<span class="html">并暴露</span>一个同名的 ref：
 
 <div class="sfc">
 
@@ -33,9 +33,9 @@ setup() {
 
 </div>
 
-Notice the ref is initialized with `null` value. This is because the element doesn't exist yet when <span class="sfc">`<script setup>`</span><span class="html">`setup()`</span> is executed. The template ref is only accessible after the component is **mounted**.
+请注意，这个 ref 初始化时的值是 `null`。这是因为当 <span class="sfc">`<script setup>`</span><span class="html">`setup()`</span> 执行时，该元素还不存在。模板引用只能在组件**挂载**之后访问。
 
-To run code after mount, we can use the `onMounted()` function:
+要在挂载后执行代码，我们可以使用 `onMounted()` 函数：
 
 <div class="sfc">
 
@@ -43,7 +43,7 @@ To run code after mount, we can use the `onMounted()` function:
 import { onMounted } from 'vue'
 
 onMounted(() => {
-  // component is now mounted.
+  // 组件现在已经挂载。
 })
 ```
 
@@ -56,7 +56,7 @@ import { onMounted } from 'vue'
 createApp({
   setup() {
     onMounted(() => {
-      // component is now mounted.
+      // 组件现在已经挂载。
     })
   }
 })
@@ -67,16 +67,16 @@ createApp({
 
 <div class="options-api">
 
-The element will be exposed on `this.$refs` as `this.$refs.pElementRef`. However, you can only access it after the component is **mounted**.
+该元素会作为 `this.$refs.pElementRef` 暴露在 `this.$refs` 上。不过，你只能在组件**挂载**之后访问它。
 
-To run code after mount, we can use the `mounted` option:
+要在挂载后执行代码，我们可以使用 `mounted` 选项：
 
 <div class="sfc">
 
 ```js
 export default {
   mounted() {
-    // component is now mounted.
+    // 组件现在已经挂载。
   }
 }
 ```
@@ -87,7 +87,7 @@ export default {
 ```js
 createApp({
   mounted() {
-    // component is now mounted.
+    // 组件现在已经挂载。
   }
 })
 ```
@@ -95,6 +95,6 @@ createApp({
 </div>
 </div>
 
-This is called a **lifecycle hook** - it allows us to register a callback to be called at certain times of the component's lifecycle. There are other hooks such as <span class="options-api">`created` and `updated`</span><span class="composition-api">`onUpdated` and `onUnmounted`</span>. Check out the <a target="_blank" href="/guide/essentials/lifecycle.html#lifecycle-diagram">Lifecycle Diagram</a> for more details.
+这称为一个 **生命周期钩子**——它允许我们注册一个回调，在组件生命周期的特定时间被调用。还有其他钩子，例如 <span class="options-api">`created` 和 `updated`</span><span class="composition-api">`onUpdated` 和 `onUnmounted`</span>。更多细节请查看 <a target="_blank" href="/guide/essentials/lifecycle.html#lifecycle-diagram">生命周期图示</a>。
 
-Now, try to add <span class="options-api">a `mounted`</span><span class="composition-api">an `onMounted`</span> hook, access the `<p>` via <span class="options-api">`this.$refs.pElementRef`</span><span class="composition-api">`pElementRef.value`</span>, and perform some direct DOM operations on it (e.g. changing its `textContent`).
+现在，尝试添加一个 <span class="options-api">`mounted`</span><span class="composition-api">`onMounted`</span> 钩子，通过 <span class="options-api">`this.$refs.pElementRef`</span><span class="composition-api">`pElementRef.value`</span> 访问 `<p>`，并对其执行一些直接的 DOM 操作（例如更改它的 `textContent`）。

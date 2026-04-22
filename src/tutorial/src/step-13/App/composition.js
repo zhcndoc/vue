@@ -6,7 +6,7 @@ export default {
     ChildComp
   },
   setup() {
-    const childMsg = ref('No child msg yet')
+    const childMsg = ref('还没有来自子组件的消息')
 
     return {
       childMsg

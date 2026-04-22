@@ -1,6 +1,6 @@
 export default {
   emits: ['response'],
   created() {
-    this.$emit('response', 'hello from child')
+    this.$emit('response', '来自子组件的问候')
   }
 }

@@ -2,7 +2,7 @@ import { ref } from 'vue'
 
 export default {
   setup() {
-    const message = ref('Hello World!')
+    const message = ref('你好，世界！')
 
     function reverseMessage() {
       // Access/mutate the value of a ref via
@@ -11,7 +11,7 @@ export default {
     }
 
     function notify() {
-      alert('navigation was prevented.')
+      alert('已阻止导航。')
     }
 
     return {

@@ -1,12 +1,12 @@
-# Global API: General {#global-api-general}
+# 全局 API：通用 {#global-api-general}
 
 ## version {#version}
 
-Exposes the current version of Vue.
+暴露 Vue 的当前版本。
 
-- **Type:** `string`
+- **类型：** `string`
 
-- **Example**
+- **示例**
 
   ```js
   import { version } from 'vue'
@@ -16,21 +16,21 @@ Exposes the current version of Vue.
 
 ## nextTick() {#nexttick}
 
-A utility for waiting for the next DOM update flush.
+用于等待下一次 DOM 更新刷新的工具函数。
 
-- **Type**
+- **类型**
 
   ```ts
   function nextTick(callback?: () => void): Promise<void>
   ```
 
-- **Details**
+- **详情**
 
-  When you mutate reactive state in Vue, the resulting DOM updates are not applied synchronously. Instead, Vue buffers them until the "next tick" to ensure that each component updates only once no matter how many state changes you have made.
+  当你在 Vue 中修改响应式状态时，产生的 DOM 更新不会同步应用。相反，Vue 会将它们缓冲到“下一次 tick”再统一处理，以确保无论你进行了多少次状态变更，每个组件都只会更新一次。
 
-  `nextTick()` can be used immediately after a state change to wait for the DOM updates to complete. You can either pass a callback as an argument, or await the returned Promise.
+  `nextTick()` 可在状态变更后立即使用，以等待 DOM 更新完成。你既可以将回调作为参数传入，也可以 await 返回的 Promise。
 
-- **Example**
+- **示例**
 
   <div class="composition-api">
 
@@ -43,11 +43,11 @@ A utility for waiting for the next DOM update flush.
   async function increment() {
     count.value++
 
-    // DOM not yet updated
+    // DOM  هنوز未更新
     console.log(document.getElementById('counter').textContent) // 0
 
     await nextTick()
-    // DOM is now updated
+    // DOM 现在已更新
     console.log(document.getElementById('counter').textContent) // 1
   }
   </script>
@@ -74,11 +74,11 @@ A utility for waiting for the next DOM update flush.
       async increment() {
         this.count++
 
-        // DOM not yet updated
+        // DOM  अभी未更新
         console.log(document.getElementById('counter').textContent) // 0
 
         await nextTick()
-        // DOM is now updated
+        // DOM 现在已更新
         console.log(document.getElementById('counter').textContent) // 1
       }
     }
@@ -92,36 +92,36 @@ A utility for waiting for the next DOM update flush.
 
   </div>
 
-- **See also** [`this.$nextTick()`](/api/component-instance#nexttick)
+- **另请参见** [`this.$nextTick()`](/api/component-instance#nexttick)
 
 ## defineComponent() {#definecomponent}
 
-A type helper for defining a Vue component with type inference.
+用于定义带有类型推导的 Vue 组件的类型辅助函数。
 
-- **Type**
+- **类型**
 
   ```ts
-  // options syntax
+  // options 语法
   function defineComponent(
     component: ComponentOptions
   ): ComponentConstructor
 
-  // function syntax (requires 3.3+)
+  // 函数语法（需要 3.3+）
   function defineComponent(
     setup: ComponentOptions['setup'],
     extraOptions?: ComponentOptions
   ): () => any
   ```
 
-  > Type is simplified for readability.
+  > 为了便于阅读，这里对类型进行了简化。
 
-- **Details**
+- **详情**
 
-  The first argument expects a component options object. The return value will be the same options object, since the function is essentially a runtime no-op for type inference purposes only.
+  第一个参数接收一个组件选项对象。返回值将是相同的选项对象，因为该函数本质上只是为了类型推导而存在的运行时空操作。
 
-  Note that the return type is a bit special: it will be a constructor type whose instance type is the inferred component instance type based on the options. This is used for type inference when the returned type is used as a tag in TSX.
+  请注意，返回类型有些特殊：它将是一个构造器类型，其实例类型是根据选项推导出的组件实例类型。当返回类型在 TSX 中被用作标签时，就会用到这一点来进行类型推导。
 
-  You can extract the instance type of a component (equivalent to the type of `this` in its options) from the return type of `defineComponent()` like this:
+  你可以像这样从 `defineComponent()` 的返回类型中提取组件的实例类型（等同于其选项中 `this` 的类型）：
 
   ```ts
   const Foo = defineComponent(/* ... */)
@@ -129,28 +129,28 @@ A type helper for defining a Vue component with type inference.
   type FooInstance = InstanceType<typeof Foo>
   ```
 
-  ### Function Signature {#function-signature}
+  ### 函数签名 {#function-signature}
 
-  - Only supported in 3.3+
+  - 仅支持 3.3+
 
-  `defineComponent()` also has an alternative signature that is meant to be used with the Composition API and [render functions or JSX](/guide/extras/render-function.html).
+  `defineComponent()` 还有另一种签名，旨在与组合式 API 以及 [渲染函数或 JSX](/guide/extras/render-function.html) 一起使用。
 
-  Instead of passing in an options object, a function is expected instead. This function works the same as the Composition API [`setup()`](/api/composition-api-setup.html#composition-api-setup) function: it receives the props and the setup context. The return value should be a render function - both `h()` and JSX are supported:
+  这里传入的不是选项对象，而是一个函数。这个函数与组合式 API 的 [`setup()`](/api/composition-api-setup.html#composition-api-setup) 函数行为相同：它会接收 props 和 setup 上下文。返回值应为一个渲染函数——`h()` 和 JSX 都受支持：
 
   ```js
   import { ref, h } from 'vue'
 
   const Comp = defineComponent(
     (props) => {
-      // use Composition API here like in <script setup>
+      // 在这里像在 <script setup> 中一样使用组合式 API
       const count = ref(0)
 
       return () => {
-        // render function or JSX
+        // 渲染函数或 JSX
         return h('div', count.value)
       }
     },
-    // extra options, e.g. declare props and emits
+    // 额外选项，例如声明 props 和 emits
     {
       props: {
         /* ... */
@@ -159,47 +159,47 @@ A type helper for defining a Vue component with type inference.
   )
   ```
 
-  The main use case for this signature is with TypeScript (and in particular with TSX), as it supports generics:
+  这种签名的主要使用场景是 TypeScript（尤其是 TSX），因为它支持泛型：
 
   ```tsx
   const Comp = defineComponent(
     <T extends string | number>(props: { msg: T; list: T[] }) => {
-      // use Composition API here like in <script setup>
+      // 在这里像在 <script setup> 中一样使用组合式 API
       const count = ref(0)
 
       return () => {
-        // render function or JSX
+        // 渲染函数或 JSX
         return <div>{count.value}</div>
       }
     },
-    // manual runtime props declaration is currently still needed.
+    // 目前仍然需要手动声明运行时 props。
     {
       props: ['msg', 'list']
     }
   )
   ```
 
-  In the future, we plan to provide a Babel plugin that automatically infers and injects the runtime props (like for `defineProps` in SFCs) so that the runtime props declaration can be omitted.
+  未来，我们计划提供一个 Babel 插件，自动推导并注入运行时 props（类似 SFC 中的 `defineProps`），这样就可以省略运行时 props 声明。
 
-  ### Note on webpack Treeshaking {#note-on-webpack-treeshaking}
+  ### 关于 webpack Tree Shaking 的说明 {#note-on-webpack-treeshaking}
 
-  Because `defineComponent()` is a function call, it could look like it would produce side-effects to some build tools, e.g. webpack. This will prevent the component from being tree-shaken even when the component is never used.
+  由于 `defineComponent()` 是一个函数调用，对于某些构建工具（例如 webpack）来说，它看起来可能会产生副作用。这会导致即使组件从未被使用，也无法被 tree-shaking 掉。
 
-  To tell webpack that this function call is safe to be tree-shaken, you can add a `/*#__PURE__*/` comment notation before the function call:
+  要告诉 webpack 这次函数调用可以安全地被 tree-shaking，你可以在函数调用前添加 `/*#__PURE__*/` 注释标记：
 
   ```js
   export default /*#__PURE__*/ defineComponent(/* ... */)
   ```
 
-  Note this is not necessary if you are using Vite, because Rollup (the underlying production bundler used by Vite) is smart enough to determine that `defineComponent()` is in fact side-effect-free without the need for manual annotations.
+  请注意，如果你使用的是 Vite，这并不是必须的，因为 Rollup（Vite 所使用的底层生产构建工具）足够智能，能够判断 `defineComponent()` 实际上没有副作用，无需手动标注。
 
-- **See also** [Guide - Using Vue with TypeScript](/guide/typescript/overview#general-usage-notes)
+- **另请参见** [指南 - 在 TypeScript 中使用 Vue](/guide/typescript/overview#general-usage-notes)
 
 ## defineAsyncComponent() {#defineasynccomponent}
 
-Define an async component which is lazy loaded only when it is rendered. The argument can either be a loader function, or an options object for more advanced control of the loading behavior.
+定义一个异步组件，它只会在被渲染时才进行懒加载。该参数可以是一个加载器函数，也可以是一个用于更高级控制加载行为的选项对象。
 
-- **Type**
+- **类型**
 
   ```ts
   function defineAsyncComponent(
@@ -224,4 +224,4 @@ Define an async component which is lazy loaded only when it is rendered. The arg
   }
   ```
 
-- **See also** [Guide - Async Components](/guide/components/async)
+- **另请参见** [指南 - 异步组件](/guide/components/async)

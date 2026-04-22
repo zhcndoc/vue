@@ -1,13 +1,13 @@
-# You Did It! {#you-did-it}
+# 你做到了！ {#you-did-it}
 
-You have finished the tutorial!
+你已经完成了教程！
 
-At this point, you should have a good idea of what it's like to work with Vue. However, we covered a lot of things really fast and glossed over the details, so definitely keep learning! As a next step, you can:
+到这一步，你应该已经对使用 Vue 开发是什么感觉有了一个不错的认识。不过，我们以非常快的速度讲了很多内容，并且略过了细节，所以一定要继续学习！下一步，你可以：
 
-- Set up a real Vue project on your machine by following the [Quick Start](/guide/quick-start).
+- 通过 [快速开始](/guide/quick-start) 在你的机器上搭建一个真正的 Vue 项目。
 
-- Go through the [Main Guide](/guide/essentials/application), which covers all the topics we learned so far in greater details, and much more.
+- 阅读 [主指南](/guide/essentials/application)，它更详细地涵盖了我们到目前为止学到的所有主题，以及更多内容。
 
-- Check out some more practical [Examples](/examples/).
+- 查看一些更实用的 [示例](/examples/)。
 
-We can't wait to see what you build next!
+我们迫不及待想看到你接下来会构建出什么！

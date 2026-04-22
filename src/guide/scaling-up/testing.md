@@ -25,41 +25,41 @@ import { VTCodeGroup, VTCodeGroupTab } from '@vue/theme'
 }
 </style>
 
-# Testing {#testing}
+# 测试 {#testing}
 
-## Why Test? {#why-test}
+## 为什么要测试？ {#why-test}
 
-Automated tests help you and your team build complex Vue applications quickly and confidently by preventing regressions and encouraging you to break apart your application into testable functions, modules, classes, and components. As with any application, your new Vue app can break in many ways, and it's important that you can catch these issues and fix them before releasing.
+自动化测试可以帮助你和你的团队通过防止回归并鼓励你将应用拆分为可测试的函数、模块、类和组件，从而快速而自信地构建复杂的 Vue 应用。和任何应用一样，你的新 Vue 应用也可能以多种方式出问题，因此能够尽早捕获这些问题并在发布前修复它们非常重要。
 
-In this guide, we'll cover basic terminology and provide our recommendations on which tools to choose for your Vue 3 application.
+在本指南中，我们将介绍基础术语，并就为你的 Vue 3 应用选择哪些工具提供我们的建议。
 
-There is one Vue-specific section covering composables. See [Testing Composables](#testing-composables) below for more details.
+其中有一个针对 Vue 的特定部分，涵盖组合式函数。有关更多细节，请参见下方的 [测试组合式函数](#testing-composables)。
 
-## When to Test {#when-to-test}
+## 何时测试 {#when-to-test}
 
-Start testing early! We recommend you begin writing tests as soon as you can. The longer you wait to add tests to your application, the more dependencies your application will have, and the harder it will be to start.
+尽早开始测试！我们建议你尽可能早地开始编写测试。你越晚给应用添加测试，应用所依赖的内容就越多，启动测试也就越困难。
 
-## Testing Types {#testing-types}
+## 测试类型 {#testing-types}
 
-When designing your Vue application's testing strategy, you should leverage the following testing types:
+在设计 Vue 应用的测试策略时，你应该利用以下测试类型：
 
-- **Unit**: Checks that inputs to a given function, class, or composable are producing the expected output or side effects.
-- **Component**: Checks that your component mounts, renders, can be interacted with, and behaves as expected. These tests import more code than unit tests, are more complex, and require more time to execute.
-- **End-to-end**: Checks features that span multiple pages and makes real network requests against your production-built Vue application. These tests often involve standing up a database or other backend.
+- **单元测试**：检查给定函数、类或组合式函数的输入是否产生预期的输出或副作用。
+- **组件测试**：检查组件是否能挂载、渲染、是否可交互，以及行为是否符合预期。这类测试导入的代码比单元测试更多，更复杂，执行时间也更长。
+- **端到端测试**：检查跨多个页面的功能，并针对你生产构建后的 Vue 应用发起真实的网络请求。这类测试通常涉及启动数据库或其他后端。
 
-Each testing type plays a role in your application's testing strategy, and each will protect you against different types of issues.
+每一种测试类型都在你的应用测试策略中扮演着角色，并且各自能保护你免受不同类型问题的影响。
 
-## Overview {#overview}
+## 概览 {#overview}
 
-We will briefly discuss what each of these are, how they can be implemented for Vue applications, and provide some general recommendations.
+我们将简要讨论这些测试类型分别是什么、如何为 Vue 应用实现它们，并提供一些通用建议。
 
-## Unit Testing {#unit-testing}
+## 单元测试 {#unit-testing}
 
-Unit tests are written to verify that small, isolated units of code are working as expected. A unit test usually covers a single function, class, composable, or module. Unit tests focus on logical correctness and only concern themselves with a small portion of the application's overall functionality. They may mock large parts of your application's environment (e.g. initial state, complex classes, 3rd party modules, and network requests).
+单元测试用于验证小而独立的代码单元是否按预期工作。一个单元测试通常覆盖一个函数、类、组合式函数或模块。单元测试关注逻辑正确性，只关心应用整体功能中的一小部分。它们可能会模拟应用环境的很大一部分（例如初始状态、复杂类、第三方模块和网络请求）。
 
-In general, unit tests will catch issues with a function's business logic and logical correctness.
+一般来说，单元测试会捕获函数业务逻辑和逻辑正确性方面的问题。
 
-Take for example this `increment` function:
+例如，下面这个 `increment` 函数：
 
 ```js [helpers.js]
 export function increment(current, max = 10) {
@@ -70,9 +70,9 @@ export function increment(current, max = 10) {
 }
 ```
 
-Because it's very self-contained, it'll be easy to invoke the increment function and assert that it returns what it's supposed to, so we'll write a Unit Test.
+由于它非常独立，我们很容易调用 increment 函数并断言它返回了应有的结果，因此我们会编写一个单元测试。
 
-If any of these assertions fail, it's clear that the issue is contained within the `increment` function.
+如果这些断言中的任何一个失败了，就很明显问题出在 `increment` 函数内部。
 
 ```js{3-15} [helpers.spec.js]
 import { increment } from './helpers'
@@ -92,60 +92,60 @@ describe('increment', () => {
 })
 ```
 
-As mentioned previously, unit testing is typically applied to self-contained business logic, components, classes, modules, or functions that do not involve UI rendering, network requests, or other environmental concerns.
+如前所述，单元测试通常应用于不涉及 UI 渲染、网络请求或其他环境因素的自包含业务逻辑、组件、类、模块或函数。
 
-These are typically plain JavaScript / TypeScript modules unrelated to Vue. In general, writing unit tests for business logic in Vue applications does not differ significantly from applications using other frameworks.
+这些通常是与 Vue 无关的普通 JavaScript / TypeScript 模块。一般来说，为 Vue 应用中的业务逻辑编写单元测试，与使用其他框架的应用并没有显著差异。
 
-There are two instances where you DO unit test Vue-specific features:
+有两种情况你**应该**对 Vue 特有功能进行单元测试：
 
-1. Composables
-2. Components
+1. 组合式函数
+2. 组件
 
-### Composables {#composables}
+### 组合式函数 {#composables}
 
-One category of functions specific to Vue applications is [Composables](/guide/reusability/composables), which may require special handling during tests.
-See [Testing Composables](#testing-composables) below for more details.
+Vue 应用特有的一类函数是 [组合式函数](/guide/reusability/composables)，它们在测试期间可能需要特殊处理。
+更多细节请参见下方的 [测试组合式函数](#testing-composables)。
 
-### Unit Testing Components {#unit-testing-components}
+### 组件的单元测试 {#unit-testing-components}
 
-A component can be tested in two ways:
+组件可以通过两种方式进行测试：
 
-1. Whitebox: Unit Testing
+1. 白盒：单元测试
 
-   Tests that are "Whitebox tests" are aware of the implementation details and dependencies of a component. They are focused on **isolating** the component under test. These tests will usually involve mocking some, if not all of your component's children, as well as setting up plugin state and dependencies (e.g. Pinia).
+   所谓“白盒测试”，是指测试会了解组件的实现细节和依赖关系。它们的重点是将被测组件**隔离**出来。这类测试通常会模拟组件的一些甚至全部子组件，以及设置插件状态和依赖项（例如 Pinia）。
 
-2. Blackbox: Component Testing
+2. 黑盒：组件测试
 
-   Tests that are "Blackbox tests" are unaware of the implementation details of a component. These tests mock as little as possible to test the integration of your component and the entire system. They usually render all child components and are considered more of an "integration test". See the [Component Testing recommendations](#component-testing) below.
+   所谓“黑盒测试”，是指测试不了解组件的实现细节。这类测试尽可能少地进行模拟，以测试你的组件与整个系统之间的集成。它们通常会渲染所有子组件，因此更接近“集成测试”。请参见下方的 [组件测试建议](#component-testing)。
 
-### Recommendation {#recommendation}
+### 建议 {#recommendation}
 
 - [Vitest](https://vitest.dev/)
 
-  Since the official setup created by `create-vue` is based on [Vite](https://vite.dev/), we recommend using a unit testing framework that can leverage the same configuration and transform pipeline directly from Vite. [Vitest](https://vitest.dev/) is a unit testing framework designed specifically for this purpose, created and maintained by Vue / Vite team members. It integrates with Vite-based projects with minimal effort, and is blazing fast.
+  由于 `create-vue` 创建的官方脚手架是基于 [Vite](https://vite.dev/) 的，我们建议使用能够直接利用 Vite 中相同配置和转换管线的单元测试框架。[Vitest](https://vitest.dev/) 是专门为此目的设计的单元测试框架，由 Vue / Vite 团队成员创建并维护。它能以极低的成本与基于 Vite 的项目集成，而且速度极快。
 
-### Other Options {#other-options}
+### 其他选项 {#other-options}
 
-- [Jest](https://jestjs.io/) is a popular unit testing framework. However, we only recommend Jest if you have an existing Jest test suite that needs to be migrated over to a Vite-based project, as Vitest offers a more seamless integration and better performance.
+- [Jest](https://jestjs.io/) 是一个流行的单元测试框架。不过，我们只在你已有一套需要迁移到基于 Vite 的项目中的 Jest 测试套件时才推荐使用 Jest，因为 Vitest 提供了更无缝的集成和更好的性能。
 
-## Component Testing {#component-testing}
+## 组件测试 {#component-testing}
 
-In Vue applications, components are the main building blocks of the UI. Components are therefore the natural unit of isolation when it comes to validating your application's behavior. From a granularity perspective, component testing sits somewhere above unit testing and can be considered a form of integration testing. Much of your Vue Application should be covered by a component test and we recommend that each Vue component has its own spec file.
+在 Vue 应用中，组件是 UI 的主要构建块。因此，在验证应用行为时，组件是天然的隔离单元。从粒度角度看，组件测试位于单元测试之上，可以被视为一种集成测试。你的 Vue 应用中的大部分内容都应该由组件测试覆盖，我们建议每个 Vue 组件都有自己独立的 spec 文件。
 
-Component tests should catch issues relating to your component's props, events, slots that it provides, styles, classes, lifecycle hooks, and more.
+组件测试应该捕获与组件的 props、事件、所提供的插槽、样式、类、生命周期钩子等相关的问题。
 
-Component tests should not mock child components, but instead test the interactions between your component and its children by interacting with the components as a user would. For example, a component test should click on an element like a user would instead of programmatically interacting with the component.
+组件测试不应该模拟子组件，而应像用户一样通过与组件交互来测试你的组件与其子组件之间的交互。例如，组件测试应该像用户一样点击元素，而不是以编程方式与组件交互。
 
-Component tests should focus on the component's public interfaces rather than internal implementation details. For most components, the public interface is limited to: events emitted, props, and slots. When testing, remember to **test what a component does, not how it does it**.
+组件测试应聚焦于组件的公共接口，而不是内部实现细节。对大多数组件来说，公共接口仅限于：触发的事件、props 和插槽。测试时请记住：**测试组件做了什么，而不是它怎么做的**。
 
-**DO**
+**应该**
 
-- For **Visual** logic: assert correct render output based on inputted props and slots.
-- For **Behavioral** logic: assert correct render updates or emitted events in response to user input events.
+- 对于**视觉**逻辑：基于输入的 props 和插槽断言正确的渲染输出。
+- 对于**行为**逻辑：断言在用户输入事件响应下正确的渲染更新或触发的事件。
 
-  In the below example, we demonstrate a Stepper component that has a DOM element labeled "increment" and can be clicked. We pass a prop called `max` that prevents the Stepper from being incremented past `2`, so if we click the button 3 times, the UI should still say `2`.
+  在下面的示例中，我们展示了一个 Stepper 组件，它有一个标记为“increment”的 DOM 元素，并且可以被点击。我们传入一个名为 `max` 的 prop，它会阻止 Stepper 增加超过 `2`，因此如果我们点击按钮 3 次，UI 仍应显示 `2`。
 
-  We know nothing about the implementation of Stepper, only that the "input" is the `max` prop and the "output" is the state of the DOM as the user will see it.
+  我们对 Stepper 的实现一无所知，只知道“输入”是 `max` prop，而“输出”是用户所看到的 DOM 状态。
 
 ::: code-group
 
@@ -192,11 +192,11 @@ const { getByText } = render(Stepper, {
   }
 })
 
-getByText('0') // Implicit assertion that "0" is within the component
+getByText('0') // 隐式断言 “0” 位于组件中
 
 const button = getByRole('button', { name: /increment/i })
 
-// Dispatch a click event to our increment button.
+// 向我们的 increment 按钮派发一次 click 事件。
 await fireEvent.click(button)
 
 getByText('1')
@@ -206,109 +206,109 @@ await fireEvent.click(button)
 
 :::
 
-**DON'T**
+**不应该**
 
-- Don't assert the private state of a component instance or test the private methods of a component. Testing implementation details makes the tests brittle, as they are more likely to break and require updates when the implementation changes.
+- 不要断言组件实例的私有状态，也不要测试组件的私有方法。测试实现细节会使测试变得脆弱，因为当实现发生变化时，它们更容易失败并需要更新。
 
-  The component's ultimate job is rendering the correct DOM output, so tests focusing on the DOM output provide the same level of correctness assurance (if not more) while being more robust and resilient to change.
+  组件最终的职责是渲染正确的 DOM 输出，因此聚焦于 DOM 输出的测试能以同等甚至更高的正确性保证，同时也更稳健、更能适应变化。
 
-  Don't rely exclusively on snapshot tests. Asserting HTML strings does not describe correctness. Write tests with intentionality.
+  不要完全依赖快照测试。断言 HTML 字符串并不能说明正确性。请有目的地编写测试。
 
-  If a method needs to be tested thoroughly, consider extracting it into a standalone utility function and write a dedicated unit test for it. If it cannot be extracted cleanly, it may be tested as a part of a component, integration, or end-to-end test that covers it.
+  如果某个方法需要被彻底测试，考虑将其提取为一个独立的工具函数，并为其编写专门的单元测试。如果不能干净地提取出来，则可以将其作为组件、集成或端到端测试的一部分来测试。
 
-### Recommendation {#recommendation-1}
+### 建议 {#recommendation-1}
 
-- [Vitest](https://vitest.dev/) for components or composables that render headlessly (e.g. the [`useFavicon`](https://vueuse.org/core/useFavicon/#usefavicon) function in VueUse). Components and DOM can be tested using [`@vue/test-utils`](https://github.com/vuejs/test-utils).
+- [Vitest](https://vitest.dev/) 适用于头less 渲染的组件或组合式函数（例如 VueUse 中的 [`useFavicon`](https://vueuse.org/core/useFavicon/#usefavicon) 函数）。组件和 DOM 可以使用 [`@vue/test-utils`](https://github.com/vuejs/test-utils) 进行测试。
 
-- [Cypress Component Testing](https://on.cypress.io/component) for components whose expected behavior depends on properly rendering styles or triggering native DOM events. It can be used with Testing Library via [@testing-library/cypress](https://testing-library.com/docs/cypress-testing-library/intro).
+- [Cypress 组件测试](https://on.cypress.io/component) 适用于预期行为依赖于正确渲染样式或触发原生 DOM 事件的组件。它可以与 Testing Library 结合使用，通过 [@testing-library/cypress](https://testing-library.com/docs/cypress-testing-library/intro) 实现。
 
-The main differences between Vitest and browser-based runners are speed and execution context. In short, browser-based runners, like Cypress, can catch issues that node-based runners, like Vitest, cannot (e.g. style issues, real native DOM events, cookies, local storage, and network failures), but browser-based runners are _orders of magnitude slower than Vitest_ because they do open a browser, compile your stylesheets, and more. Cypress is a browser-based runner that supports component testing. Please read [Vitest's comparison page](https://vitest.dev/guide/comparisons.html#cypress) for the latest information comparing Vitest and Cypress.
+Vitest 与基于浏览器的运行器之间的主要区别在于速度和执行环境。简而言之，像 Cypress 这样的基于浏览器的运行器可以捕获基于 Node 的运行器（如 Vitest）无法捕获的问题（例如样式问题、真实的原生 DOM 事件、cookies、本地存储和网络故障），但基于浏览器的运行器比 Vitest _慢得多_，因为它们确实需要打开浏览器、编译样式表等等。Cypress 是一个支持组件测试的基于浏览器的运行器。请阅读 [Vitest 的对比页面](https://vitest.dev/guide/comparisons.html#cypress)以获取比较 Vitest 和 Cypress 的最新信息。
 
-### Mounting Libraries {#mounting-libraries}
+### 挂载库 {#mounting-libraries}
 
-Component testing often involves mounting the component being tested in isolation, triggering simulated user input events, and asserting on the rendered DOM output. There are dedicated utility libraries that make these tasks simpler.
+组件测试通常涉及将被测组件单独挂载、触发模拟的用户输入事件，并断言渲染后的 DOM 输出。有一些专门的工具库可以让这些任务更简单。
 
-- [`@vue/test-utils`](https://github.com/vuejs/test-utils) is the official low-level component testing library that was written to provide users access to Vue specific APIs. It's also the lower-level library `@testing-library/vue` is built on top of.
+- [`@vue/test-utils`](https://github.com/vuejs/test-utils) 是官方的底层组件测试库，旨在为用户提供访问 Vue 特定 API 的能力。它也是 [`@testing-library/vue`](https://github.com/testing-library/vue-testing-library) 的底层基础库。
 
-- [`@testing-library/vue`](https://github.com/testing-library/vue-testing-library) is a Vue testing library focused on testing components without relying on implementation details. Its guiding principle is that the more tests resemble the way software is used, the more confidence they can provide.
+- [`@testing-library/vue`](https://github.com/testing-library/vue-testing-library) 是一个专注于测试组件而不依赖实现细节的 Vue 测试库。其指导原则是：测试越接近软件的实际使用方式，就越能提供信心。
 
-We recommend using `@vue/test-utils` for testing components in applications. `@testing-library/vue` has issues with testing asynchronous component with Suspense, so it should be used with caution.
+我们建议在应用中使用 `@vue/test-utils` 来测试组件。`@testing-library/vue` 在测试带有 Suspense 的异步组件时存在问题，因此应谨慎使用。
 
-### Other Options {#other-options-1}
+### 其他选项 {#other-options-1}
 
-- [Nightwatch](https://nightwatchjs.org/) is an E2E test runner with Vue Component Testing support. ([Example Project](https://github.com/nightwatchjs-community/todo-vue))
+- [Nightwatch](https://nightwatchjs.org/) 是一个支持 Vue 组件测试的端到端测试运行器。（[示例项目](https://github.com/nightwatchjs-community/todo-vue)）
 
-- [WebdriverIO](https://webdriver.io/docs/component-testing/vue) for cross-browser component testing that relies on native user interaction based on standardized automation. It can also be used with Testing Library.
+- [WebdriverIO](https://webdriver.io/docs/component-testing/vue) 可用于基于标准化自动化、依赖原生用户交互的跨浏览器组件测试。它也可以与 Testing Library 一起使用。
 
-## E2E Testing {#e2e-testing}
+## E2E 测试 {#e2e-testing}
 
-While unit tests provide developers with some degree of confidence, unit and component tests are limited in their abilities to provide holistic coverage of an application when deployed to production. As a result, end-to-end (E2E) tests provide coverage on what is arguably the most important aspect of an application: what happens when users actually use your applications.
+虽然单元测试能为开发者提供一定程度的信心，但单元测试和组件测试在应用部署到生产环境后，无法全面覆盖应用的能力是有限的。因此，端到端（E2E）测试覆盖的是一个应用中可以说最重要的方面：用户实际使用你的应用时会发生什么。
 
-End-to-end tests focus on multi-page application behavior that makes network requests against your production-built Vue application. They often involve standing up a database or other backend and may even be run against a live staging environment.
+端到端测试聚焦于多页面应用的行为，这些行为会针对你的生产构建版 Vue 应用发起网络请求。它们通常涉及启动数据库或其他后端，甚至可能在真实的预发布环境中运行。
 
-End-to-end tests will often catch issues with your router, state management library, top-level components (e.g. an App or Layout), public assets, or any request handling. As stated above, they catch critical issues that may be impossible to catch with unit tests or component tests.
+端到端测试通常会捕获路由、状态管理库、顶层组件（例如 App 或 Layout）、公共资源，或任何请求处理方面的问题。正如上面所说，它们能捕获那些单元测试或组件测试可能根本无法捕获的关键问题。
 
-End-to-end tests do not import any of your Vue application's code but instead rely completely on testing your application by navigating through entire pages in a real browser.
+端到端测试不会导入你的 Vue 应用中的任何代码，而是完全依赖在真实浏览器中通过浏览整个页面来测试你的应用。
 
-End-to-end tests validate many of the layers in your application. They can either target your locally built application or even a live Staging environment. Testing against your Staging environment not only includes your frontend code and static server but all associated backend services and infrastructure.
+端到端测试会验证你应用中的多个层级。它们既可以针对本地构建的应用，也可以针对真实的预发布环境。针对预发布环境进行测试，不仅包括你的前端代码和静态服务器，还包括所有相关的后端服务和基础设施。
 
-> The more your tests resemble how your software is used, the more confidence they can give you. - [Kent C. Dodds](https://x.com/kentcdodds/status/977018512689455106) - Author of the Testing Library
+> 你的测试越接近软件的实际使用方式，它们能给你的信心就越大。- [Kent C. Dodds](https://x.com/kentcdodds/status/977018512689455106) - Testing Library 的作者
 
-By testing how user actions impact your application, E2E tests are often the key to higher confidence in whether an application is functioning properly or not.
+通过测试用户操作如何影响你的应用，E2E 测试往往是提高你对应用是否正常运行的信心的关键。
 
-### Choosing an E2E Testing Solution {#choosing-an-e2e-testing-solution}
+### 选择 E2E 测试方案 {#choosing-an-e2e-testing-solution}
 
-While end-to-end (E2E) testing on the web has gained a negative reputation for unreliable (flaky) tests and slowing down development processes, modern E2E tools have made strides forward to create more reliable, interactive, and useful tests. When choosing an E2E testing framework, the following sections provide some guidance on things to keep in mind when choosing a testing framework for your application.
+虽然 Web 端的端到端（E2E）测试因不稳定（flaky）和拖慢开发流程而一直声名不佳，但现代 E2E 工具已经取得了进展，能够创建更可靠、更具交互性、更有用的测试。在选择 E2E 测试框架时，以下部分会提供一些在为你的应用挑选测试框架时需要考虑的事项。
 
-#### Cross-browser testing {#cross-browser-testing}
+#### 跨浏览器测试 {#cross-browser-testing}
 
-One of the primary benefits that end-to-end (E2E) testing is known for is its ability to test your application across multiple browsers. While it may seem desirable to have 100% cross-browser coverage, it is important to note that cross browser testing has diminishing returns on a team's resources due to the additional time and machine power required to run them consistently. As a result, it is important to be mindful of this trade-off when choosing the amount of cross-browser testing your application needs.
+端到端（E2E）测试最主要的优势之一，就是它能够跨多个浏览器测试你的应用。虽然拥有 100% 的跨浏览器覆盖看起来很理想，但需要注意的是，由于运行这些测试需要额外的时间和机器算力，跨浏览器测试对团队资源的边际收益会递减。因此，在决定你的应用需要多少跨浏览器测试时，务必注意这种权衡。
 
-#### Faster feedback loops {#faster-feedback-loops}
+#### 更快的反馈循环 {#faster-feedback-loops}
 
-One of the primary problems with end-to-end (E2E) tests and development is that running the entire suite takes a long time. Typically, this is only done in continuous integration and deployment (CI/CD) pipelines. Modern E2E testing frameworks have helped to solve this by adding features like parallelization, which allows for CI/CD pipelines to often run magnitudes faster than before. In addition, when developing locally, the ability to selectively run a single test for the page you are working on while also providing hot reloading of tests can help boost a developer's workflow and productivity.
+端到端（E2E）测试与开发的一个主要问题是，运行整个测试套件会花费很长时间。通常，这只会在持续集成和部署（CI/CD）流水线中执行。现代 E2E 测试框架通过增加诸如并行化之类的功能帮助解决了这一问题，这使得 CI/CD 流水线通常能比以前快上几个数量级。此外，在本地开发时，能够选择性地只运行你正在处理页面的单个测试，同时还提供测试的热重载，也能帮助提升开发者的工作流和生产力。
 
-#### First-class debugging experience {#first-class-debugging-experience}
+#### 一流的调试体验 {#first-class-debugging-experience}
 
-While developers have traditionally relied on scanning logs in a terminal window to help determine what went wrong in a test, modern end-to-end (E2E) test frameworks allow developers to leverage tools they are already familiar with, e.g. browser developer tools.
+虽然开发者过去通常依赖在终端窗口中查看日志来帮助判断测试中出了什么问题，但现代端到端（E2E）测试框架允许开发者利用他们已经熟悉的工具，例如浏览器开发者工具。
 
-#### Visibility in headless mode {#visibility-in-headless-mode}
+#### 无头模式下的可视化 {#visibility-in-headless-mode}
 
-When end-to-end (E2E) tests are run in continuous integration/deployment pipelines, they are often run in headless browsers (i.e., no visible browser is opened for the user to watch). A critical feature of modern E2E testing frameworks is the ability to see snapshots and/or videos of the application during testing, providing some insight into why errors are happening. Historically, it was tedious to maintain these integrations.
+当端到端（E2E）测试在持续集成/部署流水线中运行时，它们通常会在无头浏览器中运行（即，不会打开可见的浏览器供用户观看）。现代 E2E 测试框架的一个关键特性是能够在测试期间查看应用的快照和/或视频，从而对错误发生的原因提供一些洞察。历史上，维护这些集成是很繁琐的。
 
-### Recommendation {#recommendation-2}
+### 推荐 {#recommendation-2}
 
-- [Playwright](https://playwright.dev/) is a great E2E testing solution that supports Chromium, WebKit, and Firefox. Test on Windows, Linux, and macOS, locally or on CI, headless or headed with native mobile emulation of Google Chrome for Android and Mobile Safari. It has an informative UI, excellent debuggability, built-in assertions, parallelization, traces and is designed to eliminate flaky tests. Support for [Component Testing](https://playwright.dev/docs/test-components) is available, but marked experimental. Playwright is open source and maintained by Microsoft.
+- [Playwright](https://playwright.dev/) 是一个出色的 E2E 测试方案，支持 Chromium、WebKit 和 Firefox。可在 Windows、Linux 和 macOS 上进行测试，无论是本地还是 CI 环境，无头或有头模式，并原生支持 Google Chrome for Android 和 Mobile Safari 的移动端模拟。它拥有信息丰富的 UI、优秀的可调试性、内置断言、并行化、追踪功能，并且旨在消除不稳定测试。它也提供 [组件测试](https://playwright.dev/docs/test-components) 支持，但标记为实验性。Playwright 是开源的，由 Microsoft 维护。
 
-- [Cypress](https://www.cypress.io/) has an informative graphical interface, excellent debuggability, built-in assertions, stubs, flake-resistance, and snapshots. As mentioned above, it provides stable support for [Component Testing](https://docs.cypress.io/guides/component-testing/introduction). Cypress supports Chromium-based browsers, Firefox, and Electron. WebKit support is available, but marked experimental. Cypress is MIT-licensed, but some features like parallelization require a subscription to Cypress Cloud.
+- [Cypress](https://www.cypress.io/) 拥有信息丰富的图形界面、优秀的可调试性、内置断言、存根、抗不稳定性以及快照。如上所述，它为 [组件测试](https://docs.cypress.io/guides/component-testing/introduction) 提供稳定支持。Cypress 支持基于 Chromium 的浏览器、Firefox 和 Electron。WebKit 支持可用，但标记为实验性。Cypress 采用 MIT 许可证，但某些功能，例如并行化，需要订阅 Cypress Cloud。
 
 <div class="lambdatest">
   <a href="https://lambdatest.com" target="_blank">
     <img src="/images/lambdatest.svg">
     <div>
-      <div class="testing-partner">Testing Sponsor</div>
-      <div>Lambdatest is a cloud platform for running E2E, accessibility, and visual regression tests across all major browsers and real devices, with AI assisted test generation!</div>
+      <div class="testing-partner">测试赞助商</div>
+      <div>Lambdatest 是一个云平台，可用于在所有主流浏览器和真实设备上运行 E2E、可访问性和视觉回归测试，并带有 AI 辅助测试生成！</div>
     </div>
   </a>
 </div>
 
-### Other Options {#other-options-2}
+### 其他选项 {#other-options-2}
 
-- [Nightwatch](https://nightwatchjs.org/) is an E2E testing solution based on [Selenium WebDriver](https://www.npmjs.com/package/selenium-webdriver). This gives it the widest browser support range, including native mobile testing. Selenium-based solutions will be slower than Playwright or Cypress.
+- [Nightwatch](https://nightwatchjs.org/) 是一个基于 [Selenium WebDriver](https://www.npmjs.com/package/selenium-webdriver) 的 E2E 测试方案。这使它拥有最广泛的浏览器支持范围，包括原生移动端测试。基于 Selenium 的方案会比 Playwright 或 Cypress 更慢。
 
-- [WebdriverIO](https://webdriver.io/) is a test automation framework for web and mobile testing based on the WebDriver protocol.
+- [WebdriverIO](https://webdriver.io/) 是一个基于 WebDriver 协议的 Web 和移动端测试自动化框架。
 
-## Recipes {#recipes}
+## 食谱 {#recipes}
 
-### Adding Vitest to a Project {#adding-vitest-to-a-project}
+### 为项目添加 Vitest {#adding-vitest-to-a-project}
 
-In a Vite-based Vue project, run:
+在一个基于 Vite 的 Vue 项目中，运行：
 
 ```sh
 > npm install -D vitest happy-dom @testing-library/vue
 ```
 
-Next, update the Vite configuration to add the `test` option block:
+接下来，更新 Vite 配置，添加 `test` 选项块：
 
 ```js{5-11} [vite.config.js]
 import { defineConfig } from 'vite'
@@ -316,17 +316,17 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   // ...
   test: {
-    // enable jest-like global test APIs
+    // 启用类似 jest 的全局测试 API
     globals: true,
-    // simulate DOM with happy-dom
-    // (requires installing happy-dom as a peer dependency)
+    // 使用 happy-dom 模拟 DOM
+    //（需要将 happy-dom 作为 peer dependency 安装）
     environment: 'happy-dom'
   }
 })
 ```
 
 :::tip
-If you use TypeScript, add `vitest/globals` to the `types` field in your `tsconfig.json`.
+如果你使用 TypeScript，请在 `tsconfig.json` 的 `types` 字段中添加 `vitest/globals`。
 
 ```json [tsconfig.json]
 {
@@ -338,7 +338,7 @@ If you use TypeScript, add `vitest/globals` to the `types` field in your `tsconf
 
 :::
 
-Then, create a file ending in `*.test.js` in your project. You can place all test files in a test directory in the project root or in test directories next to your source files. Vitest will automatically search for them using the naming convention.
+然后，在你的项目中创建一个以 `*.test.js` 结尾的文件。你可以把所有测试文件放在项目根目录下的 test 目录中，或者放在源文件旁边的 test 目录中。Vitest 会根据命名约定自动搜索它们。
 
 ```js [MyComponent.test.js]
 import { render } from '@testing-library/vue'
@@ -351,12 +351,12 @@ test('it should work', () => {
     }
   })
 
-  // assert output
+  // 断言输出
   getByText('...')
 })
 ```
 
-Finally, update `package.json` to add the test script and run it:
+最后，更新 `package.json` 以添加测试脚本并运行它：
 
 ```json{4} [package.json]
 {
@@ -371,18 +371,18 @@ Finally, update `package.json` to add the test script and run it:
 > npm test
 ```
 
-### Testing Composables {#testing-composables}
+### 测试 Composables {#testing-composables}
 
-> This section assumes you have read the [Composables](/guide/reusability/composables) section.
+> 本节假设你已经阅读了 [Composables](/guide/reusability/composables) 部分。
 
-When it comes to testing composables, we can divide them into two categories: composables that do not rely on a host component instance, and composables that do.
+在测试 composables 时，我们可以将它们分为两类：不依赖宿主组件实例的 composable，以及依赖宿主组件实例的 composable。
 
-A composable depends on a host component instance when it uses the following APIs:
+当 composable 使用以下 API 时，它就依赖宿主组件实例：
 
-- Lifecycle hooks
+- 生命周期钩子
 - Provide / Inject
 
-If a composable only uses Reactivity APIs, then it can be tested by directly invoking it and asserting its returned state/methods:
+如果一个 composable 只使用响应式 API，那么可以直接调用它，并断言其返回的状态/方法：
 
 ```js [counter.js]
 import { ref } from 'vue'
@@ -410,7 +410,7 @@ test('useCounter', () => {
 })
 ```
 
-A composable that relies on lifecycle hooks or Provide / Inject needs to be wrapped in a host component to be tested. We can create a helper like the following:
+依赖生命周期钩子或 Provide / Inject 的 composable，需要包裹在宿主组件中进行测试。我们可以创建如下辅助函数：
 
 ```js [test-utils.js]
 import { createApp } from 'vue'
@@ -420,13 +420,13 @@ export function withSetup(composable) {
   const app = createApp({
     setup() {
       result = composable()
-      // suppress missing template warning
+      // 屏蔽缺少模板的警告
       return () => {}
     }
   })
   app.mount(document.createElement('div'))
-  // return the result and the app instance
-  // for testing provide/unmount
+  // 返回结果和 app 实例
+  // 以便测试 provide/unmount
   return [result, app]
 }
 ```
@@ -437,19 +437,19 @@ import { useFoo } from './foo'
 
 test('useFoo', () => {
   const [result, app] = withSetup(() => useFoo(123))
-  // mock provide for testing injections
+  // 为测试注入模拟 provide
   app.provide(...)
-  // run assertions
+  // 执行断言
   expect(result.foo.value).toBe(1)
-  // trigger onUnmounted hook if needed
+  // 如有需要，触发 onUnmounted 钩子
   app.unmount()
 })
 ```
 
-For more complex composables, it could also be easier to test it by writing tests against the wrapper component using [Component Testing](#component-testing) techniques.
+对于更复杂的 composable，也可以通过使用 [组件测试](#component-testing) 技术，编写针对包装组件的测试来更容易地进行测试。
 
 <!--
-TODO more testing recipes can be added in the future e.g.
-- How to set up CI via GitHub actions
-- How to do mocking in component testing
+TODO 未来可以添加更多测试食谱，例如
+- 如何通过 GitHub Actions 配置 CI
+- 如何在组件测试中进行 mock
 -->

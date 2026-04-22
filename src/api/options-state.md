@@ -1,10 +1,10 @@
-# Options: State {#options-state}
+# 选项：状态 {#options-state}
 
 ## data {#data}
 
-A function that returns the initial reactive state for the component instance.
+返回组件实例初始响应式状态的函数。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentOptions {
@@ -15,17 +15,17 @@ A function that returns the initial reactive state for the component instance.
   }
   ```
 
-- **Details**
+- **详细说明**
 
-  The function is expected to return a plain JavaScript object, which will be made reactive by Vue. After the instance is created, the reactive data object can be accessed as `this.$data`. The component instance also proxies all the properties found on the data object, so `this.a` will be equivalent to `this.$data.a`.
+  该函数应返回一个普通的 JavaScript 对象，Vue 会将其变为响应式。实例创建后，可通过 `this.$data` 访问该响应式数据对象。组件实例还会代理数据对象上的所有属性，因此 `this.a` 将等同于 `this.$data.a`。
 
-  All top-level data properties must be included in the returned data object. Adding new properties to `this.$data` is possible, but it is **not** recommended. If the desired value of a property is not yet available then an empty value such as `undefined` or `null` should be included as a placeholder to ensure that Vue knows that the property exists.
+  所有顶层数据属性都必须包含在返回的数据对象中。可以向 `this.$data` 添加新属性，但**不**推荐这样做。如果某个属性的期望值尚不可用，则应包含一个空值（如 `undefined` 或 `null`）作为占位符，以确保 Vue 知道该属性存在。
 
-  Properties that start with `_` or `$` will **not** be proxied on the component instance because they may conflict with Vue's internal properties and API methods. You will have to access them as `this.$data._property`.
+  以 `_` 或 `$` 开头的属性**不会**在组件实例上被代理，因为它们可能与 Vue 的内部属性和 API 方法冲突。你需要通过 `this.$data._property` 来访问它们。
 
-  It is **not** recommended to return objects with their own stateful behavior like browser API objects and prototype properties. The returned object should ideally be a plain object that only represents the state of the component.
+  **不**推荐返回带有自身状态行为的对象，例如浏览器 API 对象和原型属性。返回的对象理想情况下应是一个仅表示组件状态的普通对象。
 
-- **Example**
+- **示例**
 
   ```js
   export default {
@@ -39,19 +39,19 @@ A function that returns the initial reactive state for the component instance.
   }
   ```
 
-  Note that if you use an arrow function with the `data` property, `this` won't be the component's instance, but you can still access the instance as the function's first argument:
+  注意，如果你在 `data` 属性中使用箭头函数，`this` 将不会指向组件实例，但你仍然可以通过函数的第一个参数访问实例：
 
   ```js
   data: (vm) => ({ a: vm.myProp })
   ```
 
-- **See also** [Reactivity in Depth](/guide/extras/reactivity-in-depth)
+- **另请参阅** [Reactivity in Depth](/guide/extras/reactivity-in-depth)
 
 ## props {#props}
 
-Declare the props of a component.
+声明组件的 props。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentOptions {
@@ -74,30 +74,30 @@ Declare the props of a component.
   type PropType<T> = { new (): T } | { new (): T }[]
   ```
 
-  > Types are simplified for readability.
+  > 为了便于阅读，类型已做简化。
 
-- **Details**
+- **详细说明**
 
-  In Vue, all component props need to be explicitly declared. Component props can be declared in two forms:
+  在 Vue 中，所有组件 props 都需要显式声明。组件 props 可以用两种形式声明：
 
-  - Simple form using an array of strings
-  - Full form using an object where each property key is the name of the prop, and the value is the prop's type (a constructor function) or advanced options.
+  - 使用字符串数组的简单形式
+  - 使用对象的完整形式，其中每个属性键是 prop 的名称，值是 prop 的类型（构造函数）或高级选项
 
-  With object-based syntax, each prop can further define the following options:
+  使用基于对象的语法时，每个 prop 还可以进一步定义以下选项：
 
-  - **`type`**: Can be one of the following native constructors: `String`, `Number`, `Boolean`, `Array`, `Object`, `Date`, `Function`, `Symbol`, any custom constructor function or an array of those. In development mode, Vue will check if a prop's value matches the declared type, and will throw a warning if it doesn't. See [Prop Validation](/guide/components/props#prop-validation) for more details.
+  - **`type`**：可以是以下原生构造函数之一：`String`、`Number`、`Boolean`、`Array`、`Object`、`Date`、`Function`、`Symbol`，以及任意自定义构造函数或它们的数组。在开发模式下，Vue 会检查 prop 的值是否匹配声明的类型，如果不匹配会抛出警告。更多详情请参见 [Prop Validation](/guide/components/props#prop-validation)。
 
-    Also note that a prop with `Boolean` type affects its value casting behavior in both development and production. See [Boolean Casting](/guide/components/props#boolean-casting) for more details.
+    另请注意，`Boolean` 类型的 prop 会同时影响开发环境和生产环境中的值类型转换行为。更多详情请参见 [Boolean Casting](/guide/components/props#boolean-casting)。
 
-  - **`default`**: Specifies a default value for the prop when it is not passed by the parent or has `undefined` value. Object or array defaults must be returned using a factory function. The factory function also receives the raw props object as the argument.
+  - **`default`**：当父组件未传入该 prop，或其值为 `undefined` 时，为其指定默认值。对象或数组类型的默认值必须通过工厂函数返回。该工厂函数也会接收原始 props 对象作为参数。
 
-  - **`required`**: Defines if the prop is required. In a non-production environment, a console warning will be thrown if this value is truthy and the prop is not passed.
+  - **`required`**：定义该 prop 是否必需。在非生产环境中，如果该值为真且 prop 未传入，将会抛出控制台警告。
 
-  - **`validator`**: Custom validator function that takes the prop value and props object as arguments. In development mode, a console warning will be thrown if this function returns a falsy value (i.e. the validation fails).
+  - **`validator`**：自定义验证函数，以 prop 值和 props 对象作为参数。在开发模式下，如果该函数返回假值（即验证失败），将会抛出控制台警告。
 
-- **Example**
+- **示例**
 
-  Simple declaration:
+  简单声明：
 
   ```js
   export default {
@@ -105,14 +105,14 @@ Declare the props of a component.
   }
   ```
 
-  Object declaration with validations:
+  带验证的对象声明：
 
   ```js
   export default {
     props: {
-      // type check
+      // 类型检查
       height: Number,
-      // type check plus other validations
+      // 类型检查加其他验证
       age: {
         type: Number,
         default: 0,
@@ -125,15 +125,15 @@ Declare the props of a component.
   }
   ```
 
-- **See also**
+- **另请参阅**
   - [Guide - Props](/guide/components/props)
   - [Guide - Typing Component Props](/guide/typescript/options-api#typing-component-props) <sup class="vt-badge ts" />
 
 ## computed {#computed}
 
-Declare computed properties to be exposed on the component instance.
+声明要暴露在组件实例上的计算属性。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentOptions {
@@ -158,13 +158,13 @@ Declare computed properties to be exposed on the component instance.
   }
   ```
 
-- **Details**
+- **详细说明**
 
-  The option accepts an object where the key is the name of the computed property, and the value is either a computed getter, or an object with `get` and `set` methods (for writable computed properties).
+  该选项接受一个对象，其中键为计算属性的名称，值可以是一个计算 getter，或一个包含 `get` 和 `set` 方法的对象（用于可写计算属性）。
 
-  All getters and setters have their `this` context automatically bound to the component instance.
+  所有 getter 和 setter 的 `this` 上下文都会自动绑定到组件实例。
 
-  Note that if you use an arrow function with a computed property, `this` won't point to the component's instance, but you can still access the instance as the function's first argument:
+  注意，如果你在计算属性中使用箭头函数，`this` 将不会指向组件实例，但你仍然可以通过函数的第一个参数访问实例：
 
   ```js
   export default {
@@ -174,7 +174,7 @@ Declare computed properties to be exposed on the component instance.
   }
   ```
 
-- **Example**
+- **示例**
 
   ```js
   export default {
@@ -182,11 +182,11 @@ Declare computed properties to be exposed on the component instance.
       return { a: 1 }
     },
     computed: {
-      // readonly
+      // 只读
       aDouble() {
         return this.a * 2
       },
-      // writable
+      // 可写
       aPlus: {
         get() {
           return this.a + 1
@@ -207,15 +207,15 @@ Declare computed properties to be exposed on the component instance.
   }
   ```
 
-- **See also**
+- **另请参阅**
   - [Guide - Computed Properties](/guide/essentials/computed)
   - [Guide - Typing Computed Properties](/guide/typescript/options-api#typing-computed-properties) <sup class="vt-badge ts" />
 
 ## methods {#methods}
 
-Declare methods to be mixed into the component instance.
+声明要混入组件实例的方法。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentOptions {
@@ -225,13 +225,13 @@ Declare methods to be mixed into the component instance.
   }
   ```
 
-- **Details**
+- **详细说明**
 
-  Declared methods can be directly accessed on the component instance, or used in template expressions. All methods have their `this` context automatically bound to the component instance, even when passed around.
+  已声明的方法可以直接在组件实例上访问，也可以在模板表达式中使用。所有方法的 `this` 上下文都会自动绑定到组件实例，即使它们被传递出去也是如此。
 
-  Avoid using arrow functions when declaring methods, as they will not have access to the component instance via `this`.
+  声明方法时应避免使用箭头函数，因为它们无法通过 `this` 访问组件实例。
 
-- **Example**
+- **示例**
 
   ```js
   export default {
@@ -250,13 +250,13 @@ Declare methods to be mixed into the component instance.
   }
   ```
 
-- **See also** [Event Handling](/guide/essentials/event-handling)
+- **另请参阅** [Event Handling](/guide/essentials/event-handling)
 
 ## watch {#watch}
 
-Declare watch callbacks to be invoked on data change.
+声明在数据变化时调用的 watch 回调。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentOptions {
@@ -275,32 +275,32 @@ Declare watch callbacks to be invoked on data change.
 
   type ObjectWatchOptionItem = {
     handler: WatchCallback | string
-    immediate?: boolean // default: false
-    deep?: boolean // default: false
-    flush?: 'pre' | 'post' | 'sync' // default: 'pre'
+    immediate?: boolean // 默认值：false
+    deep?: boolean // 默认值：false
+    flush?: 'pre' | 'post' | 'sync' // 默认值：'pre'
     onTrack?: (event: DebuggerEvent) => void
     onTrigger?: (event: DebuggerEvent) => void
   }
   ```
 
-  > Types are simplified for readability.
+  > 为了便于阅读，类型已做简化。
 
-- **Details**
+- **详细说明**
 
-  The `watch` option expects an object where keys are the reactive component instance properties to watch (e.g. properties declared via `data` or `computed`) — and values are the corresponding callbacks. The callback receives the new value and the old value of the watched source.
+  `watch` 选项期望接收一个对象，其中键是要监听的响应式组件实例属性（例如通过 `data` 或 `computed` 声明的属性），值是对应的回调函数。回调函数会接收被监听源的新值和旧值。
 
-  In addition to a root-level property, the key can also be a simple dot-delimited path, e.g. `a.b.c`. Note that this usage does **not** support complex expressions - only dot-delimited paths are supported. If you need to watch complex data sources, use the imperative [`$watch()`](/api/component-instance#watch) API instead.
+  除了根级属性外，键也可以是一个由点号分隔的简单路径，例如 `a.b.c`。请注意，这种用法**不**支持复杂表达式——只支持点号分隔的路径。如果你需要监听复杂的数据源，请改用命令式的 [`$watch()`](/api/component-instance#watch) API。
 
-  The value can also be a string of a method name (declared via `methods`), or an object that contains additional options. When using the object syntax, the callback should be declared under the `handler` field. Additional options include:
+  值还可以是一个方法名字符串（通过 `methods` 声明），或者一个包含额外选项的对象。使用对象语法时，回调应在 `handler` 字段下声明。附加选项包括：
 
-  - **`immediate`**: trigger the callback immediately on watcher creation. Old value will be `undefined` on the first call.
-  - **`deep`**: force deep traversal of the source if it is an object or an array, so that the callback fires on deep mutations. See [Deep Watchers](/guide/essentials/watchers#deep-watchers).
-  - **`flush`**: adjust the callback's flush timing. See [Callback Flush Timing](/guide/essentials/watchers#callback-flush-timing) and [`watchEffect()`](/api/reactivity-core#watcheffect).
-  - **`onTrack / onTrigger`**: debug the watcher's dependencies. See [Watcher Debugging](/guide/extras/reactivity-in-depth#watcher-debugging).
+  - **`immediate`**：在 watcher 创建时立即触发回调。首次调用时旧值将为 `undefined`。
+  - **`deep`**：如果源是对象或数组，则强制对其进行深度遍历，以便在深层变更时触发回调。参见 [Deep Watchers](/guide/essentials/watchers#deep-watchers)。
+  - **`flush`**：调整回调的刷新时机。参见 [Callback Flush Timing](/guide/essentials/watchers#callback-flush-timing) 和 [`watchEffect()`](/api/reactivity-core#watcheffect)。
+  - **`onTrack / onTrigger`**：调试 watcher 的依赖。参见 [Watcher Debugging](/guide/extras/reactivity-in-depth#watcher-debugging)。
 
-  Avoid using arrow functions when declaring watch callbacks as they will not have access to the component instance via `this`.
+  声明 watch 回调时应避免使用箭头函数，因为它们无法通过 `this` 访问组件实例。
 
-- **Example**
+- **示例**
 
   ```js
   export default {
@@ -316,31 +316,31 @@ Declare watch callbacks to be invoked on data change.
       }
     },
     watch: {
-      // watching top-level property
+      // 监听顶层属性
       a(val, oldVal) {
         console.log(`new: ${val}, old: ${oldVal}`)
       },
-      // string method name
+      // 字符串形式的方法名
       b: 'someMethod',
-      // the callback will be called whenever any of the watched object properties change regardless of their nested depth
+      // 无论被监听对象属性的嵌套深度如何，只要任意属性变化，回调都会被调用
       c: {
         handler(val, oldVal) {
           console.log('c changed')
         },
         deep: true
       },
-      // watching a single nested property:
+      // 监听单个嵌套属性：
       'c.d': function (val, oldVal) {
-        // do something
+        // 执行一些操作
       },
-      // the callback will be called immediately after the start of the observation
+      // 回调会在观察开始后立即被调用
       e: {
         handler(val, oldVal) {
           console.log('e changed')
         },
         immediate: true
       },
-      // you can pass array of callbacks, they will be called one-by-one
+      // 你可以传入回调数组，它们会依次被调用
       f: [
         'handle1',
         function handle2(val, oldVal) {
@@ -368,13 +368,13 @@ Declare watch callbacks to be invoked on data change.
   }
   ```
 
-- **See also** [Watchers](/guide/essentials/watchers)
+- **另请参阅** [Watchers](/guide/essentials/watchers)
 
 ## emits {#emits}
 
-Declare the custom events emitted by the component.
+声明组件所触发的自定义事件。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentOptions {
@@ -388,20 +388,20 @@ Declare the custom events emitted by the component.
   type EmitValidator = (...args: unknown[]) => boolean
   ```
 
-- **Details**
+- **详情**
 
-  Emitted events can be declared in two forms:
+  触发的事件可以用两种形式声明：
 
-  - Simple form using an array of strings
-  - Full form using an object where each property key is the name of the event, and the value is either `null` or a validator function.
+  - 使用字符串数组的简单形式
+  - 使用对象的完整形式，其中每个属性键是事件名，值要么是 `null`，要么是一个验证函数。
 
-  The validation function will receive the additional arguments passed to the component's `$emit` call. For example, if `this.$emit('foo', 1)` is called, the corresponding validator for `foo` will receive the argument `1`. The validator function should return a boolean to indicate whether the event arguments are valid.
+  验证函数会接收传递给组件 `$emit` 调用的额外参数。例如，如果调用了 `this.$emit('foo', 1)`，那么 `foo` 对应的验证器将接收参数 `1`。验证函数应返回一个布尔值，用于表示事件参数是否有效。
 
-  Note that the `emits` option affects which event listeners are considered component event listeners, rather than native DOM event listeners. The listeners for declared events will be removed from the component's `$attrs` object, so they will not be passed through to the component's root element. See [Fallthrough Attributes](/guide/components/attrs) for more details.
+  请注意，`emits` 选项影响的是哪些事件监听器会被视为组件事件监听器，而不是原生 DOM 事件监听器。已声明事件的监听器会从组件的 `$attrs` 对象中移除，因此不会透传到组件的根元素。更多细节请参见 [透传 Attributes](/guide/components/attrs)。
 
-- **Example**
+- **示例**
 
-  Array syntax:
+  数组语法：
 
   ```js
   export default {
@@ -412,20 +412,20 @@ Declare the custom events emitted by the component.
   }
   ```
 
-  Object syntax:
+  对象语法：
 
   ```js
   export default {
     emits: {
-      // no validation
+      // 无需校验
       click: null,
 
-      // with validation
+      // 带校验
       submit: (payload) => {
         if (payload.email && payload.password) {
           return true
         } else {
-          console.warn(`Invalid submit event payload!`)
+          console.warn(`无效的 submit 事件负载！`)
           return false
         }
       }
@@ -433,15 +433,15 @@ Declare the custom events emitted by the component.
   }
   ```
 
-- **See also**
-  - [Guide - Fallthrough Attributes](/guide/components/attrs)
-  - [Guide - Typing Component Emits](/guide/typescript/options-api#typing-component-emits) <sup class="vt-badge ts" />
+- **另请参阅**
+  - [指南 - 透传 Attributes](/guide/components/attrs)
+  - [指南 - 为组件 emits 添加类型](/guide/typescript/options-api#typing-component-emits) <sup class="vt-badge ts" />
 
 ## expose {#expose}
 
-Declare exposed public properties when the component instance is accessed by a parent via template refs.
+当组件实例通过模板 ref 被父组件访问时，声明要暴露的公共属性。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentOptions {
@@ -449,19 +449,19 @@ Declare exposed public properties when the component instance is accessed by a p
   }
   ```
 
-- **Details**
+- **详情**
 
-  By default, a component instance exposes all instance properties to the parent when accessed via `$parent`, `$root`, or template refs. This can be undesirable, since a component most likely has internal state or methods that should be kept private to avoid tight coupling.
+  默认情况下，当通过 `$parent`、`$root` 或模板 ref 访问组件实例时，组件会向父组件暴露所有实例属性。这可能并不理想，因为组件通常会包含应保持私有的内部状态或方法，以避免过度耦合。
 
-  The `expose` option expects a list of property name strings. When `expose` is used, only the properties explicitly listed will be exposed on the component's public instance.
+  `expose` 选项接受一个属性名字符串列表。使用 `expose` 时，只有显式列出的属性才会暴露在组件的公共实例上。
 
-  `expose` only affects user-defined properties - it does not filter out built-in component instance properties.
+  `expose` 只影响用户自定义属性——它不会过滤掉内置的组件实例属性。
 
-- **Example**
+- **示例**
 
   ```js
   export default {
-    // only `publicMethod` will be available on the public instance
+    // 只有 `publicMethod` 会在公共实例上可用
     expose: ['publicMethod'],
     methods: {
       publicMethod() {

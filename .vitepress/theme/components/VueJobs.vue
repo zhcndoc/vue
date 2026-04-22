@@ -47,7 +47,7 @@ onMounted(async () => {
         <div class="vj-company-logo">
           <img
             :src="job.organization.avatar"
-            :alt="`Logo for ${job.organization.name}`"
+            :alt="`${job.organization.name} 的 Logo`"
           />
         </div>
         <div
@@ -61,17 +61,17 @@ onMounted(async () => {
           <div class="vj-job-title">{{ job.title }}</div>
           <div class="vj-job-info">
             {{ job.organization.name }} <span>· </span>
-            <span>{{ job.remote ? 'Remote' : job.locations[0] }}</span>
+            <span>{{ job.remote ? '远程' : job.locations[0] }}</span>
           </div>
         </div>
       </a>
     </div>
     <div class="vj-link">
-      Jobs by
+      职位来自
       <a
         href="https://vuejobs.com/?utm_source=vuejs&utm_medium=referral&utm_campaign=jobs_widget&utm_content=bottom_link"
         target="_blank"
-        title="Hire Vue.js developers"
+        title="招聘 Vue.js 开发者"
         >vuejobs.com</a
       >
     </div>

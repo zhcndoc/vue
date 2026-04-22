@@ -1,2 +1,2 @@
-FLIP list transitions with the built-in <TransitionGroup>.
+使用内置的 `<TransitionGroup>` 实现 FLIP 列表过渡动画。
 https://aerotwist.com/blog/flip-your-animations/

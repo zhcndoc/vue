@@ -1,20 +1,20 @@
-# TypeScript with Options API {#typescript-with-options-api}
+# 使用 Options API 的 TypeScript {#typescript-with-options-api}
 
-> This page assumes you've already read the overview on [Using Vue with TypeScript](./overview).
+> 本页假设你已经阅读过 [在 Vue 中使用 TypeScript](./overview) 的概览。
 
 :::tip
-While Vue does support TypeScript usage with Options API, it is recommended to use Vue with TypeScript via Composition API as it offers simpler, more efficient and more robust type inference.
+虽然 Vue 确实支持在 Options API 中使用 TypeScript，但仍建议通过 Composition API 在 Vue 中使用 TypeScript，因为它提供了更简单、更高效且更健壮的类型推断。
 :::
 
-## Typing Component Props {#typing-component-props}
+## 为组件 Props 添加类型 {#typing-component-props}
 
-Type inference for props in Options API requires wrapping the component with `defineComponent()`. With it, Vue is able to infer the types for the props based on the `props` option, taking additional options such as `required: true` and `default` into account:
+在 Options API 中，对 props 的类型推断需要用 `defineComponent()` 包裹组件。这样一来，Vue 就能够根据 `props` 选项推断出 props 的类型，并考虑 `required: true` 和 `default` 等额外选项：
 
 ```ts
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  // type inference enabled
+  // 已启用类型推断
   props: {
     name: String,
     id: [Number, String],
@@ -22,17 +22,17 @@ export default defineComponent({
     metadata: null
   },
   mounted() {
-    this.name // type: string | undefined
-    this.id // type: number | string | undefined
-    this.msg // type: string
-    this.metadata // type: any
+    this.name // 类型: string | undefined
+    this.id // 类型: number | string | undefined
+    this.msg // 类型: string
+    this.metadata // 类型: any
   }
 })
 ```
 
-However, the runtime `props` options only support using constructor functions as a prop's type - there is no way to specify complex types such as objects with nested properties or function call signatures.
+不过，运行时的 `props` 选项只支持使用构造函数作为 prop 的类型——无法指定诸如带有嵌套属性的对象或函数调用签名这类复杂类型。
 
-To annotate complex props types, we can use the `PropType` utility type:
+要为复杂的 props 类型添加注释，我们可以使用 `PropType` 工具类型：
 
 ```ts
 import { defineComponent } from 'vue'
@@ -47,27 +47,27 @@ interface Book {
 export default defineComponent({
   props: {
     book: {
-      // provide more specific type to `Object`
+      // 为 `Object` 提供更具体的类型
       type: Object as PropType<Book>,
       required: true
     },
-    // can also annotate functions
+    // 也可以为函数添加注释
     callback: Function as PropType<(id: number) => void>
   },
   mounted() {
     this.book.title // string
     this.book.year // number
 
-    // TS Error: argument of type 'string' is not
-    // assignable to parameter of type 'number'
+    // TS 错误：类型为 'string' 的参数
+    // 不能分配给类型为 'number' 的参数
     this.callback?.('123')
   }
 })
 ```
 
-### Caveats {#caveats}
+### 注意事项 {#caveats}
 
-If your TypeScript version is less than `4.7`, you have to be careful when using function values for `validator` and `default` prop options - make sure to use arrow functions:
+如果你的 TypeScript 版本低于 `4.7`，在使用 `validator` 和 `default` prop 选项的函数值时要格外小心——请务必使用箭头函数：
 
 ```ts
 import { defineComponent } from 'vue'
@@ -82,9 +82,9 @@ export default defineComponent({
   props: {
     bookA: {
       type: Object as PropType<Book>,
-      // Make sure to use arrow functions if your TypeScript version is less than 4.7
+      // 如果你的 TypeScript 版本低于 4.7，请务必使用箭头函数
       default: () => ({
-        title: 'Arrow Function Expression'
+        title: '箭头函数表达式'
       }),
       validator: (book: Book) => !!book.title
     }
@@ -92,11 +92,11 @@ export default defineComponent({
 })
 ```
 
-This prevents TypeScript from having to infer the type of `this` inside these functions, which, unfortunately, can cause the type inference to fail. It was a previous [design limitation](https://github.com/microsoft/TypeScript/issues/38845), and now has been improved in [TypeScript 4.7](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-7.html#improved-function-inference-in-objects-and-methods).
+这可以避免 TypeScript 需要推断这些函数内部 `this` 的类型，而这不幸可能导致类型推断失败。这曾是一个先前的 [设计限制](https://github.com/microsoft/TypeScript/issues/38845)，而现在已在 [TypeScript 4.7](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-7.html#improved-function-inference-in-objects-and-methods) 中得到改进。
 
-## Typing Component Emits {#typing-component-emits}
+## 为组件 Emits 添加类型 {#typing-component-emits}
 
-We can declare the expected payload type for an emitted event using the object syntax of the `emits` option. Also, all non-declared emitted events will throw a type error when called:
+我们可以使用 `emits` 选项的对象语法来声明某个已发出事件的预期 payload 类型。此外，所有未声明的已发出事件在调用时都会抛出类型错误：
 
 ```ts
 import { defineComponent } from 'vue'
@@ -104,25 +104,25 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   emits: {
     addBook(payload: { bookName: string }) {
-      // perform runtime validation
+      // 执行运行时校验
       return payload.bookName.length > 0
     }
   },
   methods: {
     onSubmit() {
       this.$emit('addBook', {
-        bookName: 123 // Type error!
+        bookName: 123 // 类型错误！
       })
 
-      this.$emit('non-declared-event') // Type error!
+      this.$emit('non-declared-event') // 类型错误！
     }
   }
 })
 ```
 
-## Typing Computed Properties {#typing-computed-properties}
+## 为计算属性添加类型 {#typing-computed-properties}
 
-A computed property infers its type based on its return value:
+计算属性会根据其返回值推断类型：
 
 ```ts
 import { defineComponent } from 'vue'
@@ -139,12 +139,12 @@ export default defineComponent({
     }
   },
   mounted() {
-    this.greeting // type: string
+    this.greeting // 类型: string
   }
 })
 ```
 
-In some cases, you may want to explicitly annotate the type of a computed property to ensure its implementation is correct:
+在某些情况下，你可能希望显式注解计算属性的类型，以确保其实现正确：
 
 ```ts
 import { defineComponent } from 'vue'
@@ -156,12 +156,12 @@ export default defineComponent({
     }
   },
   computed: {
-    // explicitly annotate return type
+    // 显式注解返回类型
     greeting(): string {
       return this.message + '!'
     },
 
-    // annotating a writable computed property
+    // 为可写计算属性添加注解
     greetingUppercased: {
       get(): string {
         return this.greeting.toUpperCase()
@@ -174,11 +174,11 @@ export default defineComponent({
 })
 ```
 
-Explicit annotations may also be required in some edge cases where TypeScript fails to infer the type of a computed property due to circular inference loops.
+在某些边缘情况下，由于循环推断链，TypeScript 无法推断计算属性的类型，此时也可能需要显式注解。
 
-## Typing Event Handlers {#typing-event-handlers}
+## 为事件处理函数添加类型 {#typing-event-handlers}
 
-When dealing with native DOM events, it might be useful to type the argument we pass to the handler correctly. Let's take a look at this example:
+处理原生 DOM 事件时，正确地为传入处理函数的参数添加类型可能会很有用。让我们看一个例子：
 
 ```vue
 <script lang="ts">
@@ -187,7 +187,7 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   methods: {
     handleChange(event) {
-      // `event` implicitly has `any` type
+      // `event` 会被隐式地视为 `any` 类型
       console.log(event.target.value)
     }
   }
@@ -199,7 +199,7 @@ export default defineComponent({
 </template>
 ```
 
-Without type annotation, the `event` argument will implicitly have a type of `any`. This will also result in a TS error if `"strict": true` or `"noImplicitAny": true` are used in `tsconfig.json`. It is therefore recommended to explicitly annotate the argument of event handlers. In addition, you may need to use type assertions when accessing the properties of `event`:
+如果不进行类型注解，`event` 参数会隐式具有 `any` 类型。如果在 `tsconfig.json` 中使用 `"strict": true` 或 `"noImplicitAny": true`，这也会导致 TS 错误。因此建议显式为事件处理函数的参数添加注解。此外，在访问 `event` 的属性时，你可能需要使用类型断言：
 
 ```ts
 import { defineComponent } from 'vue'
@@ -213,9 +213,9 @@ export default defineComponent({
 })
 ```
 
-## Augmenting Global Properties {#augmenting-global-properties}
+## 扩展全局属性 {#augmenting-global-properties}
 
-Some plugins install globally available properties to all component instances via [`app.config.globalProperties`](/api/application#app-config-globalproperties). For example, we may install `this.$http` for data-fetching or `this.$translate` for internationalization. To make this play well with TypeScript, Vue exposes a `ComponentCustomProperties` interface designed to be augmented via [TypeScript module augmentation](https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation):
+某些插件会通过 [`app.config.globalProperties`](/api/application#app-config-globalproperties) 向所有组件实例安装全局可用属性。例如，我们可能会安装 `this.$http` 用于数据请求，或安装 `this.$translate` 用于国际化。为了让这与 TypeScript 配合良好，Vue 提供了一个 `ComponentCustomProperties` 接口，专门用于通过 [TypeScript 模块扩展](https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation) 进行增强：
 
 ```ts
 import axios from 'axios'
@@ -228,18 +228,18 @@ declare module 'vue' {
 }
 ```
 
-See also:
+另请参阅：
 
-- [TypeScript unit tests for component type extensions](https://github.com/vuejs/core/blob/main/packages-private/dts-test/componentTypeExtensions.test-d.tsx)
+- [用于组件类型扩展的 TypeScript 单元测试](https://github.com/vuejs/core/blob/main/packages-private/dts-test/componentTypeExtensions.test-d.tsx)
 
-### Type Augmentation Placement {#type-augmentation-placement}
+### 类型扩展的放置位置 {#type-augmentation-placement}
 
-We can put this type augmentation in a `.ts` file, or in a project-wide `*.d.ts` file. Either way, make sure it is included in `tsconfig.json`. For library / plugin authors, this file should be specified in the `types` property in `package.json`.
+我们可以把这个类型扩展放在一个 `.ts` 文件中，或者放在项目级别的 `*.d.ts` 文件中。无论哪种方式，都要确保它已包含在 `tsconfig.json` 中。对于库 / 插件作者，这个文件应在 `package.json` 的 `types` 属性中指定。
 
-In order to take advantage of module augmentation, you will need to ensure the augmentation is placed in a [TypeScript module](https://www.typescriptlang.org/docs/handbook/modules.html). That is to say, the file needs to contain at least one top-level `import` or `export`, even if it is just `export {}`. If the augmentation is placed outside of a module, it will overwrite the original types rather than augmenting them!
+为了利用模块扩展，你需要确保该扩展放在一个 [TypeScript 模块](https://www.typescriptlang.org/docs/handbook/modules.html) 中。也就是说，文件中至少需要包含一个顶层的 `import` 或 `export`，即使只是 `export {}`。如果扩展被放在模块外部，它会覆盖原始类型，而不是对其进行扩展！
 
 ```ts
-// Does not work, overwrites the original types.
+// 不能工作，会覆盖原始类型。
 declare module 'vue' {
   interface ComponentCustomProperties {
     $translate: (key: string) => string
@@ -248,7 +248,7 @@ declare module 'vue' {
 ```
 
 ```ts
-// Works correctly
+// 可以正常工作
 export {}
 
 declare module 'vue' {
@@ -258,9 +258,9 @@ declare module 'vue' {
 }
 ```
 
-## Augmenting Custom Options {#augmenting-custom-options}
+## 扩展自定义选项 {#augmenting-custom-options}
 
-Some plugins, for example `vue-router`, provide support for custom component options such as `beforeRouteEnter`:
+某些插件，例如 `vue-router`，支持自定义组件选项，例如 `beforeRouteEnter`：
 
 ```ts
 import { defineComponent } from 'vue'
@@ -272,7 +272,7 @@ export default defineComponent({
 })
 ```
 
-Without proper type augmentation, the arguments of this hook will implicitly have `any` type. We can augment the `ComponentCustomOptions` interface to support these custom options:
+如果没有正确的类型扩展，这个钩子的参数会隐式具有 `any` 类型。我们可以扩展 `ComponentCustomOptions` 接口来支持这些自定义选项：
 
 ```ts
 import { Route } from 'vue-router'
@@ -284,14 +284,14 @@ declare module 'vue' {
 }
 ```
 
-Now the `beforeRouteEnter` option will be properly typed. Note this is just an example - well-typed libraries like `vue-router` should automatically perform these augmentations in their own type definitions.
+现在 `beforeRouteEnter` 选项就会有正确的类型了。注意这只是一个示例——像 `vue-router` 这样类型定义良好的库应该会在它们自己的类型定义中自动执行这些扩展。
 
-The placement of this augmentation is subject to the [same restrictions](#type-augmentation-placement) as global property augmentations.
+这种扩展的放置位置受与 [全局属性扩展](#type-augmentation-placement) 相同的限制。
 
-See also:
+另请参阅：
 
-- [TypeScript unit tests for component type extensions](https://github.com/vuejs/core/blob/main/packages-private/dts-test/componentTypeExtensions.test-d.tsx)
+- [用于组件类型扩展的 TypeScript 单元测试](https://github.com/vuejs/core/blob/main/packages-private/dts-test/componentTypeExtensions.test-d-tsx)
 
-## Typing Global Custom Directives {#typing-global-custom-directives}
+## 为全局自定义指令添加类型 {#typing-global-custom-directives}
 
-See: [Typing Custom Global Directives](/guide/typescript/composition-api#typing-global-custom-directives) <sup class="vt-badge ts" />
+参见：[为自定义全局指令添加类型](/guide/typescript/composition-api#typing-global-custom-directives) <sup class="vt-badge ts" />

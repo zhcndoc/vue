@@ -6,29 +6,29 @@ footer: false
 import { VTCodeGroup, VTCodeGroupTab } from '@vue/theme'
 </script>
 
-# Quick Start {#quick-start}
+# 快速开始 {#quick-start}
 
-## Try Vue Online {#try-vue-online}
+## 在线体验 Vue {#try-vue-online}
 
-- To quickly get a taste of Vue, you can try it directly in our [Playground](https://play.vuejs.org/#eNo9jcEKwjAMhl/lt5fpQYfXUQfefAMvvRQbddC1pUuHUPrudg4HIcmXjyRZXEM4zYlEJ+T0iEPgXjn6BB8Zhp46WUZWDjCa9f6w9kAkTtH9CRinV4fmRtZ63H20Ztesqiylphqy3R5UYBqD1UyVAPk+9zkvV1CKbCv9poMLiTEfR2/IXpSoXomqZLtti/IFwVtA9A==).
+- 要快速了解 Vue，你可以直接在我们的 [Playground](https://play.vuejs.org/#eNo9jcEKwjAMhl/lt5fpQYfXUQfefAMvvRQbddC1pUuHUPrudg4HIcmXjyRZXEM4zYlEJ+T0iEPgXjn6BB8Zhp46WUZWDjCa9f6w9kAkTtH9CRinV4fmRtZ63H20Ztesqiylphqy3R5UYBqD1UyVAPk+9zkvV1CKbCv9poMLiTEfR2/IXpSoXomqZLtti/IFwVtA9A==) 中试用。
 
-- If you prefer a plain HTML setup without any build steps, you can use this [JSFiddle](https://jsfiddle.net/yyx990803/2ke1ab0z/) as your starting point.
+- 如果你更喜欢不包含任何构建步骤的纯 HTML 设置，可以将这个 [JSFiddle](https://jsfiddle.net/yyx990803/2ke1ab0z/) 作为起点。
 
-- If you are already familiar with Node.js and the concept of build tools, you can also try a complete build setup right within your browser on [StackBlitz](https://vite.new/vue).
+- 如果你已经熟悉 Node.js 和构建工具的概念，也可以直接在浏览器中通过 [StackBlitz](https://vite.new/vue) 尝试完整的构建环境。
 
-- To get a walkthrough of the recommended setup, watch this interactive [Scrimba](http://scrimba.com/links/vue-quickstart) tutorial that shows you how to run, edit, and deploy your first Vue app.
+- 若想了解推荐配置的完整演示，请观看这个交互式 [Scrimba](http://scrimba.com/links/vue-quickstart) 教程，其中会展示如何运行、编辑并部署你的第一个 Vue 应用。
 
-## Creating a Vue Application {#creating-a-vue-application}
+## 创建一个 Vue 应用 {#creating-a-vue-application}
 
-:::tip Prerequisites
+:::tip 前置条件
 
-- Familiarity with the command line
-- Install [Node.js](https://nodejs.org/) version `^20.19.0 || >=22.12.0`
+- 熟悉命令行
+- 安装 [Node.js](https://nodejs.org/) 版本 `^20.19.0 || >=22.12.0`
   :::
 
-In this section we will introduce how to scaffold a Vue [Single Page Application](/guide/extras/ways-of-using-vue#single-page-application-spa) on your local machine. The created project will be using a build setup based on [Vite](https://vite.dev/) and allow us to use Vue [Single-File Components](/guide/scaling-up/sfc) (SFCs).
+本节将介绍如何在本地机器上搭建一个 Vue [单页应用](/guide/extras/ways-of-using-vue#single-page-application-spa)。创建出的项目将使用基于 [Vite](https://vite.dev/) 的构建配置，并允许我们使用 Vue [单文件组件](/guide/scaling-up/sfc)（SFC）。
 
-Make sure you have an up-to-date version of [Node.js](https://nodejs.org/) installed and your current working directory is the one where you intend to create a project. Run the following command in your command line (without the `$` sign):
+请确保你已安装最新版本的 [Node.js](https://nodejs.org/)，并且当前工作目录就是你打算创建项目的目录。在命令行中运行以下命令（不要带 `$` 符号）：
 
 ::: code-group
 
@@ -41,13 +41,13 @@ $ pnpm create vue@latest
 ```
 
 ```sh [yarn]
-# For Yarn (v1+)
+# 对于 Yarn (v1+)
 $ yarn create vue
 
-# For Yarn Modern (v2+)
+# 对于 Yarn Modern (v2+)
 $ yarn create vue@latest
   
-# For Yarn ^v4.11
+# 对于 Yarn ^v4.11
 $ yarn dlx create-vue@latest
 ```
 
@@ -56,23 +56,23 @@ $ bun create vue@latest
 ```
 :::
 
-This command will install and execute [create-vue](https://github.com/vuejs/create-vue), the official Vue project scaffolding tool. You will be presented with prompts for several optional features such as TypeScript and testing support:
+该命令将安装并执行 [create-vue](https://github.com/vuejs/create-vue)，这是 Vue 官方的项目脚手架工具。随后你会看到一些可选功能的提示，例如 TypeScript 和测试支持：
 
-<div class="language-sh"><pre><code><span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">Project name: <span style="color:#888;">… <span style="color:#89DDFF;">&lt;</span><span style="color:#888;">your-project-name</span><span style="color:#89DDFF;">&gt;</span></span></span>
-<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">Add TypeScript? <span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Yes</span></span>
-<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">Add JSX Support? <span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Yes</span></span>
-<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">Add Vue Router for Single Page Application development? <span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Yes</span></span>
-<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">Add Pinia for state management? <span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Yes</span></span>
-<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">Add Vitest for Unit testing? <span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Yes</span></span>
-<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">Add an End-to-End Testing Solution? <span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Cypress / Nightwatch / Playwright</span></span>
-<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">Add ESLint for code quality? <span style="color:#888;">… No / <span style="color:#89DDFF;text-decoration:underline">Yes</span></span></span>
-<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">Add Prettier for code formatting? <span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Yes</span></span>
-<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">Add Vue DevTools 7 extension for debugging? (experimental) <span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Yes</span></span>
+<div class="language-sh"><pre><code><span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">项目名称：<span style="color:#888;">… <span style="color:#89DDFF;">&lt;</span><span style="color:#888;">your-project-name</span><span style="color:#89DDFF;">&gt;</span></span></span>
+<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">添加 TypeScript？<span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Yes</span></span>
+<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">添加 JSX 支持？<span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Yes</span></span>
+<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">为单页应用开发添加 Vue Router？<span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Yes</span></span>
+<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">添加 Pinia 用于状态管理？<span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Yes</span></span>
+<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">添加 Vitest 用于单元测试？<span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Yes</span></span>
+<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">添加端到端测试方案？<span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Cypress / Nightwatch / Playwright</span></span>
+<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">添加 ESLint 进行代码质量检查？<span style="color:#888;">… No / <span style="color:#89DDFF;text-decoration:underline">Yes</span></span></span>
+<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">添加 Prettier 进行代码格式化？<span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Yes</span></span>
+<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">添加用于调试的 Vue DevTools 7 扩展？（实验性）<span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Yes</span></span>
 <span></span>
-<span style="color:#A6ACCD;">Scaffolding project in ./<span style="color:#89DDFF;">&lt;</span><span style="color:#888;">your-project-name</span><span style="color:#89DDFF;">&gt;</span>...</span>
-<span style="color:#A6ACCD;">Done.</span></code></pre></div>
+<span style="color:#A6ACCD;">正在 ./<span style="color:#89DDFF;">&lt;</span><span style="color:#888;">your-project-name</span><span style="color:#89DDFF;">&gt;</span> 中搭建项目...</span>
+<span style="color:#A6ACCD;">完成。</span></code></pre></div>
 
-If you are unsure about an option, simply choose `No` by hitting enter for now. Once the project is created, follow the instructions to install dependencies and start the dev server:
+如果你不确定某个选项，暂时直接按回车选择 `No` 即可。项目创建完成后，按照说明安装依赖并启动开发服务器：
 
 ::: code-group
 
@@ -103,14 +103,14 @@ $ bun run dev
 :::
 
 
-You should now have your first Vue project running! Note that the example components in the generated project are written using the [Composition API](/guide/introduction#composition-api) and `<script setup>`, rather than the [Options API](/guide/introduction#options-api). Here are some additional tips:
+现在你应该已经运行起你的第一个 Vue 项目了！请注意，生成项目中的示例组件使用的是 [组合式 API](/guide/introduction#composition-api) 和 `<script setup>`，而不是 [选项式 API](/guide/introduction#options-api)。下面是一些额外提示：
 
-- The recommended IDE setup is [Visual Studio Code](https://code.visualstudio.com/) + [Vue - Official extension](https://marketplace.visualstudio.com/items?itemName=Vue.volar). If you use other editors, check out the [IDE support section](/guide/scaling-up/tooling#ide-support).
-- More tooling details, including integration with backend frameworks, are discussed in the [Tooling Guide](/guide/scaling-up/tooling).
-- To learn more about the underlying build tool Vite, check out the [Vite docs](https://vite.dev/).
-- If you choose to use TypeScript, check out the [TypeScript Usage Guide](typescript/overview).
+- 推荐的 IDE 配置是 [Visual Studio Code](https://code.visualstudio.com/) + [Vue - Official extension](https://marketplace.visualstudio.com/items?itemName=Vue.volar)。如果你使用其他编辑器，请查看 [IDE 支持部分](/guide/scaling-up/tooling#ide-support)。
+- 更多工具链细节，包括与后端框架的集成，已在 [工具指南](/guide/scaling-up/tooling) 中讨论。
+- 想进一步了解底层构建工具 Vite，请查看 [Vite 文档](https://vite.dev/)。
+- 如果你选择使用 TypeScript，请查看 [TypeScript 使用指南](typescript/overview)。
 
-When you are ready to ship your app to production, run the following:
+当你准备好将应用发布到生产环境时，运行以下命令：
 
 ::: code-group
 
@@ -133,25 +133,25 @@ $ bun run build
 :::
 
 
-This will create a production-ready build of your app in the project's `./dist` directory. Check out the [Production Deployment Guide](/guide/best-practices/production-deployment) to learn more about shipping your app to production.
+这会在项目的 `./dist` 目录中生成适用于生产环境的构建版本。查看 [生产部署指南](/guide/best-practices/production-deployment) 以了解更多关于将应用发布到生产环境的信息。
 
-[Next Steps >](#next-steps)
+[下一步 >](#next-steps)
 
-## Using Vue from CDN {#using-vue-from-cdn}
+## 从 CDN 使用 Vue {#using-vue-from-cdn}
 
-You can use Vue directly from a CDN via a script tag:
+你可以通过 script 标签直接从 CDN 使用 Vue：
 
 ```html
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 ```
 
-Here we are using [unpkg](https://unpkg.com/), but you can also use any CDN that serves npm packages, for example [jsdelivr](https://www.jsdelivr.com/package/npm/vue) or [cdnjs](https://cdnjs.com/libraries/vue). Of course, you can also download this file and serve it yourself.
+这里我们使用的是 [unpkg](https://unpkg.com/)，但你也可以使用任何提供 npm 包的 CDN，例如 [jsdelivr](https://www.jsdelivr.com/package/npm/vue) 或 [cdnjs](https://cdnjs.com/libraries/vue)。当然，你也可以下载这个文件并自行托管。
 
-When using Vue from a CDN, there is no "build step" involved. This makes the setup a lot simpler, and is suitable for enhancing static HTML or integrating with a backend framework. However, you won't be able to use the Single-File Component (SFC) syntax.
+当通过 CDN 使用 Vue 时，不涉及任何“构建步骤”。这会让配置简单许多，并且适合增强静态 HTML 或与后端框架集成。不过，你将无法使用单文件组件（SFC）语法。
 
-### Using the Global Build {#using-the-global-build}
+### 使用全局构建版本 {#using-the-global-build}
 
-The above link loads the _global build_ of Vue, where all top-level APIs are exposed as properties on the global `Vue` object. Here is a full example using the global build:
+上面的链接加载的是 Vue 的 _全局构建版本_，其中所有顶层 API 都作为全局 `Vue` 对象上的属性暴露出来。下面是一个使用全局构建版本的完整示例：
 
 <div class="options-api">
 
@@ -173,7 +173,7 @@ The above link loads the _global build_ of Vue, where all top-level APIs are exp
 </script>
 ```
 
-[CodePen Demo >](https://codepen.io/vuejs-examples/pen/QWJwJLp)
+[CodePen 演示 >](https://codepen.io/vuejs-examples/pen/QWJwJLp)
 
 </div>
 
@@ -198,17 +198,17 @@ The above link loads the _global build_ of Vue, where all top-level APIs are exp
 </script>
 ```
 
-[CodePen Demo >](https://codepen.io/vuejs-examples/pen/eYQpQEG)
+[CodePen 演示 >](https://codepen.io/vuejs-examples/pen/eYQpQEG)
 
 :::tip
-Many of the examples for Composition API throughout the guide will be using the `<script setup>` syntax, which requires build tools. If you intend to use Composition API without a build step, consult the usage of the [`setup()` option](/api/composition-api-setup).
+本指南中许多组合式 API 示例都会使用 `<script setup>` 语法，这需要构建工具。如果你打算在没有构建步骤的情况下使用组合式 API，请参考 [`setup()` 选项](/api/composition-api-setup) 的用法。
 :::
 
 </div>
 
-### Using the ES Module Build {#using-the-es-module-build}
+### 使用 ES 模块构建版本 {#using-the-es-module-build}
 
-Throughout the rest of the documentation, we will be primarily using [ES modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) syntax. Most modern browsers now support ES modules natively, so we can use Vue from a CDN via native ES modules like this:
+在本指南的其余部分，我们将主要使用 [ES 模块](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) 语法。如今大多数现代浏览器都原生支持 ES 模块，因此我们可以像这样通过原生 ES 模块从 CDN 使用 Vue：
 
 <div class="options-api">
 
@@ -251,28 +251,28 @@ Throughout the rest of the documentation, we will be primarily using [ES modules
 
 </div>
 
-Notice that we are using `<script type="module">`, and the imported CDN URL is pointing to the **ES modules build** of Vue instead.
+请注意，我们使用的是 `<script type="module">`，而导入的 CDN URL 指向的是 Vue 的 **ES 模块构建版本**。
 
 <div class="options-api">
 
-[CodePen Demo >](https://codepen.io/vuejs-examples/pen/VwVYVZO)
+[CodePen 演示 >](https://codepen.io/vuejs-examples/pen/VwVYVZO)
 
 </div>
 <div class="composition-api">
 
-[CodePen Demo >](https://codepen.io/vuejs-examples/pen/MWzazEv)
+[CodePen 演示 >](https://codepen.io/vuejs-examples/pen/MWzazEv)
 
 </div>
 
-### Enabling Import maps {#enabling-import-maps}
+### 启用 Import Maps {#enabling-import-maps}
 
-In the above example, we are importing from the full CDN URL, but in the rest of the documentation you will see code like this:
+在上面的示例中，我们是从完整的 CDN URL 导入的，但在本指南的其余部分你会看到如下代码：
 
 ```js
 import { createApp } from 'vue'
 ```
 
-We can teach the browser where to locate the `vue` import by using [Import Maps](https://caniuse.com/import-maps):
+我们可以通过使用 [Import Maps](https://caniuse.com/import-maps) 让浏览器知道去哪里定位 `vue` 导入：
 
 <div class="options-api">
 
@@ -300,7 +300,7 @@ We can teach the browser where to locate the `vue` import by using [Import Maps]
 </script>
 ```
 
-[CodePen Demo >](https://codepen.io/vuejs-examples/pen/wvQKQyM)
+[CodePen 演示 >](https://codepen.io/vuejs-examples/pen/wvQKQyM)
 
 </div>
 
@@ -331,25 +331,25 @@ We can teach the browser where to locate the `vue` import by using [Import Maps]
 </script>
 ```
 
-[CodePen Demo >](https://codepen.io/vuejs-examples/pen/YzRyRYM)
+[CodePen 演示 >](https://codepen.io/vuejs-examples/pen/YzRyRYM)
 
 </div>
 
-You can also add entries for other dependencies to the import map - but make sure they point to the ES modules version of the library you intend to use.
+你还可以在 import map 中为其他依赖添加条目——但要确保它们指向你打算使用的库的 ES 模块版本。
 
-:::tip Import Maps Browser Support
-Import Maps is a relatively new browser feature. Make sure to use a browser within its [support range](https://caniuse.com/import-maps). In particular, it is only supported in Safari 16.4+.
+:::tip Import Maps 浏览器支持
+Import Maps 是一项相对较新的浏览器特性。请确保使用处于其 [支持范围](https://caniuse.com/import-maps) 内的浏览器。尤其需要注意的是，它目前仅在 Safari 16.4+ 中受支持。
 :::
 
-:::warning Notes on Production Use
-The examples so far are using the development build of Vue - if you intend to use Vue from a CDN in production, make sure to check out the [Production Deployment Guide](/guide/best-practices/production-deployment#without-build-tools).
+:::warning 关于生产使用的说明
+到目前为止的示例使用的是 Vue 的开发版——如果你打算在生产环境中通过 CDN 使用 Vue，请务必查看 [生产部署指南](/guide/best-practices/production-deployment#without-build-tools)。
 
-While it is possible to use Vue without a build system, an alternative approach to consider is using [`vuejs/petite-vue`](https://github.com/vuejs/petite-vue) that could better suit the context where [`jquery/jquery`](https://github.com/jquery/jquery) (in the past) or [`alpinejs/alpine`](https://github.com/alpinejs/alpine) (in the present) might be used instead.
+虽然可以在没有构建系统的情况下使用 Vue，但另一个可考虑的方案是使用 [`vuejs/petite-vue`](https://github.com/vuejs/petite-vue)，它可能更适合过去会使用 [`jquery/jquery`](https://github.com/jquery/jquery) 或当下可能会使用 [`alpinejs/alpine`](https://github.com/alpinejs/alpine) 的场景。
 :::
 
-### Splitting Up the Modules {#splitting-up-the-modules}
+### 拆分模块 {#splitting-up-the-modules}
 
-As we dive deeper into the guide, we may need to split our code into separate JavaScript files so that they are easier to manage. For example:
+随着我们深入本指南，可能需要将代码拆分为独立的 JavaScript 文件，以便更易于管理。例如：
 
 ```html [index.html]
 <div id="app"></div>
@@ -369,7 +369,7 @@ export default {
   data() {
     return { count: 0 }
   },
-  template: `<div>Count is: {{ count }}</div>`
+  template: `<div>计数为：{{ count }}</div>`
 }
 ```
 
@@ -383,35 +383,35 @@ export default {
     const count = ref(0)
     return { count }
   },
-  template: `<div>Count is: {{ count }}</div>`
+  template: `<div>计数为：{{ count }}</div>`
 }
 ```
 
 </div>
 
-If you directly open the above `index.html` in your browser, you will find that it throws an error because ES modules cannot work over the `file://` protocol, which is the protocol the browser uses when you open a local file.
+如果你直接在浏览器中打开上面的 `index.html`，会发现它报错了，因为 ES 模块不能通过 `file://` 协议工作，而浏览器在打开本地文件时使用的就是这个协议。
 
-Due to security reasons, ES modules can only work over the `http://` protocol, which is what the browsers use when opening pages on the web. In order for ES modules to work on our local machine, we need to serve the `index.html` over the `http://` protocol, with a local HTTP server.
+出于安全原因，ES 模块只能通过 `http://` 协议工作，而浏览器在打开网页时使用的就是这个协议。为了让 ES 模块在本地机器上正常工作，我们需要通过本地 HTTP 服务器以 `http://` 协议提供 `index.html`。
 
-To start a local HTTP server, first make sure you have [Node.js](https://nodejs.org/en/) installed, then run `npx serve` from the command line in the same directory where your HTML file is. You can also use any other HTTP server that can serve static files with the correct MIME types.
+要启动本地 HTTP 服务器，首先确保你已安装 [Node.js](https://nodejs.org/en/)，然后在命令行中、HTML 文件所在的同一目录下运行 `npx serve`。你也可以使用任何其他能够以正确 MIME 类型提供静态文件的 HTTP 服务器。
 
-You may have noticed that the imported component's template is inlined as a JavaScript string. If you are using VS Code, you can install the [es6-string-html](https://marketplace.visualstudio.com/items?itemName=Tobermory.es6-string-html) extension and prefix the strings with a `/*html*/` comment to get syntax highlighting for them.
+你可能已经注意到，导入的组件模板是以内联 JavaScript 字符串的形式写入的。如果你使用 VS Code，可以安装 [es6-string-html](https://marketplace.visualstudio.com/items?itemName=Tobermory.es6-string-html) 扩展，并在字符串前添加 `/*html*/` 注释，从而为其提供语法高亮。
 
-## Next Steps {#next-steps}
+## 下一步 {#next-steps}
 
-If you skipped the [Introduction](/guide/introduction), we strongly recommend reading it before moving on to the rest of the documentation.
+如果你跳过了[介绍](/guide/introduction)，我们强烈建议你在继续阅读其余文档之前先阅读它。
 
 <div class="vt-box-container next-steps">
   <a class="vt-box" href="/guide/essentials/application.html">
-    <p class="next-steps-link">Continue with the Guide</p>
-    <p class="next-steps-caption">The guide walks you through every aspect of the framework in full detail.</p>
+    <p class="next-steps-link">继续阅读指南</p>
+    <p class="next-steps-caption">指南将带你全面深入地了解框架的各个方面。</p>
   </a>
   <a class="vt-box" href="/tutorial/">
-    <p class="next-steps-link">Try the Tutorial</p>
-    <p class="next-steps-caption">For those who prefer learning things hands-on.</p>
+    <p class="next-steps-link">试试教程</p>
+    <p class="next-steps-caption">适合那些更喜欢通过动手实践来学习的人。</p>
   </a>
   <a class="vt-box" href="/examples/">
-    <p class="next-steps-link">Check out the Examples</p>
-    <p class="next-steps-caption">Explore examples of core features and common UI tasks.</p>
+    <p class="next-steps-link">查看示例</p>
+    <p class="next-steps-caption">探索核心功能和常见 UI 任务的示例。</p>
   </a>
 </div>

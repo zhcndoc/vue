@@ -99,30 +99,28 @@ function dismiss() {
   <Transition name="fly-in">
     <div class="preference-tooltip" v-if="show">
       <template v-if="source === 'default'">
-        <p>API style now defaults to Composition API.</p>
+        <p>当前默认的 API 风格是 Composition API。</p>
         <p>
-          Some pages contain different content based on the API style
-          chosen. Use this switch to toggle between APIs styles.
+          某些页面会根据所选的 API 风格显示不同内容。你可以使用这个开关在两种 API 风格之间切换。
         </p>
       </template>
       <template v-else-if="source && source.startsWith('url')">
         <p>
-          Showing content for
-          {{ preferComposition ? 'Composition' : 'Options' }} API because
+          当前显示的是
+          {{ preferComposition ? 'Composition' : 'Options' }} API 的内容，因为
           {{
             source === 'url-query'
-              ? 'it is specified by the URL query.'
-              : 'the target section is only available for that API.'
+              ? 'URL 查询参数指定了它。'
+              : '目标章节仅适用于该 API。'
           }}
         </p>
         <p>
-          This is different from your saved preference and will only affect
-          the current browsing session.
+          这与您保存的偏好不同，并且只会影响当前浏览会话。
         </p>
       </template>
       <p class="actions">
-        <a href="/guide/introduction#api-styles">Learn more</a>
-        <button @click="dismiss">Got it</button>
+        <a href="/guide/introduction#api-styles">了解更多</a>
+        <button @click="dismiss">知道了</button>
       </p>
       <div class="arrow-top"></div>
       <div class="arrow-top inner"></div>

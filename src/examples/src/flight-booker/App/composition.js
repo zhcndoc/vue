@@ -17,8 +17,8 @@ export default {
     function book() {
       alert(
         isReturn.value
-          ? `You have booked a return flight leaving on ${departureDate.value} and returning on ${returnDate.value}.`
-          : `You have booked a one-way flight leaving on ${departureDate.value}.`
+          ? `你已预订一趟往返航班，出发日期为 ${departureDate.value}，返程日期为 ${returnDate.value}。`
+          : `你已预订一趟单程航班，出发日期为 ${departureDate.value}。`
       )
     }
 

@@ -1,54 +1,54 @@
-# Reactivity API: Utilities {#reactivity-api-utilities}
+# 响应式 API：工具 {#reactivity-api-utilities}
 
 ## isRef() {#isref}
 
-Checks if a value is a ref object.
+检查一个值是否是 ref 对象。
 
-- **Type**
+- **类型**
 
   ```ts
   function isRef<T>(r: Ref<T> | unknown): r is Ref<T>
   ```
 
-  Note the return type is a [type predicate](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates), which means `isRef` can be used as a type guard:
+  注意返回类型是一个 [类型谓词](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates)，这意味着 `isRef` 可以作为类型守卫使用：
 
   ```ts
   let foo: unknown
   if (isRef(foo)) {
-    // foo's type is narrowed to Ref<unknown>
+    // foo 的类型被缩小为 Ref<unknown>
     foo.value
   }
   ```
 
 ## unref() {#unref}
 
-Returns the inner value if the argument is a ref, otherwise return the argument itself. This is a sugar function for `val = isRef(val) ? val.value : val`.
+如果参数是 ref，则返回其内部值，否则返回参数本身。这是 `val = isRef(val) ? val.value : val` 的语法糖函数。
 
-- **Type**
+- **类型**
 
   ```ts
   function unref<T>(ref: T | Ref<T>): T
   ```
 
-- **Example**
+- **示例**
 
   ```ts
   function useFoo(x: number | Ref<number>) {
     const unwrapped = unref(x)
-    // unwrapped is guaranteed to be number now
+    // 现在可以保证 unwrapped 是 number
   }
   ```
 
 ## toRef() {#toref}
 
-Can be used to normalize values / refs / getters into refs (3.3+).
+可用于将值 / refs / getters 规范化为 refs（3.3+）。
 
-Can also be used to create a ref for a property on a source reactive object. The created ref is synced with its source property: mutating the source property will update the ref, and vice-versa.
+也可用于为源响应式对象上的某个属性创建 ref。创建的 ref 会与其源属性同步：修改源属性会更新 ref，反之亦然。
 
-- **Type**
+- **类型**
 
   ```ts
-  // normalization signature (3.3+)
+  // 规范化签名（3.3+）
   function toRef<T>(
     value: T
   ): T extends () => infer R
@@ -57,7 +57,7 @@ Can also be used to create a ref for a property on a source reactive object. The
     ? T
     : Ref<UnwrapRef<T>>
 
-  // object property signature
+  // 对象属性签名
   function toRef<T extends object, K extends keyof T>(
     object: T,
     key: K,
@@ -67,23 +67,23 @@ Can also be used to create a ref for a property on a source reactive object. The
   type ToRef<T> = T extends Ref ? T : Ref<T>
   ```
 
-- **Example**
+- **示例**
 
-  Normalization signature (3.3+):
+  规范化签名（3.3+）：
 
   ```js
-  // returns existing refs as-is
+  // 原样返回已存在的 refs
   toRef(existingRef)
 
-  // creates a readonly ref that calls the getter on .value access
+  // 创建一个只读 ref，在访问 .value 时调用 getter
   toRef(() => props.foo)
 
-  // creates normal refs from non-function values
-  // equivalent to ref(1)
+  // 从非函数值创建普通 ref
+  // 等同于 ref(1)
   toRef(1)
   ```
 
-  Object property signature:
+  对象属性签名：
 
   ```js
   const state = reactive({
@@ -91,27 +91,27 @@ Can also be used to create a ref for a property on a source reactive object. The
     bar: 2
   })
 
-  // a two-way ref that syncs with the original property
+  // 一个与原始属性同步的双向 ref
   const fooRef = toRef(state, 'foo')
 
-  // mutating the ref updates the original
+  // 修改 ref 会更新原始值
   fooRef.value++
   console.log(state.foo) // 2
 
-  // mutating the original also updates the ref
+  // 修改原始值也会更新 ref
   state.foo++
   console.log(fooRef.value) // 3
   ```
 
-  Note this is different from:
+  注意这与以下写法不同：
 
   ```js
   const fooRef = ref(state.foo)
   ```
 
-  The above ref is **not** synced with `state.foo`, because the `ref()` receives a plain number value.
+  上面的 ref **不会** 与 `state.foo` 同步，因为 `ref()` 接收的是一个普通数字值。
 
-  `toRef()` is useful when you want to pass the ref of a prop to a composable function:
+  当你想把 prop 的 ref 传递给组合式函数时，`toRef()` 很有用：
 
   ```vue
   <script setup>
@@ -119,34 +119,34 @@ Can also be used to create a ref for a property on a source reactive object. The
 
   const props = defineProps(/* ... */)
 
-  // convert `props.foo` into a ref, then pass into
-  // a composable
+  // 将 `props.foo` 转换为 ref，然后传入
+  // 一个组合式函数
   useSomeFeature(toRef(props, 'foo'))
 
-  // getter syntax - recommended in 3.3+
+  // getter 语法 - 3.3+ 推荐
   useSomeFeature(toRef(() => props.foo))
   </script>
   ```
 
-  When `toRef` is used with component props, the usual restrictions around mutating the props still apply. Attempting to assign a new value to the ref is equivalent to trying to modify the prop directly and is not allowed. In that scenario you may want to consider using [`computed`](./reactivity-core#computed) with `get` and `set` instead. See the guide to [using `v-model` with components](/guide/components/v-model) for more information.
+  当 `toRef` 与组件 props 一起使用时，关于修改 props 的常规限制仍然适用。尝试给该 ref 赋新值等同于尝试直接修改 prop，这是不被允许的。在这种场景下，你可能需要考虑改用带有 `get` 和 `set` 的 [`computed`](./reactivity-core#computed)。更多信息请参见[在组件中使用 `v-model`](/guide/components/v-model) 指南。
 
-  When using the object property signature, `toRef()` will return a usable ref even if the source property doesn't currently exist. This makes it possible to work with optional properties, which wouldn't be picked up by [`toRefs`](#torefs).
+  使用对象属性签名时，即使源属性当前不存在，`toRef()` 也会返回一个可用的 ref。这使得它可以处理可选属性，而这些属性不会被 [`toRefs`](#torefs) 捕获。
 
 ## toValue() {#tovalue}
 
-- Only supported in 3.3+
+- 仅在 3.3+ 中支持
 
-Normalizes values / refs / getters to values. This is similar to [unref()](#unref), except that it also normalizes getters. If the argument is a getter, it will be invoked and its return value will be returned.
+将值 / refs / getters 规范化为值。这类似于 [unref()](#unref)，不同之处在于它也会规范化 getters。如果参数是 getter，则会被调用并返回其返回值。
 
-This can be used in [Composables](/guide/reusability/composables.html) to normalize an argument that can be either a value, a ref, or a getter.
+这可用于 [组合式函数](/guide/reusability/composables.html) 中，对可以是值、ref 或 getter 的参数进行规范化。
 
-- **Type**
+- **类型**
 
   ```ts
   function toValue<T>(source: T | Ref<T> | (() => T)): T
   ```
 
-- **Example**
+- **示例**
 
   ```js
   toValue(1) //       --> 1
@@ -154,18 +154,18 @@ This can be used in [Composables](/guide/reusability/composables.html) to normal
   toValue(() => 1) // --> 1
   ```
 
-  Normalizing arguments in composables:
+  在组合式函数中规范化参数：
 
   ```ts
   import type { MaybeRefOrGetter } from 'vue'
 
   function useFeature(id: MaybeRefOrGetter<number>) {
     watch(() => toValue(id), id => {
-      // react to id changes
+      // 响应 id 的变化
     })
   }
 
-  // this composable supports any of the following:
+  // 这个组合式函数支持以下任意一种：
   useFeature(1)
   useFeature(ref(1))
   useFeature(() => 1)
@@ -173,9 +173,9 @@ This can be used in [Composables](/guide/reusability/composables.html) to normal
 
 ## toRefs() {#torefs}
 
-Converts a reactive object to a plain object where each property of the resulting object is a ref pointing to the corresponding property of the original object. Each individual ref is created using [`toRef()`](#toref).
+将一个响应式对象转换为普通对象，其中结果对象的每个属性都是一个 ref，指向原始对象中对应的属性。每个单独的 ref 都是使用 [`toRef()`](#toref) 创建的。
 
-- **Type**
+- **类型**
 
   ```ts
   function toRefs<T extends object>(
@@ -187,7 +187,7 @@ Converts a reactive object to a plain object where each property of the resultin
   type ToRef = T extends Ref ? T : Ref<T>
   ```
 
-- **Example**
+- **示例**
 
   ```js
   const state = reactive({
@@ -197,13 +197,13 @@ Converts a reactive object to a plain object where each property of the resultin
 
   const stateAsRefs = toRefs(state)
   /*
-  Type of stateAsRefs: {
+  stateAsRefs 的类型：{
     foo: Ref<number>,
     bar: Ref<number>
   }
   */
 
-  // The ref and the original property is "linked"
+  // ref 与原始属性是“关联”的
   state.foo++
   console.log(stateAsRefs.foo.value) // 2
 
@@ -211,7 +211,7 @@ Converts a reactive object to a plain object where each property of the resultin
   console.log(state.foo) // 3
   ```
 
-  `toRefs` is useful when returning a reactive object from a composable function so that the consuming component can destructure/spread the returned object without losing reactivity:
+  当你想从组合式函数返回一个响应式对象，以便消费它的组件可以对返回对象进行解构/展开而不丢失响应性时，`toRefs` 很有用：
 
   ```js
   function useFeatureX() {
@@ -220,23 +220,23 @@ Converts a reactive object to a plain object where each property of the resultin
       bar: 2
     })
 
-    // ...logic operating on state
+    // ...对 state 进行的逻辑操作
 
-    // convert to refs when returning
+    // 返回时转换为 refs
     return toRefs(state)
   }
 
-  // can destructure without losing reactivity
+  // 可以在不丢失响应性的情况下进行解构
   const { foo, bar } = useFeatureX()
   ```
 
-  `toRefs` will only generate refs for properties that are enumerable on the source object at call time. To create a ref for a property that may not exist yet, use [`toRef`](#toref) instead.
+  `toRefs` 只会为调用时源对象上可枚举的属性生成 refs。若要为可能尚不存在的属性创建 ref，请改用 [`toRef`](#toref)。
 
 ## isProxy() {#isproxy}
 
-Checks if an object is a proxy created by [`reactive()`](./reactivity-core#reactive), [`readonly()`](./reactivity-core#readonly), [`shallowReactive()`](./reactivity-advanced#shallowreactive) or [`shallowReadonly()`](./reactivity-advanced#shallowreadonly).
+检查一个对象是否是由 [`reactive()`](./reactivity-core#reactive)、[`readonly()`](./reactivity-core#readonly)、[`shallowReactive()`](./reactivity-advanced#shallowreactive) 或 [`shallowReadonly()`](./reactivity-advanced#shallowreadonly) 创建的代理。
 
-- **Type**
+- **类型**
 
   ```ts
   function isProxy(value: any): boolean
@@ -244,9 +244,9 @@ Checks if an object is a proxy created by [`reactive()`](./reactivity-core#react
 
 ## isReactive() {#isreactive}
 
-Checks if an object is a proxy created by [`reactive()`](./reactivity-core#reactive) or [`shallowReactive()`](./reactivity-advanced#shallowreactive).
+检查一个对象是否是由 [`reactive()`](./reactivity-core#reactive) 或 [`shallowReactive()`](./reactivity-advanced#shallowreactive) 创建的代理。
 
-- **Type**
+- **类型**
 
   ```ts
   function isReactive(value: unknown): boolean
@@ -254,11 +254,11 @@ Checks if an object is a proxy created by [`reactive()`](./reactivity-core#react
 
 ## isReadonly() {#isreadonly}
 
-Checks whether the passed value is a readonly object. The properties of a readonly object can change, but they can't be assigned directly via the passed object.
+检查传入的值是否为只读对象。只读对象的属性可以变化，但不能通过传入的对象直接赋值。
 
-The proxies created by [`readonly()`](./reactivity-core#readonly) and [`shallowReadonly()`](./reactivity-advanced#shallowreadonly) are both considered readonly, as is a [`computed()`](./reactivity-core#computed) ref without a `set` function.
+由 [`readonly()`](./reactivity-core#readonly) 和 [`shallowReadonly()`](./reactivity-advanced#shallowreadonly) 创建的代理都被视为只读对象，此外，未提供 `set` 函数的 [`computed()`](./reactivity-core#computed) ref 也同样被视为只读。
 
-- **Type**
+- **类型**
 
   ```ts
   function isReadonly(value: unknown): boolean

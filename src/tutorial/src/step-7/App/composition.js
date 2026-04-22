@@ -7,9 +7,9 @@ export default {
 
     const newTodo = ref('')
     const todos = ref([
-      { id: id++, text: 'Learn HTML' },
-      { id: id++, text: 'Learn JavaScript' },
-      { id: id++, text: 'Learn Vue' }
+      { id: id++, text: '学习 HTML' },
+      { id: id++, text: '学习 JavaScript' },
+      { id: id++, text: '学习 Vue' }
     ])
 
     function addTodo() {

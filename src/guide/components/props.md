@@ -1,18 +1,18 @@
 # Props {#props}
 
-> This page assumes you've already read the [Components Basics](/guide/essentials/component-basics). Read that first if you are new to components.
+> 本页假设你已经阅读过 [组件基础](/guide/essentials/component-basics)。如果你是组件新手，请先阅读那一页。
 
 <div class="options-api">
-  <VueSchoolLink href="https://vueschool.io/lessons/vue-3-reusable-components-with-props" title="Free Vue.js Props Lesson"/>
+  <VueSchoolLink href="https://vueschool.io/lessons/vue-3-reusable-components-with-props" title="免费的 Vue.js Props 课程"/>
 </div>
 
-## Props Declaration {#props-declaration}
+## Props 声明 {#props-declaration}
 
-Vue components require explicit props declaration so that Vue knows what external props passed to the component should be treated as fallthrough attributes (which will be discussed in [its dedicated section](/guide/components/attrs)).
+Vue 组件需要显式声明 props，这样 Vue 才知道传递给组件的外部 props 应该被视为 fallthrough 属性（这将在 [专门的章节](/guide/components/attrs) 中讨论）。
 
 <div class="composition-api">
 
-In SFCs using `<script setup>`, props can be declared using the `defineProps()` macro:
+在使用 `<script setup>` 的 SFC 中，可以使用 `defineProps()` 宏来声明 props：
 
 ```vue
 <script setup>
@@ -22,31 +22,31 @@ console.log(props.foo)
 </script>
 ```
 
-In non-`<script setup>` components, props are declared using the [`props`](/api/options-state#props) option:
+在非 `<script setup>` 组件中，props 通过 [`props`](/api/options-state#props) 选项声明：
 
 ```js
 export default {
   props: ['foo'],
   setup(props) {
-    // setup() receives props as the first argument.
+    // setup() 接收 props 作为第一个参数。
     console.log(props.foo)
   }
 }
 ```
 
-Notice the argument passed to `defineProps()` is the same as the value provided to the `props` options: the same props options API is shared between the two declaration styles.
+注意，传递给 `defineProps()` 的参数与提供给 `props` 选项的值是相同的：两种声明方式共享同一套 props 选项 API。
 
 </div>
 
 <div class="options-api">
 
-Props are declared using the [`props`](/api/options-state#props) option:
+Props 使用 [`props`](/api/options-state#props) 选项声明：
 
 ```js
 export default {
   props: ['foo'],
   created() {
-    // props are exposed on `this`
+    // props 暴露在 `this` 上
     console.log(this.foo)
   }
 }
@@ -54,7 +54,7 @@ export default {
 
 </div>
 
-In addition to declaring props using an array of strings, we can also use the object syntax:
+除了使用字符串数组声明 props 之外，我们也可以使用对象语法：
 
 <div class="options-api">
 
@@ -71,7 +71,7 @@ export default {
 <div class="composition-api">
 
 ```js
-// in <script setup>
+// 在 <script setup> 中
 defineProps({
   title: String,
   likes: Number
@@ -79,7 +79,7 @@ defineProps({
 ```
 
 ```js
-// in non-<script setup>
+// 在非 <script setup> 中
 export default {
   props: {
     title: String,
@@ -90,19 +90,19 @@ export default {
 
 </div>
 
-For each property in the object declaration syntax, the key is the name of the prop, while the value should be the constructor function of the expected type.
+在对象声明语法中，对于每个属性，键是 prop 的名称，而值应该是预期类型的构造函数。
 
-This not only documents your component, but will also warn other developers using your component in the browser console if they pass the wrong type. We will discuss more details about [prop validation](#prop-validation) further down this page.
+这不仅能为你的组件提供文档说明，如果其他开发者在浏览器控制台中传入了错误的类型，也会发出警告。我们将在本页后面进一步讨论 [prop 校验](#prop-validation) 的更多细节。
 
 <div class="options-api">
 
-See also: [Typing Component Props](/guide/typescript/options-api#typing-component-props) <sup class="vt-badge ts" />
+另请参阅：[组件 Props 的类型标注](/guide/typescript/options-api#typing-component-props) <sup class="vt-badge ts" />
 
 </div>
 
 <div class="composition-api">
 
-If you are using TypeScript with `<script setup>`, it's also possible to declare props using pure type annotations:
+如果你在 `<script setup>` 中使用 TypeScript，也可以使用纯类型标注来声明 props：
 
 ```vue
 <script setup lang="ts">
@@ -113,50 +113,50 @@ defineProps<{
 </script>
 ```
 
-More details: [Typing Component Props](/guide/typescript/composition-api#typing-component-props) <sup class="vt-badge ts" />
+更多细节：[组件 Props 的类型标注](/guide/typescript/composition-api#typing-component-props) <sup class="vt-badge ts" />
 
 </div>
 
 <div class="composition-api">
 
-## Reactive Props Destructure <sup class="vt-badge" data-text="3.5+" /> \*\* {#reactive-props-destructure}
+## 响应式 Props 解构 <sup class="vt-badge" data-text="3.5+" /> \*\* {#reactive-props-destructure}
 
-Vue's reactivity system tracks state usage based on property access. E.g. when you access `props.foo` in a computed getter or a watcher, the `foo` prop gets tracked as a dependency.
+Vue 的响应式系统会基于属性访问来追踪状态的使用。例如，当你在计算 getter 或侦听器中访问 `props.foo` 时，`foo` 这个 prop 会被追踪为依赖。
 
-So, given the following code:
+因此，假设有如下代码：
 
 ```js
 const { foo } = defineProps(['foo'])
 
 watchEffect(() => {
-  // runs only once before 3.5
-  // re-runs when the "foo" prop changes in 3.5+
+  // 在 3.5 之前只会运行一次
+  // 在 3.5+ 中，当 "foo" prop 变化时会重新运行
   console.log(foo)
 })
 ```
 
-In version 3.4 and below, `foo` is an actual constant and will never change. In version 3.5 and above, Vue's compiler automatically prepends `props.` when code in the same `<script setup>` block accesses variables destructured from `defineProps`. Therefore the code above becomes equivalent to the following:
+在 3.4 及以下版本中，`foo` 是一个真正的常量，永远不会改变。在 3.5 及以上版本中，Vue 的编译器会自动在同一个 `<script setup>` 块中访问从 `defineProps` 解构出的变量时为其前面加上 `props.`。因此上面的代码等价于下面这样：
 
 ```js {5}
 const props = defineProps(['foo'])
 
 watchEffect(() => {
-  // `foo` transformed to `props.foo` by the compiler
+  // `foo` 被编译器转换为 `props.foo`
   console.log(props.foo)
 })
 ```
 
-In addition, you can use JavaScript's native default value syntax to declare default values for the props. This is particularly useful when using the type-based props declaration:
+此外，你还可以使用 JavaScript 原生的默认值语法来为 props 声明默认值。这在使用基于类型的 props 声明时尤其有用：
 
 ```ts
 const { foo = 'hello' } = defineProps<{ foo?: string }>()
 ```
 
-If you prefer to have more visual distinction between destructured props and normal variables in your IDE, Vue's VSCode extension provides a setting to enable inlay-hints for destructured props.
+如果你希望在 IDE 中更直观地区分解构出的 props 和普通变量，Vue 的 VSCode 扩展提供了一个设置，可以为解构出的 props 启用内联提示。
 
-### Passing Destructured Props into Functions {#passing-destructured-props-into-functions}
+### 将解构出的 Props 传入函数 {#passing-destructured-props-into-functions}
 
-When we pass a destructured prop into a function, e.g.:
+当我们把一个解构出的 prop 传给函数时，例如：
 
 ```js
 const { foo } = defineProps(['foo'])
@@ -164,29 +164,29 @@ const { foo } = defineProps(['foo'])
 watch(foo, /* ... */)
 ```
 
-This will not work as expected because it is equivalent to `watch(props.foo, ...)` - we are passing a value instead of a reactive data source to `watch`. In fact, Vue's compiler will catch such cases and throw a warning.
+这不会按预期工作，因为它等价于 `watch(props.foo, ...)` —— 我们传给 `watch` 的是一个值，而不是一个响应式数据源。实际上，Vue 的编译器会捕获这类情况并抛出警告。
 
-Similar to how we can watch a normal prop with `watch(() => props.foo, ...)`, we can watch a destructured prop also by wrapping it in a getter:
+类似于我们可以使用 `watch(() => props.foo, ...)` 来侦听普通 prop，也可以通过将解构出的 prop 包装进一个 getter 来侦听它：
 
 ```js
 watch(() => foo, /* ... */)
 ```
 
-In addition, this is the recommended approach when we need to pass a destructured prop into an external function while retaining reactivity:
+此外，当我们需要在保持响应性的同时将解构出的 prop 传递给外部函数时，也推荐使用这种方式：
 
 ```js
 useComposable(() => foo)
 ```
 
-The external function can call the getter (or normalize it with [toValue](/api/reactivity-utilities.html#tovalue)) when it needs to track changes of the provided prop, e.g. in a computed or watcher getter.
+外部函数可以在需要跟踪所提供 prop 的变化时调用这个 getter（或使用 [toValue](/api/reactivity-utilities.html#tovalue) 将其规范化），例如在计算属性或侦听器 getter 中。
 
 </div>
 
-## Prop Passing Details {#prop-passing-details}
+## Props 传递细节 {#prop-passing-details}
 
-### Prop Name Casing {#prop-name-casing}
+### Prop 名称大小写 {#prop-name-casing}
 
-We declare long prop names using camelCase because this avoids having to use quotes when using them as property keys, and allows us to reference them directly in template expressions because they are valid JavaScript identifiers:
+我们使用 camelCase 来声明较长的 prop 名称，因为这样在将其用作属性键时不需要加引号，而且由于它们是合法的 JavaScript 标识符，也可以直接在模板表达式中引用：
 
 <div class="composition-api">
 
@@ -213,77 +213,77 @@ export default {
 <span>{{ greetingMessage }}</span>
 ```
 
-Technically, you can also use camelCase when passing props to a child component (except in [in-DOM templates](/guide/essentials/component-basics#in-dom-template-parsing-caveats)). However, the convention is using kebab-case in all cases to align with HTML attributes:
+从技术上讲，在向子组件传递 props 时也可以使用 camelCase（[DOM 内模板](/guide/essentials/component-basics#in-dom-template-parsing-caveats) 除外）。不过，惯例是在所有情况下都使用 kebab-case，以便与 HTML 属性保持一致：
 
 ```vue-html
 <MyComponent greeting-message="hello" />
 ```
 
-We use [PascalCase for component tags](/guide/components/registration#component-name-casing) when possible because it improves template readability by differentiating Vue components from native elements. However, there isn't as much practical benefit in using camelCase when passing props, so we choose to follow each language's conventions.
+我们在可能的情况下会为 [组件标签使用 PascalCase](/guide/components/registration#component-name-casing)，因为这能通过区分 Vue 组件和原生元素来提升模板可读性。然而，在传递 props 时使用 camelCase 并没有那么明显的实际收益，所以我们选择遵循各自语言的惯例。
 
-### Static vs. Dynamic Props {#static-vs-dynamic-props}
+### 静态 vs. 动态 Props {#static-vs-dynamic-props}
 
-So far, you've seen props passed as static values, like in:
+到目前为止，你已经看到了以静态值传递 props 的方式，例如：
 
 ```vue-html
 <BlogPost title="My journey with Vue" />
 ```
 
-You've also seen props assigned dynamically with `v-bind` or its `:` shortcut, such as in:
+你也看到了使用 `v-bind` 或其 `:` 简写动态绑定 props 的方式，例如：
 
 ```vue-html
-<!-- Dynamically assign the value of a variable -->
+<!-- 动态地为变量赋值 -->
 <BlogPost :title="post.title" />
 
-<!-- Dynamically assign the value of a complex expression -->
+<!-- 动态地为复杂表达式赋值 -->
 <BlogPost :title="post.title + ' by ' + post.author.name" />
 ```
 
-### Passing Different Value Types {#passing-different-value-types}
+### 传递不同类型的值 {#passing-different-value-types}
 
-In the two examples above, we happen to pass string values, but _any_ type of value can be passed to a prop.
+在上面两个例子中，我们恰好传递的是字符串值，但任何类型的值都可以传递给 prop。
 
-#### Number {#number}
+#### 数字 {#number}
 
 ```vue-html
-<!-- Even though `42` is static, we need v-bind to tell Vue that -->
-<!-- this is a JavaScript expression rather than a string.       -->
+<!-- 虽然 `42` 是静态的，但我们需要用 v-bind 来告诉 Vue -->
+<!-- 这是一段 JavaScript 表达式，而不是字符串。      -->
 <BlogPost :likes="42" />
 
-<!-- Dynamically assign to the value of a variable. -->
+<!-- 动态地为变量的值赋值。 -->
 <BlogPost :likes="post.likes" />
 ```
 
-#### Boolean {#boolean}
+#### 布尔值 {#boolean}
 
 ```vue-html
-<!-- Including the prop with no value will imply `true`. -->
+<!-- 只传递 prop 而不提供值会被视为 `true`。 -->
 <BlogPost is-published />
 
-<!-- Even though `false` is static, we need v-bind to tell Vue that -->
-<!-- this is a JavaScript expression rather than a string.          -->
+<!-- 虽然 `false` 是静态的，但我们需要用 v-bind 来告诉 Vue -->
+<!-- 这是一段 JavaScript 表达式，而不是字符串。         -->
 <BlogPost :is-published="false" />
 
-<!-- Dynamically assign to the value of a variable. -->
+<!-- 动态地为变量的值赋值。 -->
 <BlogPost :is-published="post.isPublished" />
 ```
 
-#### Array {#array}
+#### 数组 {#array}
 
 ```vue-html
-<!-- Even though the array is static, we need v-bind to tell Vue that -->
-<!-- this is a JavaScript expression rather than a string.            -->
+<!-- 虽然数组是静态的，但我们需要用 v-bind 来告诉 Vue -->
+<!-- 这是一段 JavaScript 表达式，而不是字符串。           -->
 <BlogPost :comment-ids="[234, 266, 273]" />
 
-<!-- Dynamically assign to the value of a variable. -->
+<!-- 动态地为变量的值赋值。 -->
 <BlogPost :comment-ids="post.commentIds" />
 ```
 
-#### Object {#object}
+#### 对象 {#object}
 
 ```vue-html
-<!-- Even though the object is static, we need v-bind to tell Vue that -->
-<!-- this is a JavaScript expression rather than a string.             -->
+<!-- 虽然对象是静态的，但我们需要用 v-bind 来告诉 Vue -->
+<!-- 这是一段 JavaScript 表达式，而不是字符串。            -->
 <BlogPost
   :author="{
     name: 'Veronica',
@@ -291,13 +291,13 @@ In the two examples above, we happen to pass string values, but _any_ type of va
   }"
  />
 
-<!-- Dynamically assign to the value of a variable. -->
+<!-- 动态地为变量的值赋值。 -->
 <BlogPost :author="post.author" />
 ```
 
-### Binding Multiple Properties Using an Object {#binding-multiple-properties-using-an-object}
+### 使用对象绑定多个属性 {#binding-multiple-properties-using-an-object}
 
-If you want to pass all the properties of an object as props, you can use [`v-bind` without an argument](/guide/essentials/template-syntax#dynamically-binding-multiple-attributes) (`v-bind` instead of `:prop-name`). For example, given a `post` object:
+如果你想将一个对象的所有属性都作为 props 传递，可以使用 [不带参数的 `v-bind`](/guide/essentials/template-syntax#dynamically-binding-multiple-attributes)（`v-bind` 而不是 `:prop-name`）。例如，给定一个 `post` 对象：
 
 <div class="options-api">
 
@@ -326,30 +326,30 @@ const post = {
 
 </div>
 
-The following template:
+下面这个模板：
 
 ```vue-html
 <BlogPost v-bind="post" />
 ```
 
-Will be equivalent to:
+将等价于：
 
 ```vue-html
 <BlogPost :id="post.id" :title="post.title" />
 ```
 
-## One-Way Data Flow {#one-way-data-flow}
+## 单向数据流 {#one-way-data-flow}
 
-All props form a **one-way-down binding** between the child property and the parent one: when the parent property updates, it will flow down to the child, but not the other way around. This prevents child components from accidentally mutating the parent's state, which can make your app's data flow harder to understand.
+所有 props 都会在子属性和父属性之间形成一种**单向下行绑定**：当父属性更新时，会向下传递到子组件，但不会反过来。这可以防止子组件无意中修改父组件的状态，从而让应用的数据流更难理解。
 
-In addition, every time the parent component is updated, all props in the child component will be refreshed with the latest value. This means you should **not** attempt to mutate a prop inside a child component. If you do, Vue will warn you in the console:
+此外，每当父组件更新时，子组件中的所有 props 都会被刷新为最新值。这意味着你**不应该**在子组件中尝试修改 prop。如果这样做了，Vue 会在控制台发出警告：
 
 <div class="composition-api">
 
 ```js
 const props = defineProps(['foo'])
 
-// ❌ warning, props are readonly!
+// ❌ 警告，props 是只读的！
 props.foo = 'bar'
 ```
 
@@ -360,7 +360,7 @@ props.foo = 'bar'
 export default {
   props: ['foo'],
   created() {
-    // ❌ warning, props are readonly!
+    // ❌ 警告，props 是只读的！
     this.foo = 'bar'
   }
 }
@@ -368,17 +368,17 @@ export default {
 
 </div>
 
-There are usually two cases where it's tempting to mutate a prop:
+通常有两种情况会让人想要修改 prop：
 
-1. **The prop is used to pass in an initial value; the child component wants to use it as a local data property afterwards.** In this case, it's best to define a local data property that uses the prop as its initial value:
+1. **该 prop 用于传入初始值；之后子组件想将其作为本地数据属性使用。** 在这种情况下，最好定义一个以该 prop 为初始值的本地数据属性：
 
    <div class="composition-api">
 
    ```js
    const props = defineProps(['initialCounter'])
 
-   // counter only uses props.initialCounter as the initial value;
-   // it is disconnected from future prop updates.
+   // counter 仅将 props.initialCounter 作为初始值；
+   // 它与未来的 prop 更新断开关联。
    const counter = ref(props.initialCounter)
    ```
 
@@ -390,8 +390,8 @@ There are usually two cases where it's tempting to mutate a prop:
      props: ['initialCounter'],
      data() {
        return {
-         // counter only uses this.initialCounter as the initial value;
-         // it is disconnected from future prop updates.
+         // counter 仅将 this.initialCounter 作为初始值；
+         // 它与未来的 prop 更新断开关联。
          counter: this.initialCounter
        }
      }
@@ -400,14 +400,14 @@ There are usually two cases where it's tempting to mutate a prop:
 
    </div>
 
-2. **The prop is passed in as a raw value that needs to be transformed.** In this case, it's best to define a computed property using the prop's value:
+2. **该 prop 作为原始值传入，需要进行转换。** 在这种情况下，最好使用 prop 的值定义一个计算属性：
 
    <div class="composition-api">
 
    ```js
    const props = defineProps(['size'])
 
-   // computed property that auto-updates when the prop changes
+   // 当 prop 变化时会自动更新的计算属性
    const normalizedSize = computed(() => props.size.trim().toLowerCase())
    ```
 
@@ -418,7 +418,7 @@ There are usually two cases where it's tempting to mutate a prop:
    export default {
      props: ['size'],
      computed: {
-       // computed property that auto-updates when the prop changes
+       // 当 prop 变化时会自动更新的计算属性
        normalizedSize() {
          return this.size.trim().toLowerCase()
        }
@@ -428,74 +428,73 @@ There are usually two cases where it's tempting to mutate a prop:
 
    </div>
 
-### Mutating Object / Array Props {#mutating-object-array-props}
+### 修改对象 / 数组 Props {#mutating-object-array-props}
 
-When objects and arrays are passed as props, while the child component cannot mutate the prop binding, it **will** be able to mutate the object or array's nested properties. This is because in JavaScript objects and arrays are passed by reference, and it is unreasonably expensive for Vue to prevent such mutations.
+当对象和数组作为 props 传入时，虽然子组件不能修改 prop 绑定本身，但它**可以**修改对象或数组的嵌套属性。这是因为在 JavaScript 中，对象和数组是通过引用传递的，而 Vue 要阻止这种修改的成本过高。
 
-The main drawback of such mutations is that it allows the child component to affect parent state in a way that isn't obvious to the parent component, potentially making it more difficult to reason about the data flow in the future. As a best practice, you should avoid such mutations unless the parent and child are tightly coupled by design. In most cases, the child should [emit an event](/guide/components/events) to let the parent perform the mutation.
+这种修改方式的主要缺点是，它会让子组件以父组件不易察觉的方式影响父状态，从而可能使未来更难推理数据流。最佳实践是，除非父子组件在设计上紧密耦合，否则应避免此类修改。在大多数情况下，子组件应该 [触发一个事件](/guide/components/events) 让父组件执行修改。
 
-## Prop Validation {#prop-validation}
+## Prop 校验 {#prop-validation}
 
-Components can specify requirements for their props, such as the types you've already seen. If a requirement is not met, Vue will warn you in the browser's JavaScript console. This is especially useful when developing a component that is intended to be used by others.
+组件可以为其 props 指定要求，例如你已经见过的类型。如果某个要求未满足，Vue 会在浏览器的 JavaScript 控制台中发出警告。这在开发一个打算供他人使用的组件时尤其有用。
 
-To specify prop validations, you can provide an object with validation requirements to the <span class="composition-api">`defineProps()` macro</span><span class="options-api">`props` option</span>, instead of an array of strings. For example:
+要指定 prop 校验，你可以向 <span class="composition-api">`defineProps()` 宏</span><span class="options-api">`props` 选项</span>提供一个带有校验要求的对象，而不是字符串数组。例如：
 
 <div class="composition-api">
 
 ```js
 defineProps({
-  // Basic type check
-  //  (`null` and `undefined` values will allow any type)
+  // 基本类型检查
+  //  (`null` 和 `undefined` 值将允许任何类型)
   propA: Number,
-  // Multiple possible types
+  // 多种可能的类型
   propB: [String, Number],
-  // Required string
+  // 必填字符串
   propC: {
     type: String,
     required: true
   },
-  // Required but nullable string
+  // 必填但可为 null 的字符串
   propD: {
     type: [String, null],
     required: true
   },
-  // Number with a default value
+  // 带默认值的数字
   propE: {
     type: Number,
     default: 100
   },
-  // Object with a default value
+  // 带默认值的对象
   propF: {
     type: Object,
-    // Object or array defaults must be returned from
-    // a factory function. The function receives the raw
-    // props received by the component as the argument.
+    // 对象或数组的默认值必须从工厂函数返回。
+    // 该函数接收组件收到的原始 props 作为参数。
     default(rawProps) {
       return { message: 'hello' }
     }
   },
-  // Custom validator function
-  // full props passed as 2nd argument in 3.4+
+  // 自定义校验函数
+  // 在 3.4+ 中，完整 props 会作为第二个参数传入
   propG: {
     validator(value, props) {
-      // The value must match one of these strings
+      // 该值必须匹配以下字符串之一
       return ['success', 'warning', 'danger'].includes(value)
     }
   },
-  // Function with a default value
+  // 带默认值的函数
   propH: {
     type: Function,
-    // Unlike object or array default, this is not a factory
-    // function - this is a function to serve as a default value
+    // 不同于对象或数组的默认值，这里不是工厂
+    // 函数——这是一个用作默认值的函数
     default() {
-      return 'Default function'
+      return '默认函数'
     }
   }
 })
 ```
 
 :::tip
-Code inside the `defineProps()` argument **cannot access other variables declared in `<script setup>`**, because the entire expression is moved to an outer function scope when compiled.
+`defineProps()` 参数中的代码 **不能访问在 `<script setup>` 中声明的其他变量**，因为在编译时整个表达式会被移动到外部函数作用域中。
 :::
 
 </div>
@@ -504,51 +503,50 @@ Code inside the `defineProps()` argument **cannot access other variables declare
 ```js
 export default {
   props: {
-    // Basic type check
-    //  (`null` and `undefined` values will allow any type)
+    // 基本类型检查
+    //  (`null` 和 `undefined` 值将允许任何类型)
     propA: Number,
-    // Multiple possible types
+    // 多种可能的类型
     propB: [String, Number],
-    // Required string
+    // 必填字符串
     propC: {
       type: String,
       required: true
     },
-    // Required but nullable string
+    // 必填但可为 null 的字符串
     propD: {
       type: [String, null],
       required: true
     },
-    // Number with a default value
+    // 带默认值的数字
     propE: {
       type: Number,
       default: 100
     },
-    // Object with a default value
+    // 带默认值的对象
     propF: {
       type: Object,
-      // Object or array defaults must be returned from
-      // a factory function. The function receives the raw
-      // props received by the component as the argument.
+      // 对象或数组的默认值必须从工厂函数返回。
+      // 该函数接收组件收到的原始 props 作为参数。
       default(rawProps) {
         return { message: 'hello' }
       }
     },
-    // Custom validator function
-    // full props passed as 2nd argument in 3.4+
+    // 自定义校验函数
+    // 在 3.4+ 中，完整 props 会作为第二个参数传入
     propG: {
       validator(value, props) {
-        // The value must match one of these strings
+        // 该值必须匹配以下字符串之一
         return ['success', 'warning', 'danger'].includes(value)
       }
     },
-    // Function with a default value
+    // 带默认值的函数
     propH: {
       type: Function,
-      // Unlike object or array default, this is not a factory
-      // function - this is a function to serve as a default value
+      // 不同于对象或数组的默认值，这里不是工厂
+      // 函数——这是一个用作默认值的函数
       default() {
-        return 'Default function'
+        return '默认函数'
       }
     }
   }
@@ -557,34 +555,34 @@ export default {
 
 </div>
 
-Additional details:
+附加说明：
 
-- All props are optional by default, unless `required: true` is specified.
+- 默认情况下，除非指定 `required: true`，否则所有 props 都是可选的。
 
-- An absent optional prop other than `Boolean` will have `undefined` value.
+- 除了 `Boolean` 之外，缺失的可选 prop 的值将是 `undefined`。
 
-- The `Boolean` absent props will be cast to `false`. You can change this by setting a `default` for it — i.e.: `default: undefined` to behave as a non-Boolean prop.
+- `Boolean` 类型的缺失 prop 会被转换为 `false`。你可以通过为其设置 `default` 来改变这一点——即：`default: undefined`，使其表现为非 `Boolean` prop。
 
-- If a `default` value is specified, it will be used if the resolved prop value is `undefined` - this includes both when the prop is absent, or an explicit `undefined` value is passed.
+- 如果指定了 `default` 值，那么当解析后的 prop 值为 `undefined` 时就会使用它——这包括 prop 缺失以及显式传入 `undefined` 值的情况。
 
-When prop validation fails, Vue will produce a console warning (if using the development build).
+当 prop 校验失败时，Vue 会输出控制台警告（如果使用开发版构建）。
 
 <div class="composition-api">
 
-If using [Type-based props declarations](/api/sfc-script-setup#type-only-props-emit-declarations) <sup class="vt-badge ts" />, Vue will try its best to compile the type annotations into equivalent runtime prop declarations. For example, `defineProps<{ msg: string }>` will be compiled into `{ msg: { type: String, required: true }}`.
+如果使用 [基于类型的 props 声明](/api/sfc-script-setup#type-only-props-emit-declarations) <sup class="vt-badge ts" />，Vue 会尽力将类型注解编译为等价的运行时 prop 声明。例如，`defineProps<{ msg: string }>` 会被编译为 `{ msg: { type: String, required: true }}`。
 
 </div>
 <div class="options-api">
 
-::: tip Note
-Note that props are validated **before** a component instance is created, so instance properties (e.g. `data`, `computed`, etc.) will not be available inside `default` or `validator` functions.
+::: tip 注
+请注意，props 的校验会在创建组件实例之前进行，因此实例属性（例如 `data`、`computed` 等）在 `default` 或 `validator` 函数中不可用。
 :::
 
 </div>
 
-### Runtime Type Checks {#runtime-type-checks}
+### 运行时类型检查 {#runtime-type-checks}
 
-The `type` can be one of the following native constructors:
+`type` 可以是以下原生构造函数之一：
 
 - `String`
 - `Number`
@@ -596,7 +594,7 @@ The `type` can be one of the following native constructors:
 - `Symbol`
 - `Error`
 
-In addition, `type` can also be a custom class or constructor function and the assertion will be made with an `instanceof` check. For example, given the following class:
+此外，`type` 也可以是自定义类或构造函数，断言将通过 `instanceof` 检查来进行。例如，给定如下类：
 
 ```js
 class Person {
@@ -607,7 +605,7 @@ class Person {
 }
 ```
 
-You could use it as a prop's type:
+你可以将其用作 prop 的类型：
 
 <div class="composition-api">
 
@@ -630,11 +628,11 @@ export default {
 
 </div>
 
-Vue will use `instanceof Person` to validate whether the value of the `author` prop is indeed an instance of the `Person` class.
+Vue 会使用 `instanceof Person` 来验证 `author` prop 的值是否确实是 `Person` 类的实例。
 
-### Nullable Type {#nullable-type}
+### 可为 null 的类型 {#nullable-type}
 
-If the type is required but nullable, you can use the array syntax that includes `null`:
+如果类型是必填但可为 null，你可以使用包含 `null` 的数组语法：
 
 <div class="composition-api">
 
@@ -663,11 +661,11 @@ export default {
 
 </div>
 
-Note that if `type` is just `null` without using the array syntax, it will allow any type.
+注意，如果 `type` 只是 `null` 而没有使用数组语法，它将允许任何类型。
 
-## Boolean Casting {#boolean-casting}
+## 布尔值转换 {#boolean-casting}
 
-Props with `Boolean` type have special casting rules to mimic the behavior of native boolean attributes. Given a `<MyComponent>` with the following declaration:
+`Boolean` 类型的 props 有特殊的转换规则，用来模拟原生布尔属性的行为。给定一个带有以下声明的 `<MyComponent>`：
 
 <div class="composition-api">
 
@@ -690,37 +688,37 @@ export default {
 
 </div>
 
-The component can be used like this:
+该组件可以这样使用：
 
 ```vue-html
-<!-- equivalent of passing :disabled="true" -->
+<!-- 等同于传入 :disabled="true" -->
 <MyComponent disabled />
 
-<!-- equivalent of passing :disabled="false" -->
+<!-- 等同于传入 :disabled="false" -->
 <MyComponent />
 ```
 
-When a prop is declared to allow multiple types, the casting rules for `Boolean` will also be applied. However, there is an edge when both `String` and `Boolean` are allowed - the Boolean casting rule only applies if Boolean appears before String:
+当一个 prop 被声明为允许多种类型时，也会应用 `Boolean` 的转换规则。不过，当同时允许 `String` 和 `Boolean` 时有一个边界情况——只有当 `Boolean` 出现在 `String` 之前时，布尔转换规则才会生效：
 
 <div class="composition-api">
 
 ```js
-// disabled will be casted to true
+// disabled 将被转换为 true
 defineProps({
   disabled: [Boolean, Number]
 })
 
-// disabled will be casted to true
+// disabled 将被转换为 true
 defineProps({
   disabled: [Boolean, String]
 })
 
-// disabled will be casted to true
+// disabled 将被转换为 true
 defineProps({
   disabled: [Number, Boolean]
 })
 
-// disabled will be parsed as an empty string (disabled="")
+// disabled 将被解析为空字符串 (disabled="")
 defineProps({
   disabled: [String, Boolean]
 })
@@ -730,28 +728,28 @@ defineProps({
 <div class="options-api">
 
 ```js
-// disabled will be casted to true
+// disabled 将被转换为 true
 export default {
   props: {
     disabled: [Boolean, Number]
   }
 }
 
-// disabled will be casted to true
+// disabled 将被转换为 true
 export default {
   props: {
     disabled: [Boolean, String]
   }
 }
 
-// disabled will be casted to true
+// disabled 将被转换为 true
 export default {
   props: {
     disabled: [Number, Boolean]
   }
 }
 
-// disabled will be parsed as an empty string (disabled="")
+// disabled 将被解析为空字符串 (disabled="")
 export default {
   props: {
     disabled: [String, Boolean]

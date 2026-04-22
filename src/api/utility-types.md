@@ -1,14 +1,14 @@
-# Utility Types {#utility-types}
+# 实用类型 {#utility-types}
 
 :::info
-This page only lists a few commonly used utility types that may need explanation for their usage. For a full list of exported types, consult the [source code](https://github.com/vuejs/core/blob/main/packages/runtime-core/src/index.ts#L131).
+本页仅列出少数几种常用的实用类型，这些类型在使用时可能需要解释。完整的导出类型列表，请查阅 [源代码](https://github.com/vuejs/core/blob/main/packages/runtime-core/src/index.ts#L131)。
 :::
 
 ## PropType\<T> {#proptype-t}
 
-Used to annotate a prop with more advanced types when using runtime props declarations.
+在使用运行时 props 声明时，用于为更高级的类型给 prop 添加注解。
 
-- **Example**
+- **示例**
 
   ```ts
   import type { PropType } from 'vue'
@@ -22,7 +22,7 @@ Used to annotate a prop with more advanced types when using runtime props declar
   export default {
     props: {
       book: {
-        // provide more specific type to `Object`
+        // 为 `Object` 提供更具体的类型
         type: Object as PropType<Book>,
         required: true
       }
@@ -30,27 +30,27 @@ Used to annotate a prop with more advanced types when using runtime props declar
   }
   ```
 
-- **See also** [Guide - Typing Component Props](/guide/typescript/options-api#typing-component-props)
+- **另见** [指南 - 为组件 Props 添加类型](/guide/typescript/options-api#typing-component-props)
 
 ## MaybeRef\<T> {#mayberef}
 
-- Only supported in 3.3+
+- 仅支持 3.3+ 版本
 
-Alias for `T | Ref<T>`. Useful for annotating arguments of [Composables](/guide/reusability/composables.html).
+`T | Ref<T>` 的别名。适合用于给 [组合式函数](/guide/reusability/composables.html) 的参数添加注解。
 
 ## MaybeRefOrGetter\<T> {#maybereforgetter}
 
-- Only supported in 3.3+
+- 仅支持 3.3+ 版本
 
-Alias for `T | Ref<T> | (() => T)`. Useful for annotating arguments of [Composables](/guide/reusability/composables.html).
+`T | Ref<T> | (() => T)` 的别名。适合用于给 [组合式函数](/guide/reusability/composables.html) 的参数添加注解。
 
 ## ExtractPropTypes\<T> {#extractproptypes}
 
-Extract prop types from a runtime props options object. The extracted types are internal facing - i.e. the resolved props received by the component. This means boolean props and props with default values are always defined, even if they are not required.
+从运行时 props 选项对象中提取 prop 类型。提取出的类型是内部使用的，也就是组件接收到的已解析 props。这意味着布尔类型 props 和带默认值的 props 总是已定义的，即使它们不是必需的。
 
-To extract public facing props, i.e. props that the parent is allowed to pass, use [`ExtractPublicPropTypes`](#extractpublicproptypes).
+要提取对外公开的 props，也就是父组件被允许传入的 props，请使用 [`ExtractPublicPropTypes`](#extractpublicproptypes)。
 
-- **Example**
+- **示例**
 
   ```ts
   const propsOptions = {
@@ -77,11 +77,11 @@ To extract public facing props, i.e. props that the parent is allowed to pass, u
 
 ## ExtractPublicPropTypes\<T> {#extractpublicproptypes}
 
-- Only supported in 3.3+
+- 仅支持 3.3+ 版本
 
-Extract prop types from a runtime props options object. The extracted types are public facing - i.e. the props that the parent is allowed to pass.
+从运行时 props 选项对象中提取 prop 类型。提取出的类型是对外公开的，也就是父组件被允许传入的 props。
 
-- **Example**
+- **示例**
 
   ```ts
   const propsOptions = {
@@ -108,9 +108,9 @@ Extract prop types from a runtime props options object. The extracted types are 
 
 ## ComponentCustomProperties {#componentcustomproperties}
 
-Used to augment the component instance type to support custom global properties.
+用于扩展组件实例类型，以支持自定义全局属性。
 
-- **Example**
+- **示例**
 
   ```ts
   import axios from 'axios'
@@ -124,16 +124,16 @@ Used to augment the component instance type to support custom global properties.
   ```
 
   :::tip
-  Augmentations must be placed in a module `.ts` or `.d.ts` file. See [Type Augmentation Placement](/guide/typescript/options-api#augmenting-global-properties) for more details.
+  扩展必须放在模块 `.ts` 或 `.d.ts` 文件中。更多细节请参见 [类型扩展位置](/guide/typescript/options-api#augmenting-global-properties)。
   :::
 
-- **See also** [Guide - Augmenting Global Properties](/guide/typescript/options-api#augmenting-global-properties)
+- **另见** [指南 - 扩展全局属性](/guide/typescript/options-api#augmenting-global-properties)
 
 ## ComponentCustomOptions {#componentcustomoptions}
 
-Used to augment the component options type to support custom options.
+用于扩展组件选项类型，以支持自定义选项。
 
-- **Example**
+- **示例**
 
   ```ts
   import { Route } from 'vue-router'
@@ -146,16 +146,16 @@ Used to augment the component options type to support custom options.
   ```
 
   :::tip
-  Augmentations must be placed in a module `.ts` or `.d.ts` file. See [Type Augmentation Placement](/guide/typescript/options-api#augmenting-global-properties) for more details.
+  扩展必须放在模块 `.ts` 或 `.d.ts` 文件中。更多细节请参见 [类型扩展位置](/guide/typescript/options-api#augmenting-global-properties)。
   :::
 
-- **See also** [Guide - Augmenting Custom Options](/guide/typescript/options-api#augmenting-custom-options)
+- **另见** [指南 - 扩展自定义选项](/guide/typescript/options-api#augmenting-custom-options)
 
 ## ComponentCustomProps {#componentcustomprops}
 
-Used to augment allowed TSX props in order to use non-declared props on TSX elements.
+用于扩展允许的 TSX props，以便在 TSX 元素上使用未声明的 props。
 
-- **Example**
+- **示例**
 
   ```ts
   declare module 'vue' {
@@ -168,21 +168,21 @@ Used to augment allowed TSX props in order to use non-declared props on TSX elem
   ```
 
   ```tsx
-  // now works even if hello is not a declared prop
+  // 现在即使 hello 不是已声明的 prop 也能正常工作
   <MyComponent hello="world" />
   ```
 
   :::tip
-  Augmentations must be placed in a module `.ts` or `.d.ts` file. See [Type Augmentation Placement](/guide/typescript/options-api#augmenting-global-properties) for more details.
+  扩展必须放在模块 `.ts` 或 `.d.ts` 文件中。更多细节请参见 [类型扩展位置](/guide/typescript/options-api#augmenting-global-properties)。
   :::
 
 ## CSSProperties {#cssproperties}
 
-Used to augment allowed values in style property bindings.
+用于扩展样式属性绑定中允许的值。
 
-- **Example**
+- **示例**
 
-  Allow any custom CSS property
+  允许任何自定义 CSS 属性
 
   ```ts
   declare module 'vue' {
@@ -201,11 +201,11 @@ Used to augment allowed values in style property bindings.
   ```
 
 :::tip
-Augmentations must be placed in a module `.ts` or `.d.ts` file. See [Type Augmentation Placement](/guide/typescript/options-api#augmenting-global-properties) for more details.
+扩展必须放在模块 `.ts` 或 `.d.ts` 文件中。更多细节请参见 [类型扩展位置](/guide/typescript/options-api#augmenting-global-properties)。
 :::
 
-:::info See also
-SFC `<style>` tags support linking CSS values to dynamic component state using the `v-bind` CSS function. This allows for custom properties without type augmentation.
+:::info 另见
+SFC `<style>` 标签支持使用 `v-bind` CSS 函数将 CSS 值与动态组件状态关联起来。这使得无需类型扩展也能使用自定义属性。
 
-- [v-bind() in CSS](/api/sfc-css-features#v-bind-in-css)
+- [CSS 中的 v-bind() ](/api/sfc-css-features#v-bind-in-css)
   :::

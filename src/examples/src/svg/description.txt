@@ -1,1 +1,1 @@
-An SVG graph
+一个 SVG 图表

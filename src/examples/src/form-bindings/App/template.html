@@ -1,45 +1,45 @@
-<h2>Text Input</h2>
+<h2>文本输入</h2>
 <input v-model="text">
 <p>{{ text }}</p>
 
-<h2>Checkbox</h2>
+<h2>复选框</h2>
 <input type="checkbox" id="checkbox" v-model="checked">
-<label for="checkbox">Checked: {{ checked }}</label>
+<label for="checkbox">是否选中：{{ checked }}</label>
 
 <!--
   multiple checkboxes can bind to the same
   array v-model value
 -->
-<h2>Multi Checkbox</h2>
+<h2>多选复选框</h2>
 <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
 <label for="jack">Jack</label>
 <input type="checkbox" id="john" value="John" v-model="checkedNames">
 <label for="john">John</label>
 <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
 <label for="mike">Mike</label>
-<p>Checked names: {{ checkedNames }}</p>
+<p>选中的名字：{{ checkedNames }}</p>
 
-<h2>Radio</h2>
+<h2>单选按钮</h2>
 <input type="radio" id="one" value="One" v-model="picked">
 <label for="one">One</label>
 <br>
 <input type="radio" id="two" value="Two" v-model="picked">
 <label for="two">Two</label>
-<p>Picked: {{ picked }}</p>
+<p>已选：{{ picked }}</p>
 
-<h2>Select</h2>
+<h2>选择框</h2>
 <select v-model="selected">
-  <option disabled value="">Please select one</option>
+  <option disabled value="">请选择一项</option>
   <option>A</option>
   <option>B</option>
   <option>C</option>
 </select>
-<p>Selected: {{ selected }}</p>
+<p>已选：{{ selected }}</p>
 
-<h2>Multi Select</h2>
+<h2>多选框</h2>
 <select v-model="multiSelected" multiple style="width:100px">
   <option>A</option>
   <option>B</option>
   <option>C</option>
 </select>
-<p>Selected: {{ multiSelected }}</p>
+<p>已选：{{ multiSelected }}</p>

@@ -1,104 +1,104 @@
-# Template Syntax {#template-syntax}
+# 模板语法 {#template-syntax}
 
-<ScrimbaLink href="https://scrimba.com/links/vue-template-syntax" title="Free Vue.js Template Syntax Lesson" type="scrimba">
-  Watch an interactive video lesson on Scrimba
+<ScrimbaLink href="https://scrimba.com/links/vue-template-syntax" title="免费的 Vue.js 模板语法课程" type="scrimba">
+  在 Scrimba 上观看互动视频课程
 </ScrimbaLink>
 
-Vue uses an HTML-based template syntax that allows you to declaratively bind the rendered DOM to the underlying component instance's data. All Vue templates are syntactically valid HTML that can be parsed by spec-compliant browsers and HTML parsers.
+Vue 使用一种基于 HTML 的模板语法，它允许你以声明式的方式将渲染后的 DOM 绑定到底层组件实例的数据。所有 Vue 模板在语法上都是有效的 HTML，可以被符合规范的浏览器和 HTML 解析器解析。
 
-Under the hood, Vue compiles the templates into highly-optimized JavaScript code. Combined with the reactivity system, Vue can intelligently figure out the minimal number of components to re-render and apply the minimal amount of DOM manipulations when the app state changes.
+在底层，Vue 会将模板编译为高度优化的 JavaScript 代码。结合响应式系统，Vue 能够智能地判断在应用状态变化时需要重新渲染的组件最少数量，并应用最少量的 DOM 操作。
 
-If you are familiar with Virtual DOM concepts and prefer the raw power of JavaScript, you can also [directly write render functions](/guide/extras/render-function) instead of templates, with optional JSX support. However, do note that they do not enjoy the same level of compile-time optimizations as templates.
+如果你熟悉虚拟 DOM 概念，并且更喜欢 JavaScript 的原始能力，你也可以[直接编写渲染函数](/guide/extras/render-function)来代替模板，并可选地支持 JSX。不过请注意，它们不像模板那样享有同等程度的编译期优化。
 
-## Text Interpolation {#text-interpolation}
+## 文本插值 {#text-interpolation}
 
-The most basic form of data binding is text interpolation using the "Mustache" syntax (double curly braces):
+最基本的数据绑定形式是使用 “Mustache” 语法（双大括号）的文本插值：
 
 ```vue-html
-<span>Message: {{ msg }}</span>
+<span>消息：{{ msg }}</span>
 ```
 
-The mustache tag will be replaced with the value of the `msg` property [from the corresponding component instance](/guide/essentials/reactivity-fundamentals#declaring-reactive-state). It will also be updated whenever the `msg` property changes.
+Mustache 标签会被替换为 [对应组件实例中的](/guide/essentials/reactivity-fundamentals#declaring-reactive-state) `msg` 属性值。每当 `msg` 属性变化时，它也会被更新。
 
-## Raw HTML {#raw-html}
+## 原始 HTML {#raw-html}
 
-The double mustaches interpret the data as plain text, not HTML. In order to output real HTML, you will need to use the [`v-html` directive](/api/built-in-directives#v-html):
+双大括号会将数据解释为纯文本，而不是 HTML。若要输出真正的 HTML，你需要使用 [`v-html` 指令](/api/built-in-directives#v-html)：
 
 ```vue-html
-<p>Using text interpolation: {{ rawHtml }}</p>
-<p>Using v-html directive: <span v-html="rawHtml"></span></p>
+<p>使用文本插值：{{ rawHtml }}</p>
+<p>使用 v-html 指令：<span v-html="rawHtml"></span></p>
 ```
 
 <script setup>
-  const rawHtml = '<span style="color: red">This should be red.</span>'
+  const rawHtml = '<span style="color: red">这应该是红色。</span>'
 </script>
 
 <div class="demo">
-  <p>Using text interpolation: {{ rawHtml }}</p>
-  <p>Using v-html directive: <span v-html="rawHtml"></span></p>
+  <p>使用文本插值：{{ rawHtml }}</p>
+  <p>使用 v-html 指令：<span v-html="rawHtml"></span></p>
 </div>
 
-Here we're encountering something new. The `v-html` attribute you're seeing is called a **directive**. Directives are prefixed with `v-` to indicate that they are special attributes provided by Vue, and as you may have guessed, they apply special reactive behavior to the rendered DOM. Here, we're basically saying "keep this element's inner HTML up-to-date with the `rawHtml` property on the current active instance."
+这里我们遇到了新的内容。你看到的 `v-html` 属性被称为**指令**。指令以 `v-` 为前缀，表示它们是由 Vue 提供的特殊属性，正如你可能已经猜到的那样，它们会对渲染后的 DOM 应用特殊的响应式行为。这里，我们基本上是在说：“让这个元素的 inner HTML 与当前活动实例上的 `rawHtml` 属性保持同步。”
 
-The contents of the `span` will be replaced with the value of the `rawHtml` property, interpreted as plain HTML - data bindings are ignored. Note that you cannot use `v-html` to compose template partials, because Vue is not a string-based templating engine. Instead, components are preferred as the fundamental unit for UI reuse and composition.
+`span` 的内容会被替换为 `rawHtml` 属性的值，并按纯 HTML 进行解释——数据绑定会被忽略。请注意，你不能使用 `v-html` 来组合模板片段，因为 Vue 不是一个基于字符串的模板引擎。相反，组件被视为 UI 复用与组合的基本单元。
 
-:::warning Security Warning
-Dynamically rendering arbitrary HTML on your website can be very dangerous because it can easily lead to [XSS vulnerabilities](https://en.wikipedia.org/wiki/Cross-site_scripting). Only use `v-html` on trusted content and **never** on user-provided content.
+:::warning 安全警告
+在你的网站上动态渲染任意 HTML 可能非常危险，因为这很容易导致 [XSS 漏洞](https://en.wikipedia.org/wiki/Cross-site_scripting)。只应对可信内容使用 `v-html`，**绝不要**对用户提供的内容使用。
 :::
 
-## Attribute Bindings {#attribute-bindings}
+## 属性绑定 {#attribute-bindings}
 
-Mustaches cannot be used inside HTML attributes. Instead, use a [`v-bind` directive](/api/built-in-directives#v-bind):
+Mustache 不能在 HTML 属性内部使用。相反，请使用 [`v-bind` 指令](/api/built-in-directives#v-bind)：
 
 ```vue-html
 <div v-bind:id="dynamicId"></div>
 ```
 
-The `v-bind` directive instructs Vue to keep the element's `id` attribute in sync with the component's `dynamicId` property. If the bound value is `null` or `undefined`, then the attribute will be removed from the rendered element.
+`v-bind` 指令会告诉 Vue 将元素的 `id` 属性与组件的 `dynamicId` 属性保持同步。如果绑定的值是 `null` 或 `undefined`，那么该属性将从渲染后的元素中移除。
 
-### Shorthand {#shorthand}
+### 简写 {#shorthand}
 
-Because `v-bind` is so commonly used, it has a dedicated shorthand syntax:
+由于 `v-bind` 使用得非常频繁，它有专门的简写语法：
 
 ```vue-html
 <div :id="dynamicId"></div>
 ```
 
-Attributes that start with `:` may look a bit different from normal HTML, but it is in fact a valid character for attribute names and all Vue-supported browsers can parse it correctly. In addition, they do not appear in the final rendered markup. The shorthand syntax is optional, but you will likely appreciate it when you learn more about its usage later.
+以 `:` 开头的属性看起来可能与普通 HTML 有些不同，但事实上它是属性名中合法的字符，而且所有受 Vue 支持的浏览器都能正确解析。此外，它们不会出现在最终渲染的标记中。简写语法是可选的，但在你稍后学习更多用法时，可能会很喜欢它。
 
-> For the rest of the guide, we will be using the shorthand syntax in code examples, as that's the most common usage for Vue developers.
+> 在本指南的其余部分，我们将在代码示例中使用简写语法，因为这是 Vue 开发者最常见的用法。
 
-### Same-name Shorthand {#same-name-shorthand}
+### 同名简写 {#same-name-shorthand}
 
-- Only supported in 3.4+
+- 仅支持 3.4+
 
-If the attribute has the same name as the variable name of the JavaScript value being bound, the syntax can be further shortened to omit the attribute value:
+如果属性名与被绑定的 JavaScript 值的变量名相同，语法还可以进一步简化，省略属性值：
 
 ```vue-html
-<!-- same as :id="id" -->
+<!-- 与 :id="id" 相同 -->
 <div :id></div>
 
-<!-- this also works -->
+<!-- 这也可以 -->
 <div v-bind:id></div>
 ```
 
-This is similar to the property shorthand syntax when declaring objects in JavaScript. Note this is a feature that is only available in Vue 3.4 and above.
+这类似于在 JavaScript 中声明对象时的属性简写语法。请注意，这一特性仅在 Vue 3.4 及以上版本可用。
 
-### Boolean Attributes {#boolean-attributes}
+### 布尔属性 {#boolean-attributes}
 
-[Boolean attributes](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes) are attributes that can indicate true / false values by their presence on an element. For example, [`disabled`](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/disabled) is one of the most commonly used boolean attributes.
+[布尔属性](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes) 是一种通过元素上是否存在来表示 true / false 值的属性。例如，[`disabled`](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/disabled) 是最常用的布尔属性之一。
 
-`v-bind` works a bit differently in this case:
+在这种情况下，`v-bind` 的工作方式略有不同：
 
 ```vue-html
-<button :disabled="isButtonDisabled">Button</button>
+<button :disabled="isButtonDisabled">按钮</button>
 ```
 
-The `disabled` attribute will be included if `isButtonDisabled` has a [truthy value](https://developer.mozilla.org/en-US/docs/Glossary/Truthy). It will also be included if the value is an empty string, maintaining consistency with `<button disabled="">`. For other [falsy values](https://developer.mozilla.org/en-US/docs/Glossary/Falsy) the attribute will be omitted.
+如果 `isButtonDisabled` 具有 [truthy 值](https://developer.mozilla.org/en-US/docs/Glossary/Truthy)，则会包含 `disabled` 属性。如果该值是空字符串，也会包含该属性，以保持与 `<button disabled="">` 一致。对于其他 [falsy 值](https://developer.mozilla.org/en-US/docs/Glossary/Falsy)，该属性将被省略。
 
-### Dynamically Binding Multiple Attributes {#dynamically-binding-multiple-attributes}
+### 动态绑定多个属性 {#dynamically-binding-multiple-attributes}
 
-If you have a JavaScript object representing multiple attributes that looks like this:
+如果你有一个表示多个属性的 JavaScript 对象，如下所示：
 
 <div class="composition-api">
 
@@ -126,15 +126,15 @@ data() {
 
 </div>
 
-You can bind them to a single element by using `v-bind` without an argument:
+你可以使用不带参数的 `v-bind` 将它们绑定到单个元素：
 
 ```vue-html
 <div v-bind="objectOfAttrs"></div>
 ```
 
-## Using JavaScript Expressions {#using-javascript-expressions}
+## 使用 JavaScript 表达式 {#using-javascript-expressions}
 
-So far we've only been binding to simple property keys in our templates. But Vue actually supports the full power of JavaScript expressions inside all data bindings:
+到目前为止，我们在模板中只绑定到了简单的属性键。但 Vue 实际上支持在所有数据绑定中使用完整的 JavaScript 表达式能力：
 
 ```vue-html
 {{ number + 1 }}
@@ -146,30 +146,30 @@ So far we've only been binding to simple property keys in our templates. But Vue
 <div :id="`list-${id}`"></div>
 ```
 
-These expressions will be evaluated as JavaScript in the data scope of the current component instance.
+这些表达式会在当前组件实例的数据作用域中作为 JavaScript 求值。
 
-In Vue templates, JavaScript expressions can be used in the following positions:
+在 Vue 模板中，JavaScript 表达式可用于以下位置：
 
-- Inside text interpolations (mustaches)
-- In the attribute value of any Vue directives (special attributes that start with `v-`)
+- 文本插值（mustache）内部
+- 任何 Vue 指令的属性值中（以 `v-` 开头的特殊属性）
 
-### Expressions Only {#expressions-only}
+### 仅限表达式 {#expressions-only}
 
-Each binding can only contain **one single expression**. An expression is a piece of code that can be evaluated to a value. A simple check is whether it can be used after `return`.
+每个绑定中只能包含**一个单独的表达式**。表达式是一段可以被求值为某个值的代码。一个简单的判断方法是：它是否可以放在 `return` 之后使用。
 
-Therefore, the following will **NOT** work:
+因此，下面这种写法**不会**生效：
 
 ```vue-html
-<!-- this is a statement, not an expression: -->
+<!-- 这是语句，不是表达式： -->
 {{ var a = 1 }}
 
-<!-- flow control won't work either, use ternary expressions -->
+<!-- 控制流也不行，请使用三元表达式 -->
 {{ if (ok) { return message } }}
 ```
 
-### Calling Functions {#calling-functions}
+### 调用函数 {#calling-functions}
 
-It is possible to call a component-exposed method inside a binding expression:
+可以在绑定表达式中调用组件暴露的方法：
 
 ```vue-html
 <time :title="toTitleDate(date)" :datetime="date">
@@ -178,113 +178,113 @@ It is possible to call a component-exposed method inside a binding expression:
 ```
 
 :::tip
-Functions called inside binding expressions will be called every time the component updates, so they should **not** have any side effects, such as changing data or triggering asynchronous operations.
+在绑定表达式中调用的函数会在组件每次更新时都被调用，因此它们**不应**具有任何副作用，例如修改数据或触发异步操作。
 :::
 
-### Restricted Globals Access {#restricted-globals-access}
+### 受限的全局对象访问 {#restricted-globals-access}
 
-Template expressions are sandboxed and only have access to a [restricted list of globals](https://github.com/vuejs/core/blob/main/packages/shared/src/globalsAllowList.ts#L3). The list exposes commonly used built-in globals such as `Math` and `Date`.
+模板表达式是沙箱化的，只能访问[受限的全局对象列表](https://github.com/vuejs/core/blob/main/packages/shared/src/globalsAllowList.ts#L3)。该列表暴露了常用的内置全局对象，例如 `Math` 和 `Date`。
 
-Globals not explicitly included in the list, for example user-attached properties on `window`, will not be accessible in template expressions. You can, however, explicitly define additional globals for all Vue expressions by adding them to [`app.config.globalProperties`](/api/application#app-config-globalproperties).
+列表中未明确包含的全局对象，例如挂载在 `window` 上的用户属性，在模板表达式中都无法访问。不过，你可以通过将它们添加到 [`app.config.globalProperties`](/api/application#app-config-globalproperties) 中，为所有 Vue 表达式显式定义额外的全局对象。
 
-## Directives {#directives}
+## 指令 {#directives}
 
-Directives are special attributes with the `v-` prefix. Vue provides a number of [built-in directives](/api/built-in-directives), including `v-html` and `v-bind` which we have introduced above.
+指令是带有 `v-` 前缀的特殊属性。Vue 提供了许多[内置指令](/api/built-in-directives)，包括我们上面介绍过的 `v-html` 和 `v-bind`。
 
-Directive attribute values are expected to be single JavaScript expressions (with the exception of `v-for`, `v-on` and `v-slot`, which will be discussed in their respective sections later). A directive's job is to reactively apply updates to the DOM when the value of its expression changes. Take [`v-if`](/api/built-in-directives#v-if) as an example:
+指令属性值预期为单个 JavaScript 表达式（`v-for`、`v-on` 和 `v-slot` 除外，这些会在后面的各自章节中讨论）。指令的作用是：当其表达式的值变化时，响应式地将更新应用到 DOM 上。以 [`v-if`](/api/built-in-directives#v-if) 为例：
 
 ```vue-html
-<p v-if="seen">Now you see me</p>
+<p v-if="seen">现在你看见我了</p>
 ```
 
-Here, the `v-if` directive would remove or insert the `<p>` element based on the truthiness of the value of the expression `seen`.
+这里，`v-if` 指令会根据表达式 `seen` 的真假值来移除或插入 `<p>` 元素。
 
-### Arguments {#arguments}
+### 参数 {#arguments}
 
-Some directives can take an "argument", denoted by a colon after the directive name. For example, the `v-bind` directive is used to reactively update an HTML attribute:
+某些指令可以接收一个“参数”，通过指令名后面的冒号来表示。例如，`v-bind` 指令用于响应式地更新 HTML 属性：
 
 ```vue-html
 <a v-bind:href="url"> ... </a>
 
-<!-- shorthand -->
+<!-- 简写 -->
 <a :href="url"> ... </a>
 ```
 
-Here, `href` is the argument, which tells the `v-bind` directive to bind the element's `href` attribute to the value of the expression `url`. In the shorthand, everything before the argument (i.e., `v-bind:`) is condensed into a single character, `:`.
+这里，`href` 是参数，它告诉 `v-bind` 指令将元素的 `href` 属性绑定到表达式 `url` 的值。在简写中，参数前面的所有内容（即 `v-bind:`）都被压缩成一个字符 `:`。
 
-Another example is the `v-on` directive, which listens to DOM events:
+另一个例子是 `v-on` 指令，它用于监听 DOM 事件：
 
 ```vue-html
 <a v-on:click="doSomething"> ... </a>
 
-<!-- shorthand -->
+<!-- 简写 -->
 <a @click="doSomething"> ... </a>
 ```
 
-Here, the argument is the event name to listen to: `click`. `v-on` has a corresponding shorthand, namely the `@` character. We will talk about event handling in more detail too.
+这里，参数是要监听的事件名称：`click`。`v-on` 也有对应的简写，即 `@` 字符。我们之后也会更详细地讲解事件处理。
 
-### Dynamic Arguments {#dynamic-arguments}
+### 动态参数 {#dynamic-arguments}
 
-It is also possible to use a JavaScript expression in a directive argument by wrapping it with square brackets:
+也可以通过使用方括号将 JavaScript 表达式包裹起来，把它用作指令参数：
 
 ```vue-html
 <!--
-Note that there are some constraints to the argument expression,
-as explained in the "Dynamic Argument Value Constraints" and "Dynamic Argument Syntax Constraints" sections below.
+请注意，参数表达式存在一些约束，
+如下文“动态参数值约束”和“动态参数语法约束”两节所述。
 -->
 <a v-bind:[attributeName]="url"> ... </a>
 
-<!-- shorthand -->
+<!-- 简写 -->
 <a :[attributeName]="url"> ... </a>
 ```
 
-Here, `attributeName` will be dynamically evaluated as a JavaScript expression, and its evaluated value will be used as the final value for the argument. For example, if your component instance has a data property, `attributeName`, whose value is `"href"`, then this binding will be equivalent to `v-bind:href`.
+这里，`attributeName` 会作为 JavaScript 表达式动态求值，其求值结果将作为参数的最终值。例如，如果你的组件实例有一个数据属性 `attributeName`，其值为 `"href"`，那么这个绑定就等同于 `v-bind:href`。
 
-Similarly, you can use dynamic arguments to bind a handler to a dynamic event name:
+类似地，你也可以使用动态参数将处理器绑定到动态的事件名称：
 
 ```vue-html
 <a v-on:[eventName]="doSomething"> ... </a>
 
-<!-- shorthand -->
+<!-- 简写 -->
 <a @[eventName]="doSomething"> ... </a>
 ```
 
-In this example, when `eventName`'s value is `"focus"`, `v-on:[eventName]` will be equivalent to `v-on:focus`.
+在这个例子中，当 `eventName` 的值是 `"focus"` 时，`v-on:[eventName]` 就等同于 `v-on:focus`。
 
-#### Dynamic Argument Value Constraints {#dynamic-argument-value-constraints}
+#### 动态参数值约束 {#dynamic-argument-value-constraints}
 
-Dynamic arguments are expected to evaluate to a string, with the exception of `null`. The special value `null` can be used to explicitly remove the binding. Any other non-string value will trigger a warning.
+动态参数预期求值为字符串，`null` 除外。特殊值 `null` 可用于显式移除该绑定。任何其他非字符串值都会触发警告。
 
-#### Dynamic Argument Syntax Constraints {#dynamic-argument-syntax-constraints}
+#### 动态参数语法约束 {#dynamic-argument-syntax-constraints}
 
-Dynamic argument expressions have some syntax constraints because certain characters, such as spaces and quotes, are invalid inside HTML attribute names. For example, the following is invalid:
+动态参数表达式有一些语法约束，因为某些字符，例如空格和引号，在 HTML 属性名中是无效的。例如，下面这种写法是无效的：
 
 ```vue-html
-<!-- This will trigger a compiler warning. -->
+<!-- 这会触发编译器警告。 -->
 <a :['foo' + bar]="value"> ... </a>
 ```
 
-If you need to pass a complex dynamic argument, it's probably better to use a [computed property](./computed), which we will cover shortly.
+如果你需要传递复杂的动态参数，最好使用[计算属性](./computed)，我们很快就会介绍它。
 
-When using in-DOM templates (templates directly written in an HTML file), you should also avoid naming keys with uppercase characters, as browsers will coerce attribute names into lowercase:
+在使用 DOM 内模板（直接写在 HTML 文件中的模板）时，你也应避免使用大写字符命名键，因为浏览器会将属性名强制转换为小写：
 
 ```vue-html
 <a :[someAttr]="value"> ... </a>
 ```
 
-The above will be converted to `:[someattr]` in in-DOM templates. If your component has a `someAttr` property instead of `someattr`, your code won't work. Templates inside Single-File Components are **not** subject to this constraint.
+上面的代码在 DOM 内模板中会被转换为 `:[someattr]`。如果你的组件有一个 `someAttr` 属性而不是 `someattr`，代码将无法正常工作。单文件组件中的模板**不受**此约束影响。
 
-### Modifiers {#modifiers}
+### 修饰符 {#modifiers}
 
-Modifiers are special postfixes denoted by a dot, which indicate that a directive should be bound in some special way. For example, the `.prevent` modifier tells the `v-on` directive to call `event.preventDefault()` on the triggered event:
+修饰符是用点号表示的特殊后缀，用于表明某个指令应以某种特殊方式绑定。例如，`.prevent` 修饰符会告诉 `v-on` 指令在触发的事件上调用 `event.preventDefault()`：
 
 ```vue-html
 <form @submit.prevent="onSubmit">...</form>
 ```
 
-You'll see other examples of modifiers later, [for `v-on`](./event-handling#event-modifiers) and [for `v-model`](./forms#modifiers), when we explore those features.
+当我们进一步探索这些特性时，你还会看到其他修饰符的示例，[用于 `v-on`](./event-handling#event-modifiers) 和[用于 `v-model`](./forms#modifiers)。
 
-And finally, here's the full directive syntax visualized:
+最后，这里是完整的指令语法示意图：
 
 ![directive syntax graph](./images/directive.png)
 

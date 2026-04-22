@@ -1,28 +1,28 @@
-# Provide / Inject {#provide-inject}
+# 提供 / 注入 {#provide-inject}
 
-> This page assumes you've already read the [Components Basics](/guide/essentials/component-basics). Read that first if you are new to components.
+> 本页假设你已经阅读过 [组件基础](/guide/essentials/component-basics)。如果你是组件新手，请先阅读那一页。
 
-## Prop Drilling {#prop-drilling}
+## Prop 逐级传递 {#prop-drilling}
 
-Usually, when we need to pass data from the parent to a child component, we use [props](/guide/components/props). However, imagine the case where we have a large component tree, and a deeply nested component needs something from a distant ancestor component. With only props, we would have to pass the same prop across the entire parent chain:
+通常，当我们需要将数据从父组件传递给子组件时，会使用 [props](/guide/components/props)。然而，设想这样一种情况：我们有一个很大的组件树，而某个深层嵌套的组件需要来自远处祖先组件的某些内容。仅靠 props，我们就不得不把同一个 prop 一路传过整个父链：
 
 ![prop drilling diagram](./images/prop-drilling.png)
 
 <!-- https://www.figma.com/file/yNDTtReM2xVgjcGVRzChss/prop-drilling -->
 
-Notice although the `<Footer>` component may not care about these props at all, it still needs to declare and pass them along just so `<DeepChild>` can access them. If there is a longer parent chain, more components would be affected along the way. This is called "props drilling" and definitely isn't fun to deal with.
+请注意，虽然 `<Footer>` 组件可能根本不关心这些 props，但它仍然需要声明并继续传递它们，只是为了让 `<DeepChild>` 能够访问到它们。如果父链更长，那么沿途会有更多组件受到影响。这被称为“prop 逐级传递（props drilling）”，处理起来确实不太愉快。
 
-We can solve props drilling with `provide` and `inject`. A parent component can serve as a **dependency provider** for all its descendants. Any component in the descendant tree, regardless of how deep it is, can **inject** dependencies provided by components up in its parent chain.
+我们可以通过 `provide` 和 `inject` 来解决 prop 逐级传递的问题。父组件可以作为所有后代组件的**依赖提供者**。后代树中的任何组件，无论嵌套多深，都可以注入由其父链上方组件提供的依赖。
 
 ![Provide/inject scheme](./images/provide-inject.png)
 
 <!-- https://www.figma.com/file/PbTJ9oXis5KUawEOWdy2cE/provide-inject -->
 
-## Provide {#provide}
+## 提供 {#provide}
 
 <div class="composition-api">
 
-To provide data to a component's descendants, use the [`provide()`](/api/composition-api-dependency-injection#provide) function:
+要向组件的后代提供数据，请使用 [`provide()`](/api/composition-api-dependency-injection#provide) 函数：
 
 ```vue
 <script setup>
@@ -32,7 +32,7 @@ provide(/* key */ 'message', /* value */ 'hello!')
 </script>
 ```
 
-If not using `<script setup>`, make sure `provide()` is called synchronously inside `setup()`:
+如果不使用 `<script setup>`，请确保在 `setup()` 内同步调用 `provide()`：
 
 ```js
 import { provide } from 'vue'
@@ -44,9 +44,9 @@ export default {
 }
 ```
 
-The `provide()` function accepts two arguments. The first argument is called the **injection key**, which can be a string or a `Symbol`. The injection key is used by descendant components to lookup the desired value to inject. A single component can call `provide()` multiple times with different injection keys to provide different values.
+`provide()` 函数接受两个参数。第一个参数称为**注入键**，可以是字符串或 `Symbol`。子组件会使用这个注入键来查找要注入的目标值。单个组件可以通过不同的注入键多次调用 `provide()`，以提供不同的值。
 
-The second argument is the provided value. The value can be of any type, including reactive state such as refs:
+第二个参数是所提供的值。这个值可以是任意类型，包括诸如 refs 之类的响应式状态：
 
 ```js
 import { ref, provide } from 'vue'
@@ -55,13 +55,13 @@ const count = ref(0)
 provide('key', count)
 ```
 
-Providing reactive values allows the descendant components using the provided value to establish a reactive connection to the provider component.
+提供响应式值可以让使用该值的后代组件与提供者组件建立响应式连接。
 
 </div>
 
 <div class="options-api">
 
-To provide data to a component's descendants, use the [`provide`](/api/options-composition#provide) option:
+要向组件的后代提供数据，请使用 [`provide`](/api/options-composition#provide) 选项：
 
 ```js
 export default {
@@ -71,9 +71,9 @@ export default {
 }
 ```
 
-For each property in the `provide` object, the key is used by child components to locate the correct value to inject, while the value is what ends up being injected.
+对于 `provide` 对象中的每个属性，键会被子组件用来定位正确的注入值，而值则是最终被注入的内容。
 
-If we need to provide per-instance state, for example data declared via the `data()`, then `provide` must use a function value:
+如果我们需要提供每个实例自己的状态，例如通过 `data()` 声明的数据，那么 `provide` 必须使用函数值：
 
 ```js{7-12}
 export default {
@@ -83,7 +83,7 @@ export default {
     }
   },
   provide() {
-    // use function syntax so that we can access `this`
+    // 使用函数语法，这样我们才能访问 `this`
     return {
       message: this.message
     }
@@ -91,13 +91,13 @@ export default {
 }
 ```
 
-However, do note this does **not** make the injection reactive. We will discuss [making injections reactive](#working-with-reactivity) below.
+不过，请注意这**不会**使注入保持响应式。我们会在下面讨论[让注入保持响应式](#working-with-reactivity)。
 
 </div>
 
-## App-level Provide {#app-level-provide}
+## 应用级提供 {#app-level-provide}
 
-In addition to providing data in a component, we can also provide at the app level:
+除了在组件中提供数据之外，我们还可以在应用级别提供：
 
 ```js
 import { createApp } from 'vue'
@@ -107,13 +107,13 @@ const app = createApp({})
 app.provide(/* key */ 'message', /* value */ 'hello!')
 ```
 
-App-level provides are available to all components rendered in the app. This is especially useful when writing [plugins](/guide/reusability/plugins), as plugins typically wouldn't be able to provide values using components.
+应用级提供可以在应用中渲染的所有组件中使用。这在编写 [插件](/guide/reusability/plugins) 时尤其有用，因为插件通常无法通过组件来提供值。
 
-## Inject {#inject}
+## 注入 {#inject}
 
 <div class="composition-api">
 
-To inject data provided by an ancestor component, use the [`inject()`](/api/composition-api-dependency-injection#inject) function:
+要注入由祖先组件提供的数据，请使用 [`inject()`](/api/composition-api-dependency-injection#inject) 函数：
 
 ```vue
 <script setup>
@@ -123,13 +123,13 @@ const message = inject('message')
 </script>
 ```
 
-If multiple parents provide data with the same key, inject will resolve to the value from the closest parent in component's parent chain.
+如果多个父级使用相同的键提供数据，inject 会解析为组件父链中最近的父级所提供的值。
 
-If the provided value is a ref, it will be injected as-is and will **not** be automatically unwrapped. This allows the injector component to retain the reactivity connection to the provider component.
+如果提供的值是一个 ref，它会原样注入，并且**不会**自动解包。这使得注入组件能够保持与提供者组件的响应式连接。
 
-[Full provide + inject Example with Reactivity](https://play.vuejs.org/#eNqFUUFugzAQ/MrKF1IpxfeIVKp66Kk/8MWFDXYFtmUbpArx967BhURRU9/WOzO7MzuxV+fKcUB2YlWovXYRAsbBvQije2d9hAk8Xo7gvB11gzDDxdseCuIUG+ZN6a7JjZIvVRIlgDCcw+d3pmvTglz1okJ499I0C3qB1dJQT9YRooVaSdNiACWdQ5OICj2WwtTWhAg9hiBbhHNSOxQKu84WT8LkNQ9FBhTHXyg1K75aJHNUROxdJyNSBVBp44YI43NvG+zOgmWWYGt7dcipqPhGZEe2ef07wN3lltD+lWN6tNkV/37+rdKjK2rzhRTt7f3u41xhe37/xJZGAL2PLECXa9NKdD/a6QTTtGnP88LgiXJtYv4BaLHhvg==)
+[完整的带响应式的 provide + inject 示例](https://play.vuejs.org/#eNqFUUFugzAQ/MrKF1IpxfeIVKp66Kk/8MWFDXYFtmUbpArx967BhURRU9/WOzO7MzuxV+fKcUB2YlWovXYRAsbBvQije2d9hAk8Xo7gvB11gzDDxdseCuIUG+ZN6a7JjZIvVRIlgDCcw+d3pmvTglz1okJ499I0C3qB1dJQT9YRooVaSdNiACWdQ5OICj2WwtTWhAg9hiBbhHNSOxQKu84WT8LkNQ9FBhTHXyg1K75aJHNUROxdJyNSBVBp44YI43NvG+zOgmWWYGt7dcipqPhGZEe2ef07wN3lltD+lWN6tNkV/37+rdKjK2rzhRTt7f3u41xhe37/xJZGAL2PLECXa9NKdD/a6QTTtGnP88LgiXJtYv4BaLHhvg==)
 
-Again, if not using `<script setup>`, `inject()` should only be called synchronously inside `setup()`:
+同样地，如果不使用 `<script setup>`，`inject()` 也应只在 `setup()` 内同步调用：
 
 ```js
 import { inject } from 'vue'
@@ -146,40 +146,40 @@ export default {
 
 <div class="options-api">
 
-To inject data provided by an ancestor component, use the [`inject`](/api/options-composition#inject) option:
+要注入由祖先组件提供的数据，请使用 [`inject`](/api/options-composition#inject) 选项：
 
 ```js
 export default {
   inject: ['message'],
   created() {
-    console.log(this.message) // injected value
+    console.log(this.message) // 注入的值
   }
 }
 ```
 
-Injections are resolved **before** the component's own state, so you can access injected properties in `data()`:
+注入值会在组件自身状态之前解析，所以你可以在 `data()` 中访问注入的属性：
 
 ```js
 export default {
   inject: ['message'],
   data() {
     return {
-      // initial data based on injected value
+      // 基于注入值的初始数据
       fullMessage: this.message
     }
   }
 }
 ```
 
-If multiple parents provide data with the same key, inject will resolve to the value from the closest parent in component's parent chain.
+如果多个父级使用相同的键提供数据，inject 会解析为组件父链中最近的父级所提供的值。
 
-[Full provide + inject example](https://play.vuejs.org/#eNqNkcFqwzAQRH9l0EUthOhuRKH00FO/oO7B2JtERZaEvA4F43+vZCdOTAIJCImRdpi32kG8h7A99iQKobs6msBvpTNt8JHxcTC2wS76FnKrJpVLZelKR39TSUO7qreMoXRA7ZPPkeOuwHByj5v8EqI/moZeXudCIBL30Z0V0FLXVXsqIA9krU8R+XbMR9rS0mqhS4KpDbZiSgrQc5JKQqvlRWzEQnyvuc9YuWbd4eXq+TZn0IvzOeKr8FvsNcaK/R6Ocb9Uc4FvefpE+fMwP0wH8DU7wB77nIo6x6a2hvNEME5D0CpbrjnHf+8excI=)
+[完整的 provide + inject 示例](https://play.vuejs.org/#eNqNkcFqwzAQRH9l0EUthOhuRKH00FO/oO7B2JtERZaEvA4F43+vZCdOTAIJCImRdpi32kG8h7A99iQKobs6msBvpTNt8JHxcTC2wS76FnKrJpVLZelKR39TSUO7qreMoXRA7ZPPkeOuwHByj5v8EqI/moZeXudCIBL30Z0V0FLXVXsqIA9krU8R+XbMR9rS0mqhS4KpDbZiSgrQc5JKQqvlRWzEQnyvuc9YuWbd4eXq+TZn0IvzOeKr8FvsNcaK/R6Ocb9Uc4FvefpE+fMwP0wH8DU7wB77nIo6x6a2hvNEME5D0CpbrjnHf+8excI=)
 
-### Injection Aliasing \* {#injection-aliasing}
+### 注入别名 \* {#injection-aliasing}
 
-When using the array syntax for `inject`, the injected properties are exposed on the component instance using the same key. In the example above, the property was provided under the key `"message"`, and injected as `this.message`. The local key is the same as the injection key.
+当使用 `inject` 的数组语法时，被注入的属性会使用相同的键暴露在组件实例上。在上面的例子中，这个属性是以 `"message"` 为键提供的，并被注入为 `this.message`。本地键与注入键相同。
 
-If we want to inject the property using a different local key, we need to use the object syntax for the `inject` option:
+如果我们想用不同的本地键来注入该属性，就需要为 `inject` 选项使用对象语法：
 
 ```js
 export default {
@@ -191,31 +191,31 @@ export default {
 }
 ```
 
-Here, the component will locate a property provided with the key `"message"`, and then expose it as `this.localMessage`.
+这里，组件会查找键为 `"message"` 的提供属性，然后将其暴露为 `this.localMessage`。
 
 </div>
 
-### Injection Default Values {#injection-default-values}
+### 注入默认值 {#injection-default-values}
 
-By default, `inject` assumes that the injected key is provided somewhere in the parent chain. In the case where the key is not provided, there will be a runtime warning.
+默认情况下，`inject` 假定注入键已经在父链中的某处被提供。如果该键未被提供，将会出现运行时警告。
 
-If we want to make an injected property work with optional providers, we need to declare a default value, similar to props:
+如果我们希望注入的属性在可选提供者存在时也能正常工作，就需要像 props 一样声明默认值：
 
 <div class="composition-api">
 
 ```js
-// `value` will be "default value"
-// if no data matching "message" was provided
+// 如果没有提供与 "message" 匹配的数据
+// `value` 将会是 "default value"
 const value = inject('message', 'default value')
 ```
 
-In some cases, the default value may need to be created by calling a function or instantiating a new class. To avoid unnecessary computation or side effects in case the optional value is not used, we can use a factory function for creating the default value:
+在某些情况下，默认值可能需要通过调用函数或实例化一个新类来创建。为了避免在可选值未被使用时产生不必要的计算或副作用，我们可以使用工厂函数来创建默认值：
 
 ```js
 const value = inject('key', () => new ExpensiveClass(), true)
 ```
 
-The third parameter indicates the default value should be treated as a factory function.
+第三个参数表示默认值应被视为工厂函数。
 
 </div>
 
@@ -223,16 +223,16 @@ The third parameter indicates the default value should be treated as a factory f
 
 ```js
 export default {
-  // object syntax is required
-  // when declaring default values for injections
+  // 声明注入默认值时
+  // 必须使用对象语法
   inject: {
     message: {
-      from: 'message', // this is optional if using the same key for injection
+      from: 'message', // 如果注入使用相同的键，这一项是可选的
       default: 'default value'
     },
     user: {
-      // use a factory function for non-primitive values that are expensive
-      // to create, or ones that should be unique per component instance.
+      // 对于代价高昂的非原始值，或需要每个组件实例都唯一的值，
+      // 使用工厂函数
       default: () => ({ name: 'John' })
     }
   }
@@ -241,16 +241,16 @@ export default {
 
 </div>
 
-## Working with Reactivity {#working-with-reactivity}
+## 处理响应性 {#working-with-reactivity}
 
 <div class="composition-api">
 
-When using reactive provide / inject values, **it is recommended to keep any mutations to reactive state inside of the _provider_ whenever possible**. This ensures that the provided state and its possible mutations are co-located in the same component, making it easier to maintain in the future.
+在使用响应式的 provide / inject 值时，**建议尽可能将对响应式状态的任何修改都保留在_提供者_内部**。这样可以确保所提供的状态及其可能的修改都位于同一个组件中，便于将来维护。
 
-There may be times when we need to update the data from an injector component. In such cases, we recommend providing a function that is responsible for mutating the state:
+有时我们可能需要从注入组件中更新数据。在这种情况下，我们建议提供一个负责修改状态的函数：
 
 ```vue{7-9,13}
-<!-- inside provider component -->
+<!-- 在提供者组件内 -->
 <script setup>
 import { provide, ref } from 'vue'
 
@@ -268,7 +268,7 @@ provide('location', {
 ```
 
 ```vue{5}
-<!-- in injector component -->
+<!-- 在注入者组件中 -->
 <script setup>
 import { inject } from 'vue'
 
@@ -280,7 +280,7 @@ const { location, updateLocation } = inject('location')
 </template>
 ```
 
-Finally, you can wrap the provided value with [`readonly()`](/api/reactivity-core#readonly) if you want to ensure that the data passed through `provide` cannot be mutated by the injector component.
+最后，如果你想确保通过 `provide` 传递的数据不能被注入组件修改，可以用 [`readonly()`](/api/reactivity-core#readonly) 包裹提供的值。
 
 ```vue
 <script setup>
@@ -295,7 +295,7 @@ provide('read-only-count', readonly(count))
 
 <div class="options-api">
 
-In order to make injections reactively linked to the provider, we need to provide a computed property using the [computed()](/api/reactivity-core#computed) function:
+为了让注入值与提供者保持响应式关联，我们需要使用 [computed()](/api/reactivity-core#computed) 函数提供一个计算属性：
 
 ```js{12}
 import { computed } from 'vue'
@@ -308,24 +308,24 @@ export default {
   },
   provide() {
     return {
-      // explicitly provide a computed property
+      // 显式提供一个计算属性
       message: computed(() => this.message)
     }
   }
 }
 ```
 
-[Full provide + inject Example with Reactivity](https://play.vuejs.org/#eNqNUctqwzAQ/JVFFyeQxnfjBEoPPfULqh6EtYlV9EKWTcH43ytZtmPTQA0CsdqZ2dlRT16tPXctkoKUTeWE9VeqhbLGeXirheRwc0ZBds7HKkKzBdBDZZRtPXIYJlzqU40/I4LjjbUyIKmGEWw0at8UgZrUh1PscObZ4ZhQAA596/RcAShsGnbHArIapTRBP74O8Up060wnOO5QmP0eAvZyBV+L5jw1j2tZqsMp8yWRUHhUVjKPoQIohQ460L0ow1FeKJlEKEnttFweijJfiORElhCf5f3umObb0B9PU/I7kk17PJj7FloN/2t7a2Pj/Zkdob+x8gV8ZlMs2de/8+14AXwkBngD9zgVqjg2rNXPvwjD+EdlHilrn8MvtvD1+Q==)
+[完整的带响应式的 provide + inject 示例](https://play.vuejs.org/#eNqNUctqwzAQ/JVFFyeQxnfjBEoPPfULqh6EtYlV9EKWTcH43ytZtmPTQA0CsdqZ2dlRT16tPXctkoKUTeWE9VeqhbLGeXirheRwc0ZBds7HKkKzBdBDZZRtPXIYJlzqU40/I4LjjbUyIKmGEWw0at8UgZrUh1PscObZ4ZhQAA596/RcAShsGnbHArIapTRBP74O8Up060wnOO5QmP0eAvZyBV+L5jw1j2tZqsMp8yWRUHhUVjKPoQIohQ460L0ow1FeKJlEKEnttFweijJfiORElhCf5f3umObb0B9PU/I7kk17PJj7FloN/2t7a2Pj/Zkdob+x8gV8ZlMs2de/8+14AXwkBngD9zgVqjg2rNXPvwjD+EdlHilrn8MvtvD1+Q==)
 
-The `computed()` function is typically used in Composition API components, but can also be used to complement certain use cases in Options API. You can learn more about its usage by reading the [Reactivity Fundamentals](/guide/essentials/reactivity-fundamentals) and [Computed Properties](/guide/essentials/computed) with the API Preference set to Composition API.
+`computed()` 函数通常用于 Composition API 组件，但也可以用于补充 Options API 中的某些使用场景。你可以通过阅读将 API 偏好设置为 Composition API 时的 [响应式基础](/guide/essentials/reactivity-fundamentals) 和 [计算属性](/guide/essentials/computed) 了解更多用法。
 
 </div>
 
-## Working with Symbol Keys {#working-with-symbol-keys}
+## 使用 Symbol 键 {#working-with-symbol-keys}
 
-So far, we have been using string injection keys in the examples. If you are working in a large application with many dependency providers, or you are authoring components that are going to be used by other developers, it is best to use [Symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) injection keys to avoid potential collisions.
+到目前为止，我们在示例中一直使用字符串注入键。如果你正在开发一个拥有许多依赖提供者的大型应用，或者你正在编写会被其他开发者使用的组件，那么最好使用 [Symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) 注入键，以避免潜在的冲突。
 
-It's recommended to export the Symbols in a dedicated file:
+建议将这些 Symbols 导出到一个专门的文件中：
 
 ```js [keys.js]
 export const myInjectionKey = Symbol()
@@ -334,38 +334,38 @@ export const myInjectionKey = Symbol()
 <div class="composition-api">
 
 ```js
-// in provider component
+// 在提供者组件中
 import { provide } from 'vue'
 import { myInjectionKey } from './keys.js'
 
 provide(myInjectionKey, {
-  /* data to provide */
+  /* 要提供的数据 */
 })
 ```
 
 ```js
-// in injector component
+// 在注入者组件中
 import { inject } from 'vue'
 import { myInjectionKey } from './keys.js'
 
 const injected = inject(myInjectionKey)
 ```
 
-See also: [Typing Provide / Inject](/guide/typescript/composition-api#typing-provide-inject) <sup class="vt-badge ts" />
+另请参见：[类型化 Provide / Inject](/guide/typescript/composition-api#typing-provide-inject) <sup class="vt-badge ts" />
 
 </div>
 
 <div class="options-api">
 
 ```js
-// in provider component
+// 在提供者组件中
 import { myInjectionKey } from './keys.js'
 
 export default {
   provide() {
     return {
       [myInjectionKey]: {
-        /* data to provide */
+        /* 要提供的数据 */
       }
     }
   }
@@ -373,7 +373,7 @@ export default {
 ```
 
 ```js
-// in injector component
+// 在注入者组件中
 import { myInjectionKey } from './keys.js'
 
 export default {

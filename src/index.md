@@ -1,6 +1,7 @@
 ---
 page: true
-title: Vue.js - The Progressive JavaScript Framework
+title: Vue.js 中文文档 - 渐进式 JavaScript 框架
+titleTemplate: false
 ---
 
 <script setup>

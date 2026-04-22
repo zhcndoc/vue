@@ -1,10 +1,10 @@
-# Lifecycle Hooks {#lifecycle-hooks}
+# 生命周期钩子 {#lifecycle-hooks}
 
-Each Vue component instance goes through a series of initialization steps when it's created - for example, it needs to set up data observation, compile the template, mount the instance to the DOM, and update the DOM when data changes. Along the way, it also runs functions called lifecycle hooks, giving users the opportunity to add their own code at specific stages.
+每个 Vue 组件实例在创建时都会经历一系列初始化步骤——例如，它需要设置数据监听、编译模板、将实例挂载到 DOM，并在数据变化时更新 DOM。在此过程中，它还会运行称为生命周期钩子的函数，为用户提供在特定阶段添加自己代码的机会。
 
-## Registering Lifecycle Hooks {#registering-lifecycle-hooks}
+## 注册生命周期钩子 {#registering-lifecycle-hooks}
 
-For example, the <span class="composition-api">`onMounted`</span><span class="options-api">`mounted`</span> hook can be used to run code after the component has finished the initial rendering and created the DOM nodes:
+例如，<span class="composition-api">`onMounted`</span><span class="options-api">`mounted`</span> 钩子可用于在组件完成初始渲染并创建 DOM 节点后运行代码：
 
 <div class="composition-api">
 
@@ -13,7 +13,7 @@ For example, the <span class="composition-api">`onMounted`</span><span class="op
 import { onMounted } from 'vue'
 
 onMounted(() => {
-  console.log(`the component is now mounted.`)
+  console.log(`组件现在已经挂载了。`)
 })
 </script>
 ```
@@ -24,43 +24,43 @@ onMounted(() => {
 ```js
 export default {
   mounted() {
-    console.log(`the component is now mounted.`)
+    console.log(`组件现在已经挂载了。`)
   }
 }
 ```
 
 </div>
 
-There are also other hooks which will be called at different stages of the instance's lifecycle, with the most commonly used being <span class="composition-api">[`onMounted`](/api/composition-api-lifecycle#onmounted), [`onUpdated`](/api/composition-api-lifecycle#onupdated), and [`onUnmounted`](/api/composition-api-lifecycle#onunmounted).</span><span class="options-api">[`mounted`](/api/options-lifecycle#mounted), [`updated`](/api/options-lifecycle#updated), and [`unmounted`](/api/options-lifecycle#unmounted).</span>
+在实例生命周期的不同阶段还会调用其他钩子，其中最常用的是 <span class="composition-api">[`onMounted`](/api/composition-api-lifecycle#onmounted)、[`onUpdated`](/api/composition-api-lifecycle#onupdated) 和 [`onUnmounted`](/api/composition-api-lifecycle#onunmounted)。</span><span class="options-api">[`mounted`](/api/options-lifecycle#mounted)、[`updated`](/api/options-lifecycle#updated) 和 [`unmounted`](/api/options-lifecycle#unmounted)。</span>
 
 <div class="options-api">
 
-All lifecycle hooks are called with their `this` context pointing to the current active instance invoking it. Note this means you should avoid using arrow functions when declaring lifecycle hooks, as you won't be able to access the component instance via `this` if you do so.
+所有生命周期钩子在调用时，其 `this` 上下文都指向触发它们的当前活动实例。请注意，这意味着在声明生命周期钩子时应避免使用箭头函数，因为这样你将无法通过 `this` 访问组件实例。
 
 </div>
 
 <div class="composition-api">
 
-When calling `onMounted`, Vue automatically associates the registered callback function with the current active component instance. This requires these hooks to be registered **synchronously** during component setup. For example, do not do this:
+在调用 `onMounted` 时，Vue 会自动将已注册的回调函数与当前活动的组件实例关联起来。这要求这些钩子必须在组件 setup 期间**同步**注册。例如，不要这样做：
 
 ```js
 setTimeout(() => {
   onMounted(() => {
-    // this won't work.
+    // 这将无法工作。
   })
 }, 100)
 ```
 
-Do note this doesn't mean that the call must be placed lexically inside `setup()` or `<script setup>`. `onMounted()` can be called in an external function as long as the call stack is synchronous and originates from within `setup()`.
+请注意，这并不意味着调用必须在语法上位于 `setup()` 或 `<script setup>` 内部。只要调用栈是同步的，并且来源于 `setup()` 内部，就可以在外部函数中调用 `onMounted()`。
 
 </div>
 
-## Lifecycle Diagram {#lifecycle-diagram}
+## 生命周期图示 {#lifecycle-diagram}
 
-Below is a diagram for the instance lifecycle. You don't need to fully understand everything going on right now, but as you learn and build more, it will be a useful reference.
+下面是实例生命周期的图示。你现在不需要完全理解其中的所有内容，但随着你不断学习和构建，它会成为一个有用的参考。
 
-![Component lifecycle diagram](./images/lifecycle.png)
+![组件生命周期图示](./images/lifecycle.png)
 
 <!-- https://www.figma.com/file/Xw3UeNMOralY6NV7gSjWdS/Vue-Lifecycle -->
 
-Consult the <span class="composition-api">[Lifecycle Hooks API reference](/api/composition-api-lifecycle)</span><span class="options-api">[Lifecycle Hooks API reference](/api/options-lifecycle)</span> for details on all lifecycle hooks and their respective use cases.
+有关所有生命周期钩子及其各自使用场景的详细信息，请参阅 <span class="composition-api">[生命周期钩子 API 参考](/api/composition-api-lifecycle)</span><span class="options-api">[生命周期钩子 API 参考](/api/options-lifecycle)</span>。

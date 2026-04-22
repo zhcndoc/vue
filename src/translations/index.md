@@ -2,9 +2,9 @@
 aside: false
 ---
 
-# Translations {#translations}
+# 翻译 {#translations}
 
-## Available Languages {#available-languages}
+## 可用语言 {#available-languages}
 
 - [English](https://vuejs.org/) [[source](https://github.com/vuejs/docs)]
 - [简体中文 / Simplified Chinese](https://cn.vuejs.org/) [[source](https://github.com/vuejs-translations/docs-zh-cn)]
@@ -21,14 +21,14 @@ aside: false
 - [繁體中文 / Traditional Chinese](https://zh-hk.vuejs.org/) [[source](https://github.com/vuejs-translations/docs-zh-hk)]
 - [Polski / Polish](https://pl.vuejs.org/) [[source](https://github.com/vuejs-translations/docs-pl)]
 
-## Work in Progress Languages {#work-in-progress-languages}
+## 进行中的语言 {#work-in-progress-languages}
 
 - [العربية / Arabic](https://ar.vuejs.org/) [[source](https://github.com/vuejs-translations/docs-ar)]
 - [Español / Spanish](https://vue3-spanish-docs.netlify.app/) [[source](https://github.com/icarusgk/vuejs-spanish-docs)]
 - [Deutsch / German](https://de.vuejs.org/) [[source](https://github.com/vuejs-translations/docs-de)]
 
-## Starting a new Translation {#starting-a-new-translation}
+## 开始新的翻译 {#starting-a-new-translation}
 
-The Vue documentation has recently undergone a major revision, so translations in other languages are still missing or work-in-progress.
+Vue 文档最近经历了一次重大修订，因此其他语言的翻译仍然缺失或处于进行中。
 
-We welcome community efforts to provide more translations. Translation efforts are managed in the [vuejs-translations](https://github.com/vuejs-translations/) GitHub organization. If you are interested in contributing, please check out the [Translation Guidelines](https://github.com/vuejs-translations/guidelines/blob/main/README.md) to get started.
+我们欢迎社区为提供更多翻译所做的努力。翻译工作由 GitHub 组织 [vuejs-translations](https://github.com/vuejs-translations/) 负责管理。如果你有兴趣参与贡献，请查看 [Translation Guidelines](https://github.com/vuejs-translations/guidelines/blob/main/README.md) 以开始上手。

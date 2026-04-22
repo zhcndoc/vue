@@ -1,36 +1,36 @@
-# Getting Started {#getting-started}
+# 开始使用 {#getting-started}
 
-Welcome to the Vue tutorial!
+欢迎来到 Vue 教程！
 
-The goal of this tutorial is to quickly give you an experience of what it feels like to work with Vue, right in the browser. It does not aim to be comprehensive, and you don't need to understand everything before moving on. However, after you complete it, make sure to also read the <a target="_blank" href="/guide/introduction.html">Guide</a> which covers each topic in more detail.
+本教程的目标是让你在浏览器中快速体验使用 Vue 的感觉。它并不追求全面覆盖，你也不需要在继续之前理解所有内容。不过，在完成之后，也请务必阅读 <a target="_blank" href="/guide/introduction.html">指南</a>，其中会更详细地介绍每个主题。
 
-## Prerequisites {#prerequisites}
+## 前置条件 {#prerequisites}
 
-The tutorial assumes basic familiarity with HTML, CSS and JavaScript. If you are totally new to front-end development, it might not be the best idea to jump right into a framework as your first step - grasp the basics then come back! Prior experience with other frameworks helps, but is not required.
+本教程默认你已经对 HTML、CSS 和 JavaScript 有基本了解。如果你对前端开发完全陌生，可能不太适合把框架作为第一步直接上手——先掌握基础，再回来继续学习！如果你有其他框架的使用经验会有帮助，但这不是必需的。
 
-## How to Use This Tutorial {#how-to-use-this-tutorial}
+## 如何使用本教程 {#how-to-use-this-tutorial}
 
-You can edit the code <span class="wide">on the right</span><span class="narrow">below</span> and see the result update instantly. Each step will introduce a core feature of Vue, and you will be expected to complete the code to get the demo working. If you get stuck, you will have a "Show me!" button that reveals the working code for you. Try not to rely on it too much - you'll learn faster by figuring things out on your own.
+你可以编辑 <span class="wide">右侧</span><span class="narrow">下方</span>的代码，并立即看到结果更新。每一步都会介绍 Vue 的一个核心功能，而你需要完成相应代码来让演示运行起来。如果你遇到困难，可以点击“Show me!”按钮查看可工作的代码。尽量不要过度依赖它——自己动手思考会学得更快。
 
-If you are an experienced developer coming from Vue 2 or other frameworks, there are a few settings you can tweak to make the best use of this tutorial. If you are a beginner, it's recommended to go with the defaults.
+如果你是从 Vue 2 或其他框架转来的有经验开发者，这里有一些设置可以调整，以便更好地使用本教程。如果你是初学者，建议保持默认设置。
 
 <details>
-<summary>Tutorial Setting Details</summary>
+<summary>教程设置详情</summary>
 
-- Vue offers two API styles: Options API and Composition API. This tutorial is designed to work for both - you can choose your preferred style using the **API Preference** switches at the top. <a target="_blank" href="/guide/introduction.html#api-styles">Learn more about API styles</a>.
+- Vue 提供两种 API 风格：Options API 和 Composition API。本教程针对两种风格都进行了设计——你可以使用顶部的 **API Preference** 开关来选择你偏好的风格。<a target="_blank" href="/guide/introduction.html#api-styles">了解更多关于 API 风格的信息</a>。
 
-- You can also switch between SFC-mode or HTML-mode. The former will show code examples in <a target="_blank" href="/guide/introduction.html#single-file-components">Single-File Component</a> (SFC) format, which is what most developers use when they use Vue with a build step. HTML-mode shows usage without a build step.
+- 你也可以在 SFC 模式和 HTML 模式之间切换。前者会以 <a target="_blank" href="/guide/introduction.html#single-file-components">单文件组件</a>（SFC）格式展示代码示例，这是大多数开发者在使用带构建步骤的 Vue 时会采用的方式。HTML 模式则展示不使用构建步骤的用法。
 
 <div class="html">
 
 :::tip
-If you're about to use HTML-mode without a build step in your own applications, make sure you either change imports to:
+如果你打算在自己的应用中不使用构建步骤而直接采用 HTML 模式，请确保你要么将导入改为：
 
 ```js
 import { ... } from 'vue/dist/vue.esm-bundler.js'
 ```
 
-inside your scripts or configure your build tool to resolve `vue` accordingly. Sample config for [Vite](https://vite.dev/):
+要么在你的脚本中，或者配置你的构建工具以相应地解析 `vue`。以下是 [Vite](https://vite.dev/) 的示例配置：
 
 ```js [vite.config.js]
 export default {
@@ -42,11 +42,11 @@ export default {
 }
 ```
 
-See the respective [section in Tooling guide](/guide/scaling-up/tooling.html#note-on-in-browser-template-compilation) for more information.
+更多信息请参阅 [工具指南中的相关部分](/guide/scaling-up/tooling.html#note-on-in-browser-template-compilation)。
 :::
 
 </div>
 
 </details>
 
-Ready? Click "Next" to get started.
+准备好了吗？点击“Next”开始吧。

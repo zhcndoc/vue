@@ -3,23 +3,23 @@
     "name": "Vehikl",
     "logo": "vehikl.svg",
     "flipLogo": true,
-    "intro": "Vehikl has deep knowledge of Vue and will act as an extension of your team. We focus on writing clean, maintainable code. We are passionate about continual improvement, and we practice Mob Programming and Pair Programming on a daily basis.",
+    "intro": "Vehikl 对 Vue 有深入理解，能够成为你团队的延伸。我们专注于编写整洁、可维护的代码，并坚持持续改进，日常采用群体编程和结对编程。",
     "description": [
-      "Vehikl is a Team that values Caring, Growing, and Delivering. We instill those values in everything we do, and everyone we work with. Our goal is to be an extension of your development efforts, and build exceptional web and mobile applications.",
+      "Vehikl 是一支重视关怀、成长与交付的团队。我们将这些价值观贯彻到所做的一切以及每一次合作中。我们的目标是成为你研发能力的延伸，打造卓越的 Web 和移动应用。",
       "Our Team has a strong specialty and deep knowledge of Vue, Laravel, and React frameworks. In addition to this, our Team of 75 has worked with every tech stack you can imagine. We’re proud test-driven developers who focus on writing clean, maintainable code. Our Team is passionate about continual improvement, and we practice Mob Programming and Pair Programming on a daily basis.",
-      "We’ve worked on projects from a wide range of companies ranging from startups to enterprise-level organizations. We are one team with our clients and we share in their successes.",
-      "So what does working with us look like?",
-      "- Daily communication with your team",
-      "- Collaborate with you on weekly or bi-weekly Sprint Planning",
-      "- Demos & Retrospectives at the end of each Sprint",
-      "- Collaborative PR reviews",
-      "- Daily Pairing and Mobbing sessions",
-      "We’re always looking for opportunities to learn new things and refine our skills using lean Agile development, open communication, and collaboration. We combine one-on-one communication, and the iterative values of the Agile methodology to deliver high quality code.",
-      "We’re active members of the JavaScript and PHP community, and love to collaborate with other enthusiasts."
+      "我们服务过从初创公司到大型企业的各类客户。我们与客户站在同一阵线，并共同分享成功。",
+      "与我们合作会是什么样？",
+      "- 每天与你的团队沟通",
+      "- 每周或每两周共同进行 Sprint 规划",
+      "- 每个 Sprint 结束时进行演示与复盘",
+      "- 协作式 PR 审查",
+      "- 每天进行结对与群体编程",
+      "我们始终在寻找学习新事物和打磨技能的机会，通过精益敏捷开发、开放沟通和高效协作来持续提升。我们结合一对一沟通与敏捷方法论的迭代价值，交付高质量代码。",
+      "我们是 JavaScript 与 PHP 社区的活跃成员，也乐于与其他技术爱好者合作。"
     ],
     "proficiencies": ["Vue", "Laravel", "React", "Node.js", "Unity"],
-    "region": ["North America"],
-    "location": ["Ontario, Canada"],
+    "region": ["北美"],
+    "location": ["加拿大，安大略省"],
     "website": {
       "text": "www.vehikl.com",
       "url": "https://www.vehikl.com?utm_source=vue_partners_page"
@@ -33,18 +33,18 @@
     "logo": "monterail.png",
     "hero": "monterail-hero.png",
     "flipLogo": true,
-    "intro": "Monterail is a full-service software development company from Poland. Since 2010, we have been building innovative software for start-ups, SMBs, and enterprises from various industries globally. Our Vue experts, using battle-tested technologies and frameworks, have delivered more than 30 Vue-based projects.",
+    "intro": "Monterail 是一家来自波兰的全栈软件开发公司。自 2010 年以来，我们持续为全球各行业的初创企业、中小企业和大型企业打造创新软件。我们的 Vue 专家借助经过验证的技术与框架，已交付 30 多个基于 Vue 的项目。",
     "description": [
       "At a full-service consultancy like Monterail, you get every competence under one roof. From concept, to design, and product release. Depending on the product lifecycle stage, we guide clients through building applications from scratch or scaling them quickly.",
       "A diverse pool of experts, including Product Designers, QA specialists and Business Analysts, take care of professional tech stack consultation and business idea validation. We work within the Agile methodology ensuring smooth communication flow and aim for long-term partnerships. We've developed all kinds of Vue applications from virtual real estate tours to donation platforms.",
-      "Why Monterail?",
-      "- Listed in the Financial Times 1000 rank twice in a row (2018 & 2019)",
+      "为什么选择 Monterail？",
+      "- 连续两年入选 Financial Times 1000（2018 与 2019）",
       "- Recognized by Deloitte as one of the fastest-growing tech companies in Central Europe (2016 & 2017)",
-      "- Rated 4.7/5 on Clutch.",
-      "- NPS Score - 71",
-      "- Experts in software development and design with solid business experience",
-      "- A team experienced with remote work in a multicultural environment",
-      "- Detailed budget estimation received in weeks, not months"
+      "- 在 Clutch 上评分 4.7/5",
+      "- NPS 得分 71",
+      "- 兼具软件开发、设计与扎实商业经验的专家团队",
+      "- 拥有多元文化远程协作经验的团队",
+      "- 详细预算评估以周为单位交付，而不是数月"
     ],
     "proficiencies": [
       "Vue.js",
@@ -53,7 +53,7 @@
       "React Native",
       "Flutter"
     ],
-    "region": ["Europe"],
+    "region": ["欧洲"],
     "website": {
       "text": "www.monterail.com",
       "url": "https://www.monterail.com/services/vue-js-development?utm_source=partnership&utm_medium=logo&utm_campaign=Vue"
@@ -65,16 +65,16 @@
   {
     "name": "Curotec",
     "logo": "curotec.png",
-    "intro": "Work with a team that understands Vue.js inside and out. SaaS and enterprise teams leverage Curotec for best-in-class project execution and staff augmentation services focused on Vue.js.",
+    "intro": "与一支真正吃透 Vue.js 的团队合作。SaaS 与企业团队借助 Curotec 获得专注于 Vue.js 的一流项目执行与人员扩充服务。",
     "description": [
       "Whether you need a firm to build your idea, support an existing codebase, or augment your front-end dev team, we’ve got you covered. SaaS and enterprise product teams turn to Curotec for a firm that can get the job done right.",
       "We've got an all-shores model with team members in the US, LATAM, and South Asia. We'll create a flexible engagement for your needs aligned with your budget, timezone, and project goals. We also cover three main focus areas which include:",
-      "- Enterprise software development",
-      "- SaaS product development",
-      "- Headless / Jamstack website development",
-      "If you're looking for a Vue.js-focused front-end development team that writes great quality code and gets stuff done, click the contact button below and get in touch!"
+      "- 企业软件开发",
+      "- SaaS 产品开发",
+      "- Headless / Jamstack 网站开发",
+      "如果你正在寻找一支专注 Vue.js、代码质量出色且执行力强的前端开发团队，欢迎点击下方联系按钮与我们沟通！"
     ],
-    "region": ["North America", "Latin America"],
+    "region": ["北美", "拉丁美洲"],
     "proficiencies": [
       "Vue.js",
       "Nuxt",
@@ -95,19 +95,19 @@
   {
     "name": "Redberry",
     "logo": "redberry.png",
-    "intro": "We are the 100+ award-winning Vue and Laravel development agency you couldn't afford at home. But we are based in Georgia, the country. So you can.",
+    "intro": "我们是一家拥有 100+ 项奖项的 Vue 与 Laravel 开发机构，在你的本地市场可能价格高昂，但我们位于格鲁吉亚，因此你可以以更具竞争力的成本与我们合作。",
     "description": [
       "We’re Redberry — an official Vue Partner agency, based in Tbilisi, Georgia. We’re a 200-person team that’s shipped 300+ products across the EU, UK, US, and the Middle East. Founded in 2014 by four friends to build reliable, scalable software, we still live that mission—now at scale, with Vue at the heart of our front end.",
       "We choose the best option for your product: Nuxt when search visibility and first-load speed matter most, and Inertia + Vue when you want to move quickly on a Laravel backend. Either way, you get a fast, SEO-friendly interface that feels instant. We also set up a reusable design system so new features ship in days, stay on-brand, and remain easy to maintain. If your users need live data or work with spotty connectivity, we design for real-time updates and offline use.",
       "Every engagement starts with clarity—goals, users, constraints. In Discovery & Planning, we align on architecture, roadmap, backlog, and risks. Then we run dual-track delivery (design and engineering in parallel) so learning feeds building without slowing momentum.",
       "Our engineering playbook de-risks delivery. Each task starts on a feature branch off main, and we keep main in a releasable state. Changes move through a structured pipeline—Local → Development → Staging → Prerelease → Production—with automated CI/CD, review gates, and client validation in prerelease, so you see progress early and handoffs are clean. We bake in quality from day one: strict code standards, automated tests, measurable performance and accessibility targets, and clear API contracts. After launch, we monitor and trace real usage, fix issues before customers notice, and use data to guide what we improve next.",
-      "How we work:",
-      "Staff Augmentation — embed our Vue engineers into your team.",
-      "Managed Projects — we own delivery end-to-end (discovery → build → launch → evolve).",
-      "Stuck product? We specialize in rescue projects—stabilizing codebases and accelerating delivery. First we audit, then prioritize and fix.",
+      "我们的合作方式：",
+      "人员增强 —— 将我们的 Vue 工程师嵌入到你的团队中。",
+      "托管项目 —— 我们端到端负责交付（探索 → 开发 → 上线 → 演进）。",
+      "产品卡住了？我们擅长项目救援，帮助稳定代码库并加速交付。先审计，再排优先级并修复。",
       "We typically pair Vue with a robust Laravel backend (we’re one of only 8 diamond-tier Laravel Partners worldwide), and being based in Georgia (the country) lets us deliver top-tier engineering with unbeatable value for price."
     ],
-    "region": ["Europe"],
+    "region": ["欧洲"],
     "proficiencies": [
       "Vue",
       "Laravel",
@@ -124,13 +124,13 @@
   {
     "name": "WebReinvent",
     "logo": "webreinvent.png",
-    "intro": "WebReinvent is a software development company that provides a range of end-to-end software products, real-time apps, multi-tenant SaaS applications, low latency API & mobile app development services. We have delivered MVP to enterprise-level software globally from startup to MNC. Email us, and let's build your software product.",
+    "intro": "WebReinvent 是一家软件开发公司，提供端到端软件产品、实时应用、多租户 SaaS、低延迟 API 与移动应用开发服务。我们已为全球从初创公司到跨国企业交付从 MVP 到企业级的软件产品。欢迎联系我们，一起打造你的软件产品。",
     "description": [
       "WebReinvent is a process-oriented software development company that provides a range of end-to-end software products, real-time apps, multi-tenant SaaS applications, low latency API & mobile apps development services. Our team is well versed with VueJs and its ecosystem. We have delivered MVP to enterprise-level software from startup to MNC. Not only client projects we have developed multiple open-source products which are based on VueJs. We are proud to mention that we are one of the few official Laravel & Nuxt partners too.",
       "Our team loves to follow the industry standards, some of which are managing git repo, code review, release deployments via CI/CD (DevOps), automated software testing, maintaining detailed technical documentation, application performance monitoring, etc.",
-      "Email us, and let's build your software product."
+      "欢迎给我们发邮件，一起打造你的软件产品。"
     ],
-    "region": ["North America", "Asia", "Europe"],
+    "region": ["北美", "亚洲", "欧洲"],
     "proficiencies": ["Vue", "Laravel", "Nuxt", "Ionic", "Node.js"],
     "website": {
       "text": "webreinvent.com",
@@ -144,16 +144,16 @@
     "logo": "herodevs.png",
     "flipLogo": true,
     "hero": "herodevs-hero.png",
-    "intro": "End-of-life of open source software versions creates massive challenges for companies. HeroDevs offers two solutions: (1) We provide never-ending support for sunsetted open source software, and (2)  we provide consulting and engineering to help companies migrate to in-support open source software.",
+    "intro": "开源软件版本停止维护会给企业带来巨大挑战。HeroDevs 提供两类解决方案：（1）为已停止支持的开源软件提供持续支持；（2）通过咨询与工程服务帮助企业迁移到仍受支持的开源软件。",
     "description": [
       "When open source software is reaching end-of-life, you’re faced with a difficult decision: do you spend months or years of dev time migrating your code, or do you risk being non-compliant with industry regulations and your company’s SLAs?",
       "At HeroDevs we pride ourselves in being the experts that help you navigate end-of-life events in your technology stack. Companies offering enterprise support for open source libraries stop at the end of life. That’s where our value prop begins with our Never-Ending Support (NES) products. Our team has not only provided over 450 organizations with supported, secured versions of open source software beyond their end of life, but has also helped dozens of companies migrate their codebase to a modern, supported open source stack.",
       "With all NES Products we offer: continuous source code scanning for vulnerabilities, 5-minute installation without leaving your network, scanning for possible IP infringement in your code, and checks for platform, browser and 3rd-party library compatibility.",
-      "Need to migrate? HeroDevs can help with that too. Hire our team of experts to help you navigate the challenges that come with migrating your code.",
-      "Want to learn more? Find us at herodevs.com or send us a note at hello@herodevs.com."
+      "需要迁移？HeroDevs 也能帮助你。欢迎聘请我们的专家团队，协助你应对代码迁移中的各种挑战。",
+      "想了解更多？欢迎访问 herodevs.com，或发送邮件至 hello@herodevs.com。"
     ],
-    "proficiencies": ["Vue", "Angular", "Migration", "EOL Support"],
-    "region": ["North America"],
+    "proficiencies": ["Vue", "Angular", "迁移", "停止维护版本支持"],
+    "region": ["北美"],
     "website": {
       "text": "herodevs.com",
       "url": "https://www.herodevs.com/support/vue"
@@ -166,14 +166,14 @@
     "name": "Proxify",
     "logo": "proxify.svg",
     "flipLogo": true,
-    "intro": "With Proxify, you can hire expert Vue.js developers, at a fair price and with zero risk, in just a few days. The quality and commitment of an in-house team, with the flexibility of contractors. Augment your existing team or build a new one, without the risks and admin of permanent employment.",
+    "intro": "通过 Proxify，你可以在几天内以合理价格、零风险地聘请到资深 Vue.js 开发者。既拥有内部团队的质量与投入度，又保有外部合作的灵活性。无论是扩充现有团队还是搭建新团队，都无需承担长期雇佣的风险和管理负担。",
     "description": [
       "Proxify is an end-to-end partner that connects businesses with thoroughly vetted developers, matching you with perfect-fit developers in just two days.",
       "Our network includes over 4,000 developers with expertise in 500+ tech skills. We accept only 2% of applicants to ensure the highest quality standards. Thousands of businesses worldwide trust our rigorous selection process.",
-      "- <b>Time-to-hire</b>: Ideal candidates are presented within just two days.",
-      "- <b>A core team member, not just a freelancer</b>: Proxify developers deliver quality on business-critical code and fit seamlessly with your team’s culture. No different to your in-house staff.",
-      "- <b>Fair pricing</b>: Our model of working with top-tier talent remotely across the world is both cost-effective for our clients, and lucrative for our developers. Everybody wins.",
-      "- <b>Risk-free and adaptable</b>: Enjoy a team that can quickly adjust as your priorities shift, without the risks and limitations of permanent employment."
+      "- <b>招聘速度</b>：理想候选人最快两天内即可推荐给你。",
+      "- <b>不是自由职业者，而是核心团队成员</b>：Proxify 开发者能够在关键业务代码上稳定交付，并自然融入你的团队文化，与内部员工无异。",
+      "- <b>合理定价</b>：我们通过远程连接全球顶尖人才，这种模式对客户更具性价比，对开发者也更具吸引力，实现多方共赢。",
+      "- <b>零风险且适应性强</b>：当优先级变化时，团队可以快速调整，而无需承担长期雇佣的风险和限制。"
     ],
     "proficiencies": [
       "Vue",
@@ -182,8 +182,8 @@
       "React Native",
       "Flutter"
     ],
-    "region": ["Europe"],
-    "location": ["Europe"],
+    "region": ["欧洲"],
+    "location": ["欧洲"],
     "website": {
       "text": "proxify.io",
       "url": "https://proxify.io?utm_source=partnership&utm_medium=vuejs&utm_campaign=partners-proxify.html"

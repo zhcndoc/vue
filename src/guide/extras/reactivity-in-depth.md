@@ -6,19 +6,19 @@ outline: deep
 import SpreadSheet from './demos/SpreadSheet.vue'
 </script>
 
-# Reactivity in Depth {#reactivity-in-depth}
+# 深入响应式系统 {#reactivity-in-depth}
 
-One of Vue’s most distinctive features is the unobtrusive reactivity system. Component state consists of reactive JavaScript objects. When you modify them, the view updates. It makes state management simple and intuitive, but it’s also important to understand how it works to avoid some common gotchas. In this section, we are going to dig into some of the lower-level details of Vue’s reactivity system.
+Vue 最具特色的功能之一就是它那种不显眼的响应式系统。组件状态由响应式的 JavaScript 对象组成。当你修改它们时，视图也会更新。它让状态管理变得简单直观，但了解它的工作原理也很重要，这样才能避免一些常见陷阱。在这一节中，我们将深入了解 Vue 响应式系统的一些底层细节。
 
-## What is Reactivity? {#what-is-reactivity}
+## 什么是响应式？ {#what-is-reactivity}
 
-This term comes up in programming quite a bit these days, but what do people mean when they say it? Reactivity is a programming paradigm that allows us to adjust to changes in a declarative manner. The canonical example that people usually show, because it’s a great one, is an Excel spreadsheet:
+这些年这个术语在编程中经常出现，但人们说它时到底指什么呢？响应式是一种编程范式，它允许我们以声明式的方式来应对变化。人们通常会给出的经典示例，因为它非常典型，就是一个 Excel 电子表格：
 
 <SpreadSheet />
 
-Here cell A2 is defined via a formula of `= A0 + A1` (you can click on A2 to view or edit the formula), so the spreadsheet gives us 3. No surprises there. But if you update A0 or A1, you'll notice that A2 automagically updates too.
+这里单元格 A2 通过公式 `= A0 + A1` 定义（你可以点击 A2 来查看或编辑公式），所以电子表格给出的是 3。没什么意外的。但如果你更新 A0 或 A1，你会注意到 A2 也会自动更新。
 
-JavaScript doesn’t usually work like this. If we were to write something comparable in JavaScript:
+JavaScript 通常不是这样工作的。如果我们用 JavaScript 写一个类似的例子：
 
 ```js
 let A0 = 1
@@ -28,12 +28,12 @@ let A2 = A0 + A1
 console.log(A2) // 3
 
 A0 = 2
-console.log(A2) // Still 3
+console.log(A2) // 仍然是 3
 ```
 
-When we mutate `A0`, `A2` does not change automatically.
+当我们修改 `A0` 时，`A2` 不会自动变化。
 
-So how would we do this in JavaScript? First, in order to re-run the code that updates `A2`, let's wrap it in a function:
+那么我们如何在 JavaScript 中实现这一点呢？首先，为了重新运行更新 `A2` 的代码，我们把它包装到一个函数里：
 
 ```js
 let A2
@@ -43,31 +43,31 @@ function update() {
 }
 ```
 
-Then, we need to define a few terms:
+然后，我们需要定义几个术语：
 
-- The `update()` function produces a **side effect**, or **effect** for short, because it modifies the state of the program.
+- `update()` 函数会产生一个**副作用**，简称**effect**，因为它修改了程序的状态。
 
-- `A0` and `A1` are considered **dependencies** of the effect, as their values are used to perform the effect. The effect is said to be a **subscriber** to its dependencies.
+- `A0` 和 `A1` 被视为这个 effect 的**依赖**，因为它们的值被用来执行这个 effect。这个 effect 被称为其依赖的**订阅者**。
 
-What we need is a magic function that can invoke `update()` (the **effect**) whenever `A0` or `A1` (the **dependencies**) change:
+我们需要的是一个神奇的函数：只要 `A0` 或 `A1`（**依赖**）变化，就能调用 `update()`（**effect**）：
 
 ```js
 whenDepsChange(update)
 ```
 
-This `whenDepsChange()` function has the following tasks:
+这个 `whenDepsChange()` 函数有以下任务：
 
-1. Track when a variable is read. E.g. when evaluating the expression `A0 + A1`, both `A0` and `A1` are read.
+1. 跟踪变量何时被读取。例如，在求值表达式 `A0 + A1` 时，`A0` 和 `A1` 都会被读取。
 
-2. If a variable is read when there is a currently running effect, make that effect a subscriber to that variable. E.g. because `A0` and `A1` are read when `update()` is being executed, `update()` becomes a subscriber to both `A0` and `A1` after the first call.
+2. 如果在某个 effect 正在运行时读取了一个变量，就让这个 effect 成为该变量的订阅者。例如，因为在执行 `update()` 时读取了 `A0` 和 `A1`，所以第一次调用后，`update()` 会成为 `A0` 和 `A1` 的订阅者。
 
-3. Detect when a variable is mutated. E.g. when `A0` is assigned a new value, notify all its subscriber effects to re-run.
+3. 检测变量何时被修改。例如，当 `A0` 被赋予新值时，通知它所有订阅的 effect 重新运行。
 
-## How Reactivity Works in Vue {#how-reactivity-works-in-vue}
+## Vue 中的响应式如何工作 {#how-reactivity-works-in-vue}
 
-We can't really track the reading and writing of local variables like in the example. There's just no mechanism for doing that in vanilla JavaScript. What we **can** do though, is intercept the reading and writing of **object properties**.
+像示例中那样，我们其实没法真正跟踪局部变量的读取和写入。在原生 JavaScript 中没有任何机制可以做到这一点。不过我们**可以**拦截**对象属性**的读取和写入。
 
-There are two ways of intercepting property access in JavaScript: [getter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get#description) / [setters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/set#description) and [Proxies](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy). Vue 2 used getter / setters exclusively due to browser support limitations. In Vue 3, Proxies are used for reactive objects and getter / setters are used for refs. Here's some pseudo-code that illustrates how they work:
+在 JavaScript 中，有两种方式可以拦截属性访问：[getter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get#description) / [setters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/set#description) 和 [Proxies](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)。由于浏览器支持的限制，Vue 2 只使用 getter / setters。在 Vue 3 中，响应式对象使用 Proxies，而 refs 使用 getter / setters。下面是一些伪代码，用来说明它们是如何工作的：
 
 ```js{4,9,17,22}
 function reactive(obj) {
@@ -99,20 +99,20 @@ function ref(value) {
 ```
 
 :::tip
-Code snippets here and below are meant to explain the core concepts in the simplest form possible, so many details are omitted, and edge cases ignored.
+这里以及下面的代码片段旨在以尽可能简单的形式解释核心概念，因此省略了许多细节，并忽略了边界情况。
 :::
 
-This explains a few [limitations of reactive objects](/guide/essentials/reactivity-fundamentals#limitations-of-reactive) that we have discussed in the fundamentals section:
+这也解释了我们在基础部分讨论过的响应式对象的一些[限制](/guide/essentials/reactivity-fundamentals#limitations-of-reactive)：
 
-- When you assign or destructure a reactive object's property to a local variable, accessing or assigning to that variable is non-reactive because it no longer triggers the get / set proxy traps on the source object. Note this "disconnect" only affects the variable binding - if the variable points to a non-primitive value such as an object, mutating the object would still be reactive.
+- 当你将响应式对象的属性赋值给局部变量，或对其进行解构时，对这个变量的访问或赋值将不再是响应式的，因为它不再触发源对象上的 get / set 代理拦截。注意，这种“断开连接”只影响变量绑定——如果该变量指向的是一个非原始值，比如对象，那么对该对象的修改仍然会是响应式的。
 
-- The returned proxy from `reactive()`, although behaving just like the original, has a different identity if we compare it to the original using the `===` operator.
+- `reactive()` 返回的代理对象，虽然表现得与原对象一样，但如果使用 `===` 运算符与原对象比较，它们的身份并不相同。
 
-Inside `track()`, we check whether there is a currently running effect. If there is one, we lookup the subscriber effects (stored in a Set) for the property being tracked, and add the effect to the Set:
+在 `track()` 内部，我们会检查当前是否有正在运行的 effect。如果有，我们会查找正在被跟踪的属性对应的订阅者 effect（存储在一个 Set 中），并把这个 effect 加入到该 Set：
 
 ```js
-// This will be set right before an effect is about
-// to be run. We'll deal with this later.
+// 这个会在 effect 即将
+// 运行之前设置。我们稍后再处理它。
 let activeEffect
 
 function track(target, key) {
@@ -123,9 +123,9 @@ function track(target, key) {
 }
 ```
 
-Effect subscriptions are stored in a global `WeakMap<target, Map<key, Set<effect>>>` data structure. If no subscribing effects Set was found for a property (tracked for the first time), it will be created. This is what the `getSubscribersForProperty()` function does, in short. For simplicity, we will skip its details.
+effect 的订阅关系存储在一个全局的 `WeakMap<target, Map<key, Set<effect>>>` 数据结构中。如果某个属性没有找到订阅它的 effect Set（即第一次被跟踪），就会创建一个。这就是 `getSubscribersForProperty()` 函数的大致作用。为了简单起见，我们先跳过它的细节。
 
-Inside `trigger()`, we again lookup the subscriber effects for the property. But this time we invoke them instead:
+在 `trigger()` 内部，我们再次查找该属性的订阅者 effect。但这一次，我们改为调用它们：
 
 ```js
 function trigger(target, key) {
@@ -134,7 +134,7 @@ function trigger(target, key) {
 }
 ```
 
-Now let's circle back to the `whenDepsChange()` function:
+现在让我们回到 `whenDepsChange()` 函数：
 
 ```js
 function whenDepsChange(update) {
@@ -147,11 +147,11 @@ function whenDepsChange(update) {
 }
 ```
 
-It wraps the raw `update` function in an effect that sets itself as the current active effect before running the actual update. This enables `track()` calls during the update to locate the current active effect.
+它把原始的 `update` 函数包装成一个 effect，在真正执行更新之前先把自己设为当前活跃的 effect。这样，更新过程中调用的 `track()` 就能找到当前活跃的 effect。
 
-At this point, we have created an effect that automatically tracks its dependencies, and re-runs whenever a dependency changes. We call this a **Reactive Effect**.
+到这里，我们已经创建了一个可以自动追踪依赖，并且在依赖变化时重新运行的 effect。我们把它称为**响应式 effect**。
 
-Vue provides an API that allows you to create reactive effects: [`watchEffect()`](/api/reactivity-core#watcheffect). In fact, you may have noticed that it works pretty similarly to the magical `whenDepsChange()` in the example. We can now rework the original example using actual Vue APIs:
+Vue 提供了一个 API 让你创建响应式 effect：[`watchEffect()`](/api/reactivity-core#watcheffect)。实际上，你可能已经注意到，它的工作方式和示例里的神奇 `whenDepsChange()` 非常相似。现在我们可以使用真实的 Vue API 重写原始示例：
 
 ```js
 import { ref, watchEffect } from 'vue'
@@ -161,15 +161,15 @@ const A1 = ref(1)
 const A2 = ref()
 
 watchEffect(() => {
-  // tracks A0 and A1
+  // 跟踪 A0 和 A1
   A2.value = A0.value + A1.value
 })
 
-// triggers the effect
+// 触发 effect
 A0.value = 2
 ```
 
-Using a reactive effect to mutate a ref isn't the most interesting use case - in fact, using a computed property makes it more declarative:
+使用响应式 effect 来修改一个 ref 并不是最有趣的用例——实际上，使用计算属性会让它更具声明性：
 
 ```js
 import { ref, computed } from 'vue'
@@ -181,9 +181,9 @@ const A2 = computed(() => A0.value + A1.value)
 A0.value = 2
 ```
 
-Internally, `computed` manages its invalidation and re-computation using a reactive effect.
+在内部，`computed` 通过响应式 effect 来管理它的失效和重新计算。
 
-So what's an example of a common and useful reactive effect? Well, updating the DOM! We can implement simple "reactive rendering" like this:
+那么，一个常见且有用的响应式 effect 示例是什么呢？更新 DOM！我们可以像这样实现简单的“响应式渲染”：
 
 ```js
 import { ref, watchEffect } from 'vue'
@@ -194,33 +194,33 @@ watchEffect(() => {
   document.body.innerHTML = `Count is: ${count.value}`
 })
 
-// updates the DOM
+// 更新 DOM
 count.value++
 ```
 
-In fact, this is pretty close to how a Vue component keeps the state and the DOM in sync - each component instance creates a reactive effect to render and update the DOM. Of course, Vue components use much more efficient ways to update the DOM than `innerHTML`. This is discussed in [Rendering Mechanism](./rendering-mechanism).
+实际上，这已经非常接近 Vue 组件保持状态与 DOM 同步的方式了——每个组件实例都会创建一个响应式 effect 来渲染并更新 DOM。当然，Vue 组件更新 DOM 的方式比 `innerHTML` 高效得多。这个话题在[渲染机制](./rendering-mechanism)中有讨论。
 
 <div class="options-api">
 
-The `ref()`, `computed()` and `watchEffect()` APIs are all part of the Composition API. If you have only been using Options API with Vue so far, you'll notice that Composition API is closer to how Vue's reactivity system works under the hood. In fact, in Vue 3 the Options API is implemented on top of the Composition API. All property access on the component instance (`this`) triggers getter / setters for reactivity tracking, and options like `watch` and `computed` invoke their Composition API equivalents internally.
+`ref()`、`computed()` 和 `watchEffect()` 这些 API 都是组合式 API 的一部分。如果你到目前为止只在 Vue 中使用过选项式 API，你会发现组合式 API 更接近 Vue 响应式系统在底层的工作方式。实际上，在 Vue 3 中，选项式 API 是建立在组合式 API 之上的。组件实例上（`this`）的所有属性访问都会触发用于响应式跟踪的 getter / setters，而像 `watch` 和 `computed` 这样的选项会在内部调用它们对应的组合式 API。
 
 </div>
 
-## Runtime vs. Compile-time Reactivity {#runtime-vs-compile-time-reactivity}
+## 运行时 vs. 编译时响应式 {#runtime-vs-compile-time-reactivity}
 
-Vue's reactivity system is primarily runtime-based: the tracking and triggering are all performed while the code is running directly in the browser. The pros of runtime reactivity are that it can work without a build step, and there are fewer edge cases. On the other hand, this makes it constrained by the syntax limitations of JavaScript, leading to the need of value containers like Vue refs.
+Vue 的响应式系统主要基于运行时：所有的跟踪和触发都是在代码直接于浏览器中运行时完成的。运行时响应式的优点是它不需要构建步骤，而且边界情况更少。另一方面，这也使它受限于 JavaScript 的语法限制，因此需要像 Vue refs 这样的值容器。
 
-Some frameworks, such as [Svelte](https://svelte.dev/), choose to overcome such limitations by implementing reactivity during compilation. It analyzes and transforms the code in order to simulate reactivity. The compilation step allows the framework to alter the semantics of JavaScript itself - for example, implicitly injecting code that performs dependency analysis and effect triggering around access to locally defined variables. The downside is that such transforms require a build step, and altering JavaScript semantics is essentially creating a language that looks like JavaScript but compiles into something else.
+一些框架，例如 [Svelte](https://svelte.dev/)，选择通过在编译期间实现响应式来克服这些限制。它会分析并转换代码，以模拟响应式。编译步骤允许框架改变 JavaScript 本身的语义——例如，自动注入在局部定义变量的访问周围执行依赖分析和 effect 触发的代码。缺点是，这类转换需要构建步骤，而且改变 JavaScript 语义本质上就是创建一种看起来像 JavaScript、但编译后会变成别的东西的语言。
 
-The Vue team did explore this direction via an experimental feature called [Reactivity Transform](/guide/extras/reactivity-transform), but in the end we have decided that it would not be a good fit for the project due to [the reasoning here](https://github.com/vuejs/rfcs/discussions/369#discussioncomment-5059028).
+Vue 团队确实通过一个名为 [Reactivity Transform](/guide/extras/reactivity-transform) 的实验性功能探索过这个方向，但最终我们决定它并不适合这个项目，原因见[这里](https://github.com/vuejs/rfcs/discussions/369#discussioncomment-5059028)。
 
-## Reactivity Debugging {#reactivity-debugging}
+## 响应式调试 {#reactivity-debugging}
 
-It's great that Vue's reactivity system automatically tracks dependencies, but in some cases we may want to figure out exactly what is being tracked, or what is causing a component to re-render.
+Vue 的响应式系统会自动追踪依赖，这很棒，但在某些情况下，我们可能想要准确地弄清楚到底追踪了什么，或者是什么导致组件重新渲染。
 
-### Component Debugging Hooks {#component-debugging-hooks}
+### 组件调试钩子 {#component-debugging-hooks}
 
-We can debug what dependencies are used during a component's render and which dependency is triggering an update using the <span class="options-api">`renderTracked`</span><span class="composition-api">`onRenderTracked`</span> and <span class="options-api">`renderTriggered`</span><span class="composition-api">`onRenderTriggered`</span> lifecycle hooks. Both hooks will receive a debugger event which contains information on the dependency in question. It is recommended to place a `debugger` statement in the callbacks to interactively inspect the dependency:
+我们可以使用 <span class="options-api">`renderTracked`</span><span class="composition-api">`onRenderTracked`</span> 和 <span class="options-api">`renderTriggered`</span><span class="composition-api">`onRenderTriggered`</span> 这两个生命周期钩子，来调试组件渲染过程中使用了哪些依赖，以及是哪个依赖触发了更新。这两个钩子都会接收一个调试器事件，其中包含相关依赖的信息。建议在回调中放置 `debugger` 语句，以便交互式地检查该依赖：
 
 <div class="composition-api">
 
@@ -255,10 +255,10 @@ export default {
 </div>
 
 :::tip
-Component debug hooks only work in development mode.
+组件调试钩子仅在开发模式下生效。
 :::
 
-The debug event objects have the following type:
+调试事件对象具有以下类型：
 
 <span id="debugger-event"></span>
 
@@ -276,45 +276,45 @@ type DebuggerEvent = {
 }
 ```
 
-### Computed Debugging {#computed-debugging}
+### 计算属性调试 {#computed-debugging}
 
 <!-- TODO options API equivalent -->
 
-We can debug computed properties by passing `computed()` a second options object with `onTrack` and `onTrigger` callbacks:
+我们可以通过给 `computed()` 传入第二个选项对象，并提供 `onTrack` 和 `onTrigger` 回调，来调试计算属性：
 
-- `onTrack` will be called when a reactive property or ref is tracked as a dependency.
-- `onTrigger` will be called when the watcher callback is triggered by the mutation of a dependency.
+- 当某个响应式属性或 ref 被追踪为依赖时，会调用 `onTrack`。
+- 当某个依赖发生变更并触发侦听器回调时，会调用 `onTrigger`。
 
-Both callbacks will receive debugger events in the [same format](#debugger-event) as component debug hooks:
+这两个回调都会接收与组件调试钩子相同格式的调试器事件：[相同格式](#debugger-event)：
 
 ```js
 const plusOne = computed(() => count.value + 1, {
   onTrack(e) {
-    // triggered when count.value is tracked as a dependency
+    // 当 count.value 被追踪为依赖时触发
     debugger
   },
   onTrigger(e) {
-    // triggered when count.value is mutated
+    // 当 count.value 发生变更时触发
     debugger
   }
 })
 
-// access plusOne, should trigger onTrack
+// 访问 plusOne，应触发 onTrack
 console.log(plusOne.value)
 
-// mutate count.value, should trigger onTrigger
+// 修改 count.value，应触发 onTrigger
 count.value++
 ```
 
 :::tip
-`onTrack` and `onTrigger` computed options only work in development mode.
+`onTrack` 和 `onTrigger` 计算属性选项仅在开发模式下生效。
 :::
 
-### Watcher Debugging {#watcher-debugging}
+### 侦听器调试 {#watcher-debugging}
 
 <!-- TODO options API equivalent -->
 
-Similar to `computed()`, watchers also support the `onTrack` and `onTrigger` options:
+与 `computed()` 类似，侦听器也支持 `onTrack` 和 `onTrigger` 选项：
 
 ```js
 watch(source, callback, {
@@ -337,22 +337,22 @@ watchEffect(callback, {
 ```
 
 :::tip
-`onTrack` and `onTrigger` watcher options only work in development mode.
+`onTrack` 和 `onTrigger` 侦听器选项仅在开发模式下生效。
 :::
 
-## Integration with External State Systems {#integration-with-external-state-systems}
+## 与外部状态系统集成 {#integration-with-external-state-systems}
 
-Vue's reactivity system works by deeply converting plain JavaScript objects into reactive proxies. The deep conversion can be unnecessary or sometimes unwanted when integrating with external state management systems (e.g. if an external solution also uses Proxies).
+Vue 的响应式系统通过将普通 JavaScript 对象深度转换为响应式代理来工作。在与外部状态管理系统集成时，这种深度转换可能是不必要的，有时甚至是不希望的（例如外部方案也使用了 Proxy）。
 
-The general idea of integrating Vue's reactivity system with an external state management solution is to hold the external state in a [`shallowRef`](/api/reactivity-advanced#shallowref). A shallow ref is only reactive when its `.value` property is accessed - the inner value is left intact. When the external state changes, replace the ref value to trigger updates.
+将 Vue 的响应式系统与外部状态管理方案集成的一般思路，是将外部状态保存在一个 [`shallowRef`](/api/reactivity-advanced#shallowref) 中。浅层 ref 只有在访问其 `.value` 属性时才是响应式的——内部值会保持原样。当外部状态变化时，替换 ref 的值以触发更新。
 
-### Immutable Data {#immutable-data}
+### 不可变数据 {#immutable-data}
 
-If you are implementing an undo / redo feature, you likely want to take a snapshot of the application's state on every user edit. However, Vue's mutable reactivity system isn't best suited for this if the state tree is large, because serializing the entire state object on every update can be expensive in terms of both CPU and memory costs.
+如果你正在实现撤销 / 重做功能，你很可能希望在每次用户编辑时都为应用状态创建一个快照。然而，如果状态树很大，Vue 的可变响应式系统并不适合这种场景，因为在每次更新时序列化整个状态对象，在 CPU 和内存成本上都可能很昂贵。
 
-[Immutable data structures](https://en.wikipedia.org/wiki/Persistent_data_structure) solve this by never mutating the state objects - instead, it creates new objects that share the same, unchanged parts with old ones. There are different ways of using immutable data in JavaScript, but we recommend using [Immer](https://immerjs.github.io/immer/) with Vue because it allows you to use immutable data while keeping the more ergonomic, mutable syntax.
+[不可变数据结构](https://en.wikipedia.org/wiki/Persistent_data_structure) 通过不直接修改状态对象来解决这个问题——它会创建新的对象，并与旧对象共享未改变的部分。JavaScript 中使用不可变数据有多种方式，但我们推荐在 Vue 中使用 [Immer](https://immerjs.github.io/immer/)，因为它既能使用不可变数据，又能保持更符合人体工学的可变语法。
 
-We can integrate Immer with Vue via a simple composable:
+我们可以通过一个简单的组合式函数将 Immer 与 Vue 集成：
 
 ```js
 import { produce } from 'immer'
@@ -368,13 +368,13 @@ export function useImmer(baseState) {
 }
 ```
 
-[Try it in the Playground](https://play.vuejs.org/#eNp9VMFu2zAM/RXNl6ZAYnfoTlnSdRt66DBsQ7vtEuXg2YyjRpYEUU5TBPn3UZLtuE1RH2KLfCIfycfsk8/GpNsGkmkyw8IK4xiCa8wVV6I22jq2Zw3CbV2DZQe2srpmZ2km/PmMK8a4KrRCxxbCQY1j1pgyd3DrD0s27++OFh689z/0OOEkTBlPvkNuFfvbAE/Gra/UilzOko0Mh2A+ufcHwd9ij8KtWUjwMsAqlxgjcLU854qrVaMKJ7RiTleVDBRHQpWwO4/xB8xHoRg2v+oyh/MioJepT0ClvTsxhnSUi1LOsthN6iMdCGgkBacTY7NGhjd9ScG2k5W2c56M9rG6ceBPdbOWm1AxO0/a+uiZFjJHpFv7Fj10XhdSFBtyntTJkzaxf/ZtQnYguoFNJkUkmAWGs2xAm47onqT/jPWHxjjYuUkJhba57+yUSaFg4tZWN9X6Y9eIcC8ZJ1FQkzo36QNqRZILQXjroAqnXb+9LQzVD3vtnMFpljXKbKq00HWU3/X7i/QivcxKgS5aUglVXjxNAGvK8KnWZSNJWa0KDoGChzmk3L28jSVcQX1o1d1puwfgOpdSP97BqsfQxhCCK9gFTC+tXu7/coR7R71rxRWXBL2FpHOMOAAeYVGJhBvFL3s+kGKIkW5zSfKfd+RHA2u3gzZEpML9y9JS06YtAq5DLFmOMWXsjkM6rET1YjzUcSMk2J/G1/h8TKGOb8HmV7bdQbqzhmLziv0Bd3Govywg2O1x8Umvua3ARffN/Q/S1sDZDfMN5x2glo3nGGFfGlUS7QEusL0NcxWq+o03OwcKu6Ke/+fwhIb89Y3Sj3Qv0w+9xg7/AWfvyMs=)
+[在 Playground 中试试](https://play.vuejs.org/#eNp9VMFu2zAM/RXNl6ZAYnfoTlnSdRt66DBsQ7vtEuXg2YyjRpYEUU5TBPn3UZLtuE1RH2KLfCIfycfsk8/GpNsGkmkyw8IK4xiCa8wVV6I22jq2Zw3CbV2DZQe2srpmZ2km/PmMK8a4KrRCxxbCQY1j1pgyd3DrD0s27++OFh689z/0OOEkTBlPvkNuFfvbAE/Gra/UilzOko0Mh2A+ufcHwd9ij8KtWUjwMsAqlxgjcLU854qrVaMKJ7RiTleVDBRHQpWwO4/xB8xHoRg2v+oyh/MioJepT0ClvTsxhnSUi1LOsthN6iMdCGgkBacTY7NGhjd9ScG2k5W2c56M9rG6ceBPdbOWm1AxO0/a+uiZFjJHpFv7Fj10XhdSFBtyntTJkzaxf/ZtQnYguoFNJkUkmAWGs2xAm47onqT/jPWHxjjYuUkJhba57+yUSaFg4tZWN9X6Y9eIcC8ZJ1FQkzo36QNqRZILQXjroAqnXb+9LQzVD3vtnMFpljXKbKq00HWU3/X7i/QivcxKgS5aUglVXjxNAGvK8KnWZSNJWa0KDoGChzmk3L28jSVcQX1o1d1puwfgOpdSP97BqsfQxhCCK9gFTC+tXu7/coR7R71rxRWXBL2FpHOMOAAeYVGJhBvFL3s+kGKIkW5zSfKfd+RHA2u3gzZEpML9y9JS06YtAq5DLFmOMWXsjkM6rET1YjzUcSMk2J/G1/h8TKGOb8HmV7bdQbqzhmLziv0Bd3Govywg2O1x8Umvua3ARffN/Q/S1sDZDfMN5x2glo3nGGFfGlUS7QEusL0NcxWq+o03OwcKu6Ke/+fwhIb89Y3Sj3Qv0w+9xg7/AWfvyMs=)
 
-### State Machines {#state-machines}
+### 状态机 {#state-machines}
 
-[State Machine](https://en.wikipedia.org/wiki/Finite-state_machine) is a model for describing all the possible states an application can be in, and all the possible ways it can transition from one state to another. While it may be overkill for simple components, it can help make complex state flows more robust and manageable.
+[状态机](https://en.wikipedia.org/wiki/Finite-state_machine) 是一种用于描述应用可能处于的所有状态，以及它如何从一种状态转换到另一种状态的模型。对于简单组件来说它可能有些大材小用，但它可以帮助使复杂的状态流更加健壮和易于管理。
 
-One of the most popular state machine implementations in JavaScript is [XState](https://xstate.js.org/). Here's a composable that integrates with it:
+JavaScript 中最流行的状态机实现之一是 [XState](https://xstate.js.org/)。下面是一个与之集成的组合式函数：
 
 ```js
 import { createMachine, interpret } from 'xstate'
@@ -392,41 +392,41 @@ export function useMachine(options) {
 }
 ```
 
-[Try it in the Playground](https://play.vuejs.org/#eNp1U81unDAQfpWRL7DSFqqqUiXEJumhyqVVpDa3ugcKZtcJjC1syEqId8/YBu/uIRcEM9/P/DGz71pn0yhYwUpTD1JbMMKO+o6j7LUaLMwwGvGrqk8SBSzQDqqHJMv7EMleTMIRgGOt0Fj4a2xlxZ5EsPkHhytuOjucbApIrDoeO5HsfQCllVVHUYlVbeW0xr2OKcCzHCwkKQAK3fP56fHx5w/irSyqbfFMgA+h0cKBHZYey45jmYfeqWv6sKLXHbnTF0D5f7RWITzUnaxfD5y5ztIkSCY7zjwKYJ5DyVlf2fokTMrZ5sbZDu6Bs6e25QwK94b0svgKyjwYkEyZR2e2Z2H8n/pK04wV0oL8KEjWJwxncTicnb23C3F2slabIs9H1K/HrFZ9HrIPX7Mv37LPuTC5xEacSfa+V83YEW+bBfleFkuW8QbqQZDEuso9rcOKQQ/CxosIHnQLkWJOVdept9+ijSA6NEJwFGePaUekAdFwr65EaRcxu9BbOKq1JDqnmzIi9oL0RRDu4p1u/ayH9schrhlimGTtOLGnjeJRAJnC56FCQ3SFaYriLWjA4Q7SsPOp6kYnEXMbldKDTW/ssCFgKiaB1kusBWT+rkLYjQiAKhkHvP2j3IqWd5iMQ+M=)
+[在 Playground 中试试](https://play.vuejs.org/#eNp1U81unDAQfpWRL7DSFqqqUiXEJumhyqVVpDa3ugcKZtcJjC1syEqId8/YBu/uIRcEM9/P/DGz71pn0yhYwUpTD1JbMMKO+o6j7LUaLMwwGvGrqk8SBSzQDqqHJMv7EMleTMIRgGOt0Fj4a2xlxZ5EsPkHhytuOjucbApIrDoeO5HsfQCllVVHUYlVbeW0xr2OKcCzHCwkKQAK3fP56fHx5w/irSyqbfFMgA+h0cKBHZYey45jmYfeqWv6sKLXHbnTF0D5f7RWITzUnaxfD5y5ztIkSCY7zjwKYJ5DyVlf2fokTMrZ5sbZDu6Bs6e25QwK94b0svgKyjwYkEyZR2e2Z2H8n/pK04wV0oL8KEjWJwxncTicnb23C3F2slabIs9H1K/HrFZ9HrIPX7Mv37LPuTC5xEacSfa+V83YEW+bBfleFkuW8QbqQZDEuso9rcOKQQ/CxosIHnQLkWJOVdept9+ijSA6NEJwFGePaUekAdFwr65EaRcxu9BbOKq1JDqnmzIi9oL0RRDu4p1u/ayH9schrhlimGTtOLGnjeJRAJnC56FCQ3SFaYriLWjA4Q7SsPOp6kYnEXMbldKDTW/ssCFgKiaB1kusBWT+rkLYjQiAKhkHvP2j3IqWd5iMQ+M=)
 
 ### RxJS {#rxjs}
 
-[RxJS](https://rxjs.dev/) is a library for working with asynchronous event streams. The [VueUse](https://vueuse.org/) library provides the [`@vueuse/rxjs`](https://vueuse.org/rxjs/readme.html) add-on for connecting RxJS streams with Vue's reactivity system.
+[RxJS](https://rxjs.dev/) 是一个用于处理异步事件流的库。[VueUse](https://vueuse.org/) 库提供了 [`@vueuse/rxjs`](https://vueuse.org/rxjs/readme.html) 扩展，用于将 RxJS 流与 Vue 的响应式系统连接起来。
 
-## Connection to Signals {#connection-to-signals}
+## 与 Signals 的关系 {#connection-to-signals}
 
-Quite a few other frameworks have introduced reactivity primitives similar to refs from Vue's Composition API, under the term "signals":
+不少其他框架也引入了与 Vue Composition API 中的 ref 类似的响应式原语，并将其称为 “signals”：
 
 - [Solid Signals](https://docs.solidjs.com/concepts/signals)
 - [Angular Signals](https://angular.dev/guide/signals)
 - [Preact Signals](https://preactjs.com/guide/v10/signals/)
 - [Qwik Signals](https://qwik.builder.io/docs/components/state/#usesignal)
 
-Fundamentally, signals are the same kind of reactivity primitive as Vue refs. It's a value container that provides dependency tracking on access, and side-effect triggering on mutation. This reactivity-primitive-based paradigm isn't a particularly new concept in the frontend world: it dates back to implementations like [Knockout observables](https://knockoutjs.com/documentation/observables.html) and [Meteor Tracker](https://docs.meteor.com/api/tracker.html) from more than a decade ago. Vue Options API and the React state management library [MobX](https://mobx.js.org/) are also based on the same principles, but hide the primitives behind object properties.
+从根本上说，signals 与 Vue 的 ref 属于同一类响应式原语。它是一个值容器，在访问时提供依赖追踪，在变更时触发副作用。这种基于响应式原语的范式在前端领域并不算新：它可以追溯到十多年前的 [Knockout observables](https://knockoutjs.com/documentation/observables.html) 和 [Meteor Tracker](https://docs.meteor.com/api/tracker.html) 等实现。Vue Options API 和 React 状态管理库 [MobX](https://mobx.js.org/) 也基于同样的原则，只是把这些原语隐藏在对象属性之后。
 
-Although not a necessary trait for something to qualify as signals, today the concept is often discussed alongside the rendering model where updates are performed through fine-grained subscriptions. Due to the use of Virtual DOM, Vue currently [relies on compilers to achieve similar optimizations](/guide/extras/rendering-mechanism#compiler-informed-virtual-dom). However, we are also exploring a new Solid-inspired compilation strategy, called [Vapor Mode](https://github.com/vuejs/core-vapor), that does not rely on Virtual DOM and takes more advantage of Vue's built-in reactivity system.
+尽管“signals”并不一定要求具备这一特性，但如今这个概念通常也会与通过细粒度订阅来执行更新的渲染模型一起讨论。由于使用了虚拟 DOM，Vue 目前[依赖编译器来实现类似的优化](/guide/extras/rendering-mechanism#compiler-informed-virtual-dom)。不过，我们也在探索一种受 Solid 启发的新编译策略，称为 [Vapor Mode](https://github.com/vuejs/core-vapor)，它不依赖虚拟 DOM，并且能更多地利用 Vue 内置的响应式系统。
 
-### API Design Trade-Offs {#api-design-trade-offs}
+### API 设计权衡 {#api-design-trade-offs}
 
-The design of Preact and Qwik's signals are very similar to Vue's [shallowRef](/api/reactivity-advanced#shallowref): all three provide a mutable interface via the `.value` property. We will focus the discussion on Solid and Angular signals.
+Preact 和 Qwik 的 signals 设计与 Vue 的 [shallowRef](/api/reactivity-advanced#shallowref) 非常相似：三者都通过 `.value` 属性提供可变接口。下面我们将重点讨论 Solid 和 Angular 的 signals。
 
 #### Solid Signals {#solid-signals}
 
-Solid's `createSignal()` API design emphasizes read / write segregation. Signals are exposed as a read-only getter and a separate setter:
+Solid 的 `createSignal()` API 设计强调读 / 写分离。signals 以只读 getter 和单独的 setter 形式暴露：
 
 ```js
 const [count, setCount] = createSignal(0)
 
-count() // access the value
-setCount(1) // update the value
+count() // 访问值
+setCount(1) // 更新值
 ```
 
-Notice how the `count` signal can be passed down without the setter. This ensures that the state can never be mutated unless the setter is also explicitly exposed. Whether this safety guarantee justifies the more verbose syntax could be subject to the requirement of the project and personal taste - but in case you prefer this API style, you can easily replicate it in Vue:
+注意 `count` 这个 signal 可以在不带 setter 的情况下向下传递。这确保了只要没有显式暴露 setter，状态就永远不会被修改。至于这种安全性是否值得采用更冗长的语法，这取决于项目需求和个人偏好——但如果你喜欢这种 API 风格，也可以很容易在 Vue 中复现：
 
 ```js
 import { shallowRef, triggerRef } from 'vue'
@@ -442,21 +442,21 @@ export function createSignal(value, options) {
 }
 ```
 
-[Try it in the Playground](https://play.vuejs.org/#eNpdUk1TgzAQ/Ss7uQAjgr12oNXxH+ix9IAYaDQkMV/qMPx3N6G0Uy9Msu/tvn2PTORJqcI7SrakMp1myoKh1qldI9iopLYwQadpa+krG0TLYYZeyxGSojSSs/d7E8vFh0ka0YhOCmPh0EknbB4mPYfTEeqbIelD1oiqXPRQCS+WjoojAW8A1Wmzm1A39KYZzHNVYiUib85aKeCx46z7rBuySqQe6h14uINN1pDIBWACVUcqbGwtl17EqvIiR3LyzwcmcXFuTi3n8vuF9jlYzYaBajxfMsDcomv6E/m9E51luN2NV99yR3OQKkAmgykss+SkMZerxMLEZFZ4oBYJGAA600VEryAaD6CPaJwJKwnr9ldR2WMedV1Dsi6WwB58emZlsAV/zqmH9LzfvqBfruUmNvZ4QN7VearjenP4aHwmWsABt4x/+tiImcx/z27Jqw==)
+[在 Playground 中试试](https://play.vuejs.org/#eNpdUk1TgzAQ/Ss7uQAjgr12oNXxH+ix9IAYaDQkMV/qMPx3N6G0Uy9Msu/tvn2PTORJqcI7SrakMp1myoKh1qldI9iopLYwQadpa+krG0TLYYZeyxGSojSSs/d7E8vFh0ka0YhOCmPh0EknbB4mPYfTEeqbIelD1oiqXPRQCS+WjoojAW8A1Wmzm1A39KYZzHNVYiUib85aKeCx46z7rBuySqQe6h14uINN1pDIBWACVUcqbGwtl17EqvIiR3LyzwcmcXFuTi3n8vuF9jlYzYaBajxfMsDcomv6E/m9E51luN2NV99yR3OQKkAmgykss+SkMZerxMLEZFZ4oBYJGAA600VEryAaD6CPaJwJKwnr9ldR2WMedV1Dsi6WwB58emZlsAV/zqmH9LzfvqBfruUmNvZ4QN7VearjenP4aHwmWsABt4x/+tiImcx/z27Jqw==)
 
 #### Angular Signals {#angular-signals}
 
-Angular is undergoing some fundamental changes by foregoing dirty-checking and introducing its own implementation of a reactivity primitive. The Angular Signal API looks like this:
+Angular 正在经历一些根本性的变化：它放弃了脏检查，并引入了自己对响应式原语的实现。Angular Signal API 如下所示：
 
 ```js
 const count = signal(0)
 
-count() // access the value
-count.set(1) // set new value
-count.update((v) => v + 1) // update based on previous value
+count() // 访问值
+count.set(1) // 设置新值
+count.update((v) => v + 1) // 基于前一个值更新
 ```
 
-Again, we can easily replicate the API in Vue:
+同样，我们也可以很容易地在 Vue 中复现这一 API：
 
 ```js
 import { shallowRef } from 'vue'
@@ -474,11 +474,11 @@ export function signal(initialValue) {
 }
 ```
 
-[Try it in the Playground](https://play.vuejs.org/#eNp9Ul1v0zAU/SuWX9ZCSRh7m9IKGHuAB0AD8WQJZclt6s2xLX+ESlH+O9d2krbr1Df7nnPu17k9/aR11nmgt7SwleHaEQvO6w2TvNXKONITyxtZihWpVKu9g5oMZGtUS66yvJSNF6V5lyjZk71ikslKSeuQ7qUj61G+eL+cgFr5RwGITAkXiyVZb5IAn2/IB+QWeeoHO8GPg1aL0gH+CCl215u7mJ3bW9L3s3IYihyxifMlFRpJqewL1qN3TknysRK8el4zGjNlXtdYa9GFrjryllwvGY18QrisDLQgXZTnSX8pF64zzD7pDWDghbbI5/Hoip7tFL05eLErhVD/HmB75Edpyd8zc9DUaAbso3TrZeU4tjfawSV3vBR/SuFhSfrQUXLHBMvmKqe8A8siK7lmsi5gAbJhWARiIGD9hM7BIfHSgjGaHljzlDyGF2MEPQs6g5dpcAIm8Xs+2XxODTgUn0xVYdJ5RxPhKOd4gdMsA/rgLEq3vEEHlEQPYrbgaqu5APNDh6KWUTyuZC2jcWvfYswZD6spXu2gen4l/mT3Icboz3AWpgNGZ8yVBttM8P2v77DH9wy2qvYC2RfAB7BK+NBjon32ssa2j3ix26/xsrhsftv7vQNpp6FCo4E5RD6jeE93F0Y/tHuT3URd2OLwHyXleRY=)
+[在 Playground 中试试](https://play.vuejs.org/#eNp9Ul1v0zAU/SuWX9ZCSRh7m9IKGHuAB0AD8WQJZclt6s2xLX+ESlH+O9d2krbr1Df7nnPu17k9/aR11nmgt7SwleHaEQvO6w2TvNXKONITyxtZihWpVKu9g5oMZGtUS66yvJSNF6V5lyjZk71ikslKSeuQ7qUj61G+eL+cgFr5RwGITAkXiyVZb5IAn2/IB+QWeeoHO8GPg1aL0gH+CCl215u7mJ3bW9L3s3IYihyxifMlFRpJqewL1qN3TknysRK8el4zGjNlXtdYa9GFrjryllwvGY18QrisDLQgXZTnSX8pF64zzD7pDWDghbbI5/Hoip7tFL05eLErhVD/HmB75Edpyd8zc9DUaAbso3TrZeU4tjfawSV3vBR/SuFhSfrQUXLHBMvmKqe8A8siK7lmsi5gAbJhWARiIGD9hM7BIfHSgjGaHljzlDyGF2MEPQs6g5dpcAIm8Xs+2XxODTgUn0xVYdJ5RxPhKOd4gdMsA/rgLEq3vEEHlEQPYrbgaqu5APNDh6KWUTyuZC2jcWvfYswZD6spXu2gen4l/mT3Icboz3AWpgNGZ8yVBttM8P2v77DH9wy2qvYC2RfAB7BK+NBjon32ssa2j3ix26/xsrhsftv7vQNpp6FCo4E5RD6jeE93F0Y/tHuT3URd2OLwHyXleRY=)
 
-Compared to Vue refs, Solid and Angular's getter-based API style provide some interesting trade-offs when used in Vue components:
+与 Vue refs 相比，Solid 和 Angular 基于 getter 的 API 风格在 Vue 组件中使用时提供了一些有趣的权衡：
 
-- `()` is slightly less verbose than `.value`, but updating the value is more verbose.
-- There is no ref-unwrapping: accessing values always require `()`. This makes value access consistent everywhere. This also means you can pass raw signals down as component props.
+- `()` 比 `.value` 稍微简洁一些，但更新值的写法更冗长。
+- 没有 ref 解包：访问值始终需要 `()`。这使得在任何地方访问值的方式都保持一致。这也意味着你可以把原始 signal 直接作为组件 props 传递下去。
 
-Whether these API styles suit you is to some extent subjective. Our goal here is to demonstrate the underlying similarity and trade-offs between these different API designs. We also want to show that Vue is flexible: you are not really locked into the existing APIs. Should it be necessary, you can create your own reactivity primitive API to suit more specific needs.
+这些 API 风格是否适合你，在某种程度上是主观的。这里我们的目标是展示这些不同 API 设计之间的底层相似性和权衡。我们也想说明 Vue 是灵活的：你并不真的被现有 API 所束缚。如果有必要，你可以创建自己的响应式原语 API，以满足更具体的需求。

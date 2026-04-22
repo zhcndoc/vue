@@ -1,8 +1,8 @@
-﻿# Plugins {#plugins}
+# 插件 {#plugins}
 
-## Introduction {#introduction}
+## 介绍 {#introduction}
 
-Plugins are self-contained code that usually add app-level functionality to Vue. This is how we install a plugin:
+插件是自包含的代码，通常会为 Vue 添加应用级功能。下面是我们安装插件的方式：
 
 ```js
 import { createApp } from 'vue'
@@ -10,59 +10,59 @@ import { createApp } from 'vue'
 const app = createApp({})
 
 app.use(myPlugin, {
-  /* optional options */
+  /* 可选配置项 */
 })
 ```
 
-A plugin is defined as either an object that exposes an `install()` method, or simply a function that acts as the install function itself. The install function receives the [app instance](/api/application) along with additional options passed to `app.use()`, if any:
+插件可以定义为一个暴露 `install()` 方法的对象，或者直接定义为一个充当 install 函数本身的函数。install 函数会接收 [app 实例](/api/application) 以及传给 `app.use()` 的额外选项（如果有）：
 
 ```js
 const myPlugin = {
   install(app, options) {
-    // configure the app
+    // 配置应用
   }
 }
 ```
 
-There is no strictly defined scope for a plugin, but common scenarios where plugins are useful include:
+插件并没有严格定义的作用域，但常见的插件使用场景包括：
 
-1. Register one or more global components or custom directives with [`app.component()`](/api/application#app-component) and [`app.directive()`](/api/application#app-directive).
+1. 使用 [`app.component()`](/api/application#app-component) 和 [`app.directive()`](/api/application#app-directive) 注册一个或多个全局组件或自定义指令。
 
-2. Make a resource [injectable](/guide/components/provide-inject) throughout the app by calling [`app.provide()`](/api/application#app-provide).
+2. 通过调用 [`app.provide()`](/api/application#app-provide) 让某个资源在整个应用中都可以被 [注入](/guide/components/provide-inject)。
 
-3. Add some global instance properties or methods by attaching them to [`app.config.globalProperties`](/api/application#app-config-globalproperties).
+3. 通过将一些全局实例属性或方法挂载到 [`app.config.globalProperties`](/api/application#app-config-globalproperties) 上来添加它们。
 
-4. A library that needs to perform some combination of the above (e.g. [vue-router](https://github.com/vuejs/vue-router-next)).
+4. 需要组合执行上述部分操作的库（例如 [vue-router](https://github.com/vuejs/vue-router-next)）。
 
-## Writing a Plugin {#writing-a-plugin}
+## 编写插件 {#writing-a-plugin}
 
-In order to better understand how to create your own Vue.js plugins, we will create a very simplified version of a plugin that displays `i18n` (short for [Internationalization](https://en.wikipedia.org/wiki/Internationalization_and_localization)) strings.
+为了更好地理解如何创建你自己的 Vue.js 插件，我们将创建一个非常简化版本的插件，用于显示 `i18n`（即 [Internationalization](https://en.wikipedia.org/wiki/Internationalization_and_localization) 的缩写）字符串。
 
-Let's begin by setting up the plugin object. It is recommended to create it in a separate file and export it, as shown below to keep the logic contained and separate.
+让我们先设置插件对象。建议将其创建在单独的文件中并导出，如下所示，这样可以保持逻辑独立且易于隔离。
 
 ```js [plugins/i18n.js]
 export default {
   install: (app, options) => {
-    // Plugin code goes here
+    // 插件代码写在这里
   }
 }
 ```
 
-We want to create a translation function. This function will receive a dot-delimited `key` string, which we will use to look up the translated string in the user-provided options. This is the intended usage in templates:
+我们要创建一个翻译函数。这个函数会接收一个用点号分隔的 `key` 字符串，我们将使用它在用户提供的选项中查找翻译后的字符串。这是模板中的预期用法：
 
 ```vue-html
 <h1>{{ $translate('greetings.hello') }}</h1>
 ```
 
-Since this function should be globally available in all templates, we will make it so by attaching it to `app.config.globalProperties` in our plugin:
+由于这个函数应该在所有模板中都能全局使用，我们会在插件中将它挂载到 `app.config.globalProperties` 上：
 
 ```js{3-10} [plugins/i18n.js]
 export default {
   install: (app, options) => {
-    // inject a globally available $translate() method
+    // 注入一个全局可用的 $translate() 方法
     app.config.globalProperties.$translate = (key) => {
-      // retrieve a nested property in `options`
-      // using `key` as the path
+      // 在 `options` 中读取嵌套属性
+      // 使用 `key` 作为路径
       return key.split('.').reduce((o, i) => {
         if (o) return o[i]
       }, options)
@@ -71,9 +71,9 @@ export default {
 }
 ```
 
-Our `$translate` function will take a string such as `greetings.hello`, look inside the user provided configuration and return the translated value.
+我们的 `$translate` 函数会接收类似 `greetings.hello` 这样的字符串，查看用户提供的配置并返回翻译值。
 
-The object containing the translated keys should be passed to the plugin during installation via additional parameters to `app.use()`:
+包含翻译键的对象应当在安装插件时通过传给 `app.use()` 的额外参数传入：
 
 ```js
 import i18nPlugin from './plugins/i18n'
@@ -85,17 +85,17 @@ app.use(i18nPlugin, {
 })
 ```
 
-Now, our initial expression `$translate('greetings.hello')` will be replaced by `Bonjour!` at runtime.
+现在，我们最初的表达式 `$translate('greetings.hello')` 在运行时将被替换为 `Bonjour!`。
 
-See also: [Augmenting Global Properties](/guide/typescript/options-api#augmenting-global-properties) <sup class="vt-badge ts" />
+另请参见：[增强全局属性](/guide/typescript/options-api#augmenting-global-properties) <sup class="vt-badge ts" />
 
 :::tip
-Use global properties scarcely, since it can quickly become confusing if too many global properties injected by different plugins are used throughout an app.
+请尽量少用全局属性，因为如果在整个应用中使用了太多由不同插件注入的全局属性，事情很快就会变得令人困惑。
 :::
 
-### Provide / Inject with Plugins {#provide-inject-with-plugins}
+### 配合插件使用 Provide / Inject {#provide-inject-with-plugins}
 
-Plugins also allow us to use `provide` to give plugin users access to a function or attribute. For example, we can allow the application to have access to the `options` parameter to be able to use the translations object.
+插件还允许我们使用 `provide` 来让插件使用者访问某个函数或属性。例如，我们可以让应用能够访问 `options` 参数，以便使用翻译对象。
 
 ```js{3} [plugins/i18n.js]
 export default {
@@ -105,7 +105,7 @@ export default {
 }
 ```
 
-Plugin users will now be able to inject the plugin options into their components using the `i18n` key:
+现在，插件使用者就可以通过 `i18n` 这个 key 将插件选项注入到自己的组件中：
 
 <div class="composition-api">
 
@@ -133,6 +133,6 @@ export default {
 
 </div>
 
-### Bundle for NPM {#bundle-for-npm}
+### 打包为 NPM {#bundle-for-npm}
 
-If you further want to build and publish your plugin for others to use, see [Vite's section on Library Mode](https://vite.dev/guide/build.html#library-mode).
+如果你还想构建并发布你的插件供他人使用，请参阅 [Vite 关于库模式的章节](https://vite.dev/guide/build.html#library-mode).

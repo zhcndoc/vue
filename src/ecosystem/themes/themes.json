@@ -1,13 +1,13 @@
 [
   {
     "name": "Nuxt UI",
-    "description": "[Nuxt UI](https://ui.nuxt.com/) is an intuitive, open-source UI library for Vue and Nuxt applications. Built with Tailwind CSS and Reka UI, it provides 100+ beautifully crafted, accessible components with a flexible CSS-first design system.",
+    "description": "[Nuxt UI](https://ui.nuxt.com/) 是一个直观、开源的 Vue 与 Nuxt UI 库。它基于 Tailwind CSS 和 Reka UI 构建，提供 100+ 个精心设计、具备无障碍支持的组件，以及灵活的 CSS-first 设计系统。",
     "seeMoreUrl": "https://ui.nuxt.com",
     "products": [
       {
         "name": "Dashboard",
         "price": 0,
-        "description": "Professional Vue Dashboard Template showcasing Nuxt UI capabilities.",
+        "description": "展示 Nuxt UI 能力的专业 Vue 仪表盘模板。",
         "url": "https://vue-dashboard-template.nuxt.dev",
         "image": "https://res.cloudinary.com/nuxt/image/upload/v1742036101/nuxt-ui/nuxt-ui-dashboard-social-card_kpeysq.png"
       }
@@ -15,48 +15,48 @@
   },
   {
     "name": "Creative Tim",
-    "description": "With the examples below built by our partners from [Creative Tim](https://creative-tim.com?affiliate_id=116187) you can see how a real-world application is built, the technology stack behind it and how most of the concepts you've learned so far apply in a real-world application.",
+    "description": "通过下方由合作伙伴 [Creative Tim](https://creative-tim.com?affiliate_id=116187) 打造的示例，你可以看到真实世界应用是如何构建的、背后的技术栈，以及你目前学到的大多数概念如何在真实项目中落地。",
     "seeMoreUrl": "https://www.creative-tim.com/bootstrap-themes/vuejs-themes?affiliate_id=116187",
     "products": [
       {
         "name": "Vue Argon Design System",
         "price": 0,
-        "description": "Free Vue.js Design System",
+        "description": "免费 Vue.js 设计系统",
         "url": "https://www.creative-tim.com/product/vue-argon-design-system?affiliate_id=116187",
         "image": "https://raw.githubusercontent.com/creativetimofficial/public-assets/master/vue-argon-design-system/vue-argon-design-system.jpg"
       },
       {
         "name": "Vue Black Dashboard Pro",
         "price": 59,
-        "description": "Premium Vue.js Admin Template",
+        "description": "高级 Vue.js 管理后台模板",
         "url": "https://www.creative-tim.com/product/vue-black-dashboard-pro?affiliate_id=116187",
         "image": "https://raw.githubusercontent.com/creativetimofficial/public-assets/master/vue-black-dashboard-pro/vue-black-dashboard-pro.jpg"
       },
       {
         "name": "Vue Paper Dashboard 2 Pro",
         "price": 59,
-        "description": "Premium Vue.js Admin Template",
+        "description": "高级 Vue.js 管理后台模板",
         "url": "https://www.creative-tim.com/product/vue-paper-dashboard-2-pro?affiliate_id=116187",
         "image": "https://raw.githubusercontent.com/creativetimofficial/public-assets/master/vue-black-dashboard-pro/vue-black-dashboard-pro.jpg"
       },
       {
         "name": "Vue Material Kit",
         "price": 0,
-        "description": "Free Vue.js UI Kit",
+        "description": "免费 Vue.js UI 工具包",
         "url": "https://www.creative-tim.com/product/vue-material-kit?affiliate_id=116187",
         "image": "https://raw.githubusercontent.com/creativetimofficial/public-assets/master/vue-material-kit/vue-material-kit.jpg"
       },
       {
         "name": "Vue Black Dashboard",
         "price": 0,
-        "description": "Free Vue.js Admin Template",
+        "description": "免费 Vue.js 管理后台模板",
         "url": "https://www.creative-tim.com/product/vue-black-dashboard?affiliate_id=116187",
         "image": "https://raw.githubusercontent.com/creativetimofficial/public-assets/master/vue-black-dashboard/vue-black-dashboard.jpg"
       },
       {
         "name": "Vue Now UI Kit Pro",
         "price": 79,
-        "description": "Premium Vue.js UI Kit",
+        "description": "高级 Vue.js UI 工具包",
         "url": "https://www.creative-tim.com/product/vue-now-ui-kit-pro?affiliate_id=116187",
         "image": "https://raw.githubusercontent.com/creativetimofficial/public-assets/master/vue-now-ui-kit-pro/vue-now-ui-kit-pro.jpg"
       }
@@ -64,48 +64,48 @@
   },
   {
     "name": "MDBootstrap",
-    "description": "Check out the themes, UI Kits and plugins below built by our partners from [MDBootstrap](https://mdbootstrap.com/?utm_ref_id=82665). Learn how to use Vue in professional projects along such technologies as Bootstrap. Templates & ready components make your development faster and more efficient.",
+    "description": "看看下面这些由合作伙伴 [MDBootstrap](https://mdbootstrap.com/?utm_ref_id=82665) 打造的主题、UI 工具包和插件。你可以学习如何在结合 Bootstrap 等技术的专业项目中使用 Vue。模板和现成组件能让你的开发更快、更高效。",
     "seeMoreUrl": "https://mdbootstrap.com/docs/vue/?utm_ref_id=82665",
     "products": [
       {
         "url": "https://mdbootstrap.com/docs/vue/pro/?utm_ref_id=82665",
         "name": "Vue Material Bootstrap Pro",
-        "description": "Premium Vue.js UI Kit",
+        "description": "高级 Vue.js UI 工具包",
         "image": "https://mdbootstrap.com/img/Marketing/mdb-press-pack/vuejs/ui-kit.jpg",
         "price": 199
       },
       {
         "url": "https://mdbootstrap.com/docs/vue/?utm_ref_id=82665",
         "name": "Vue Material Bootstrap Kit",
-        "description": "Free Vue.js UI Kit",
+        "description": "免费 Vue.js UI 工具包",
         "image": "https://mdbootstrap.com/img/Marketing/mdb-press-pack/vuejs/ui-kit.jpg",
         "price": 0
       },
       {
         "url": "https://mdbootstrap.com/docs/vue/templates/admin-dashboard/?utm_ref_id=82665",
         "name": " Vue Admin Bootstrap Pro",
-        "description": "Premium Vue.js Templates Pack",
+        "description": "高级 Vue.js 模板包",
         "image": "https://mdbootstrap.com/img/Marketing/mdb-press-pack/vuejs/admin-pack.jpg",
         "price": 199
       },
       {
         "url": "https://mdbootstrap.com/freebies/vue/admin-dashboard?utm_ref_id=82665",
         "name": "Vue Admin Bootstrap",
-        "description": "Free Vue.js Templates Pack",
+        "description": "免费 Vue.js 模板包",
         "image": "https://mdbootstrap.com/img/Marketing/mdb-press-pack/vuejs/admin-pack.jpg",
         "price": 0
       },
       {
         "url": "https://mdbootstrap.com/docs/vue/plugins/calendar/?utm_ref_id=82665",
         "name": "Vue Calendar Bootstrap",
-        "description": "Premium Vue.js Plugin",
+        "description": "高级 Vue.js 插件",
         "image": "https://mdbootstrap.com/img/Marketing/mdb-press-pack/vuejs/plugins/calendar.jpg",
         "price": 199
       },
       {
         "url": "https://mdbootstrap.com/docs/vue/plugins/color-picker/?utm_ref_id=82665",
         "name": "Vue Color Picker Bootstrap",
-        "description": "Premium Vue.js Plugin",
+        "description": "高级 Vue.js 插件",
         "image": "https://mdbootstrap.com/img/Marketing/mdb-press-pack/vuejs/plugins/color-picker.jpg",
         "price": 199
       }
@@ -113,48 +113,48 @@
   },
   {
     "name": "PrimeVue",
-    "description": "The open-source UI component library [PrimeVue](https://www.primefaces.org/primevue/?af_id=4218) offers over 90 flexible components to build your apps with! They have a ton of different component themes and application templates available to get the look & feel that suits you best.",
+    "description": "开源 UI 组件库 [PrimeVue](https://www.primefaces.org/primevue/?af_id=4218) 提供了 90 多个灵活组件，帮助你构建应用！它还提供大量组件主题和应用模板，让你轻松打造最适合自己的视觉风格。",
     "seeMoreUrl": "https://www.primefaces.org/primevue/?af_id=4218",
     "products": [
       {
         "name": "Sakai",
         "price": 0,
-        "description": "Free Admin Template",
+        "description": "免费管理后台模板",
         "url": "https://www.primefaces.org/sakai-vue/#/?af_id=4218",
         "image": "https://www.primefaces.org/vue-templates/sakai.jpg"
       },
       {
         "name": "Apollo",
         "price": 59,
-        "description": "Next-Gen Application Template",
+        "description": "新一代应用模板",
         "url": "https://www.primefaces.org/layouts/apollo-vue?af_id=4218",
         "image": "https://www.primefaces.org/vue-templates/apollo.jpg"
       },
       {
         "name": "Atlantis",
         "price": 59,
-        "description": "Premium Admin Template",
+        "description": "高级管理后台模板",
         "url": "https://www.primefaces.org/layouts/atlantis-vue?af_id=4218",
         "image": "https://www.primefaces.org/vue-templates/atlantis.jpg"
       },
       {
         "name": "Freya",
         "price": 59,
-        "description": "Premium Admin Template",
+        "description": "高级管理后台模板",
         "url": "https://www.primefaces.org/layouts/freya-vue?af_id=4218",
         "image": "https://www.primefaces.org/vue-templates/freya.jpg"
       },
       {
         "name": "Ultima",
         "price": 79,
-        "description": "Material Design Admin Template",
+        "description": "Material Design 管理后台模板",
         "url": "https://www.primefaces.org/layouts/ultima-vue?af_id=4218",
         "image": "https://www.primefaces.org/vue-templates/ultima.jpg"
       },
       {
         "name": "Diamond",
         "price": 59,
-        "description": "PrimeOne Design Admin Template",
+        "description": "PrimeOne 设计风格管理后台模板",
         "url": "https://www.primefaces.org/layouts/diamond-vue?af_id=4218",
         "image": "https://www.primefaces.org/vue-templates/diamond.jpg"
       }
@@ -162,48 +162,48 @@
   },
   {
     "name": "Flatlogic",
-    "description": "Check out the admin dashboard templates built by our partners from [Flatlogic](https://flatlogic.com/templates?ref=x-fdkuTAVW). With these themes you can see how real applications are built. Additionally, these templates will help you to start a new application and save you time and money.",
+    "description": "看看合作伙伴 [Flatlogic](https://flatlogic.com/templates?ref=x-fdkuTAVW) 提供的管理后台模板。通过这些主题，你可以了解真实应用是如何构建的。它们还能帮助你快速启动新项目，节省时间与成本。",
     "seeMoreUrl": "https://flatlogic.com/templates?ref=x-fdkuTAVW",
     "products": [
       {
         "name": "Sing App Vue",
         "price": 99,
-        "description": "Vue Admin Dashboard Template",
+        "description": "Vue 管理后台模板",
         "url": "https://flatlogic.com/templates/sing-app-vue?ref=x-fdkuTAVW",
         "image": "https://flatlogic.com/assets/templates/sing_vue_full-cb6b9fdd0465a0d60c0fafa2deca1929cc4966957c8e1ce57565a5e2f45ff043.webp"
       },
       {
         "name": "Sing App Vue Node.js",
         "price": 149,
-        "description": "Vue Admin Dashboard Template with Node.JS Backend",
+        "description": "带 Node.js 后端的 Vue 管理后台模板",
         "url": "https://flatlogic.com/templates/sing-app-vue-node-js?ref=x-fdkuTAVW",
         "image": "https://flatlogic.com/assets/templates/sing_vue_full_nodejs-78af09220a2d085fec9bbc1071879915b30737f25d72669152f3b090291609aa.webp"
       },
       {
         "name": "Light Blue Vue",
         "price": 99,
-        "description": "Vue Admin Dashboard Template",
+        "description": "Vue 管理后台模板",
         "url": "https://flatlogic.com/templates/light-blue-vue?ref=x-fdkuTAVW",
         "image": "https://flatlogic.com/assets/templates/light_blue_vue_full-e044d30242912d5756b190e576bf30ea967b725c09d2e371a7eabf1c6a9c33b2.webp"
       },
       {
         "name": "Light Blue Vue Admin",
         "price": 0,
-        "description": "Free and Open Source Vue JS Template for Admin Dashboard",
+        "description": "免费开源的 Vue 管理后台模板",
         "url": "https://flatlogic.com/templates/light-blue-vue-lite?ref=x-fdkuTAVW",
         "image": "https://flatlogic.com/assets/templates/light_blue_vue_lite-c1937a2a01e5e8e8ede29a3ead011126e9dab5c58b9017daefe36411f9a1089e.webp"
       },
       {
         "name": "Sing App Vue Dashboard",
         "price": 0,
-        "description": "Free and Open Source Vue.js Admin Dashboard Template",
+        "description": "免费开源的 Vue.js 管理后台模板",
         "url": "https://flatlogic.com/templates/sing-app-vue-dashboard?ref=x-fdkuTAVW",
         "image": "https://flatlogic.com/assets/templates/sing_vue_lite-ae3ec037404bc9ae29599a16afe276e638bd916713d75946c604feb69323ec21.webp"
       },
       {
         "name": "Light Blue Vue Node.js",
         "price": 149,
-        "description": "Vue Admin Template with Node.JS Backend",
+        "description": "带 Node.js 后端的 Vue 管理模板",
         "url": "https://flatlogic.com/templates/light-blue-vue-node-js?ref=x-fdkuTAVW",
         "image": "https://flatlogic.com/assets/templates/light_blue_vue_full_nodejs-06f941c849f0a83a3c0d38c728101eace06a7515ea048f12bcd91f165280246f.webp"
       }
@@ -211,48 +211,48 @@
   },
   {
     "name": "WrapPixel",
-    "description": "Check out top [dashboard templates](https://www.wrappixel.com/templates/category/admin-dashboard-templates/?ref=320) built by our partners from [WrapPixel](https://www.wrappixel.com/?ref=320). Download highly customizable [Vue templates](https://www.wrappixel.com/templates/category/vuejs-templates/?ref=320) to start building your real time web application quickly to save hundreds of hours in development and design.",
+    "description": "看看合作伙伴 [WrapPixel](https://www.wrappixel.com/?ref=320) 提供的热门[仪表盘模板](https://www.wrappixel.com/templates/category/admin-dashboard-templates/?ref=320)。下载这些高度可定制的 [Vue 模板](https://www.wrappixel.com/templates/category/vuejs-templates/?ref=320)，快速启动实时 Web 应用开发，节省数百小时的设计与开发时间。",
     "seeMoreUrl": "https://www.wrappixel.com/templates/category/vuejs-templates/?ref=320",
     "products": [
       {
         "name": "Spike Free VueJs Admin Template",
         "price": 0,
-        "description": "Free & Open Source VueJs Admin Template",
+        "description": "免费开源的 VueJs 管理后台模板",
         "url": "https://www.wrappixel.com/templates/spike-free-vuejs-admin-template/?ref=320",
         "image": "https://www.wrappixel.com/wp-content/uploads/edd/2023/10/spike-free-vuetify-vuejs-admin-template-wp.jpg"
       },
       {
         "name": "Spike Vue3 Admin Dashboard",
         "price": 49,
-        "description": "Powerful Vue3 Dashboard Theme",
+        "description": "强大的 Vue3 仪表盘主题",
         "url": "https://www.wrappixel.com/templates/spike-vuejs-admin-dashboard/?ref=320",
         "image": "https://www.wrappixel.com/wp-content/uploads/edd/2023/09/spike-vuejs-admin-dashboard-prev-img.jpg"
       },
       {
         "name": "MaterialPro Vue3 Admin Dashboard",
         "price": 49,
-        "description": "Vue 3 + Vuetify 3 + Vite + Typescript",
+        "description": "Vue 3 + Vuetify 3 + Vite + TypeScript",
         "url": "https://www.wrappixel.com/templates/materialpro-vuetify-admin/?ref=320",
         "image": "https://www.wrappixel.com/wp-content/uploads/edd/2020/05/materialpro-vuejs-dashboard-template-20.jpg"
       },
       {
         "name": "Free MaterialPro Vuetify Admin",
         "price": 0,
-        "description": "Free Vuetify Dashboard Template",
+        "description": "免费 Vuetify 仪表盘模板",
         "url": "https://www.wrappixel.com/templates/materialpro-vuetify-admin-lite/?ref=320",
         "image": "https://www.wrappixel.com/wp-content/uploads/edd/2020/05/materialpro-vuejs-lite-admin-wp-20.jpg"
       },
       {
         "name": "Free AdminPro VueJs Lite",
         "price": 0,
-        "description": "Free & Open Source VueJs Admin Template",
+        "description": "免费开源的 VueJs 管理后台模板",
         "url": "https://www.wrappixel.com/templates/adminpro-vuetify-admin-lite/?ref=320",
         "image": "https://www.wrappixel.com/wp-content/uploads/edd/2020/11/feature_image.jpg"
       },
       {
         "name": "AdminPro Vue3 + Vuetify Dashboard",
         "price": 49,
-        "description": "Vue3 + Vite + Vuetify + Typescript",
+        "description": "Vue3 + Vite + Vuetify + TypeScript",
         "url": "https://www.wrappixel.com/templates/adminpro-vuetify-dashboard/?ref=320",
         "image": "https://www.wrappixel.com/wp-content/uploads/edd/2020/10/adminpro-vuetify-dasboard-template-y.jpg"
       }
@@ -260,69 +260,69 @@
   },
   {
     "name": "CodedThemes",
-    "description": "Explore Vue.js admin dashboard templates crafted with developers in mind by our partners at [CodedThemes](https://codedthemes.com). Download now to expedite the development of your real-time web applications, saving you countless hours in design and development.",
+    "description": "探索由合作伙伴 [CodedThemes](https://codedthemes.com) 为开发者打造的 Vue.js 管理后台模板。立即下载，加速你的实时 Web 应用开发，节省大量设计与开发时间。",
     "seeMoreUrl": "https://codedthemes.com/item/category/templates/vue-template/",
     "products": [
       {
         "name": "Free Berry Vuetify VueJs Admin Template",
         "price": 0,
-        "description": "Free & Open Source VueJs Admin Template with well known desing of Berry",
+        "description": "采用 Berry 经典设计的免费开源 VueJs 管理后台模板",
         "url": "https://codedthemes.com/item/berry-free-vuetify-vuejs-admin-template/?ref=evan.vuejs",
         "image": "https://org-public-assets.s3.us-west-2.amazonaws.com/Banners/Berry-free-vue.png"
       },
       {
         "name": "Berry Vue3 Admin Dashboard",
         "price": 69,
-        "description": "Discover our visually captivating Vue 3 Dashboard Theme!",
+        "description": "极具视觉吸引力的 Vue 3 仪表盘主题",
         "url": "https://codedthemes.com/item/berry-vue-admin-dashboard/?ref=evan.vuejs",
         "image": "https://org-public-assets.s3.us-west-2.amazonaws.com/Banners/Berry-pro-vue.png"
       },
       {
         "name": "Mantis Vue3 Admin Dashboard",
         "price": 69,
-        "description": "Simple yet rebust to start any development with latest VueJs and Vuetify",
+        "description": "简洁但足够稳健，适合用最新 VueJs 与 Vuetify 启动各类开发",
         "url": "https://codedthemes.com/item/mantis-vue-admin-template/?ref=evan.vuejs",
         "image": "https://org-public-assets.s3.us-west-2.amazonaws.com/Banners/Mantis-pro-vue.png"
       },
       {
         "name": "Free Mantis Vuetify VueJs Admin Template",
         "price": 0,
-        "description": "Free Vuetify Dashboard Template with simplest design and code",
+        "description": "设计与代码都简洁的免费 Vuetify 仪表盘模板",
         "url": "https://codedthemes.com/item/mantis-free-vuetify-vuejs-admin-template/?ref=evan.vuejs",
         "image": "https://org-public-assets.s3.us-west-2.amazonaws.com/Banners/Mantis-free-vue.png"
       },
       {
         "name": "Free Able Pro VueJs",
         "price": 0,
-        "description": "Free & Open Source Able pro VueJs Admin Template",
+        "description": "免费开源的 Able Pro VueJs 管理后台模板",
         "url": "https://codedthemes.com/item/able-pro-free-vuejs-admin-dashboard/?ref=evan.vuejs",
         "image": "https://org-public-assets.s3.us-west-2.amazonaws.com/Banners/Able+pro-free-vue.png"
       },
       {
         "name": "Free Datta Able Vue Admin Template",
         "price": 0,
-        "description": "Free & Open Source VueJs Bootstrap Admin Template",
+        "description": "免费开源的 VueJs Bootstrap 管理后台模板",
         "url": "https://codedthemes.com/item/datta-able-free-vue-admin-template/?ref=evan.vuejs",
         "image": "https://org-public-assets.s3.us-west-2.amazonaws.com/Banners/Datta+able-free-vue.png"
       },
       {
         "name": "Datta Able Vue + Bootstrap Admin Template",
         "price": 69,
-        "description": "Premium VueJs + Bootstrap + Vite + Typescript Admin Template",
+        "description": "高级 VueJs + Bootstrap + Vite + TypeScript 管理后台模板",
         "url": "https://codedthemes.com/item/datta-able-vue-admin-template/?ref=evan.vuejs",
         "image": "https://org-public-assets.s3.us-west-2.amazonaws.com/Banners/Datta+able-pro-vue.png"
       },
       {
         "name": "Able Pro Vue3 + Vuetify Dashboard",
         "price": 69,
-        "description": "Vue3 + Vite + Vuetify + Typescript Dashboard Template",
+        "description": "Vue3 + Vite + Vuetify + TypeScript 仪表盘模板",
         "url": "https://codedthemes.com/item/able-pro-vuejs-admin-dashboard/?ref=evan.vuejs",
         "image": "https://org-public-assets.s3.us-west-2.amazonaws.com/Banners/Able+pro-pro-vue.png"
       },
        {
         "name": "Able Pro Vue Laravel Admin Dashboard Template",
         "price": 69,
-        "description": "A powerful Vue + Laravel Dashboard Theme",
+        "description": "强大的 Vue + Laravel 仪表盘主题",
         "url": "https://codedthemes.com/item/able-pro-vue-laravel-admin-dashboard/?ref=evan.vuejs",
         "image": "https://org-public-assets.s3.us-west-2.amazonaws.com/Banners/Able+pro-pro-vue-laravel.png"
       }
@@ -330,48 +330,48 @@
   },
   {
     "name": "ThemeSelection",
-    "description": "Check out the admin [dashboard templates](https://themeselection.com/item/category/admin-templates/?ref=14) built by our partners from ThemeSelection.\n\nThey provide production-ready and highly customizable Free & Premium [Vue Admin Template](https://themeselection.com/item/category/vuejs-admin-templates/?ref=14), Vue + Laravel & NuxtJS Admin Templates to build modern web applications in no time!",
+    "description": "看看合作伙伴 ThemeSelection 提供的管理[仪表盘模板](https://themeselection.com/item/category/admin-templates/?ref=14)。\n\n他们提供可直接用于生产、且高度可定制的免费与高级 [Vue 管理后台模板](https://themeselection.com/item/category/vuejs-admin-templates/?ref=14)，以及 Vue + Laravel 与 NuxtJS 管理后台模板，帮助你迅速构建现代 Web 应用！",
     "seeMoreUrl": "https://themeselection.com/item/category/vuejs-admin-templates/?ref=14",
     "products": [
       {
         "name": "Materio - Vue Admin Template",
         "price": 0,
-        "description": "Free & Open Source VueJS Admin inspired by Material Design",
+        "description": "受 Material Design 启发的免费开源 VueJS 管理后台",
         "url": "https://themeselection.com/item/materio-free-vuetify-vuejs-admin-template/?ref=14",
         "image": "https://cdn.themeselection.com/ts-assets/materio/materio-vuetify-vuejs-admin-template-free/banner/banner.png"
       },
       {
         "name": "Materio - Vue Admin Template",
         "price": 69,
-        "description": "Most Powerful & Comprehensive VueJS Admin built for developers",
+        "description": "为开发者打造的强大而全面的 VueJS 管理后台",
         "url": "https://themeselection.com/item/materio-vuetify-vuejs-admin-template/?ref=14",
         "image": "https://cdn.themeselection.com/ts-assets/materio/materio-vuetify-vuejs-admin-template/banner/banner.png"
       },
       {
         "name": "Sneat - Vue Laravel Admin",
         "price": 0,
-        "description": "Free & Open Source VueJS Laravel Admin using Sneat Design System",
+        "description": "基于 Sneat 设计系统的免费开源 VueJS Laravel 管理后台",
         "url": "https://themeselection.com/item/sneat-free-vuetify-vuejs-laravel-admin-template/?ref=14",
         "image": "https://cdn.themeselection.com/ts-assets/sneat/sneat-vuetify-vuejs-laravel-admin-template-free/banner/banner.png"
       },
       {
         "name": "Sneat - Vue Laravel Admin",
         "price": 79,
-        "description": "Production Ready, Carefully Crafted VueJS Laravel Dashboard",
+        "description": "可直接用于生产、精心打磨的 VueJS Laravel 仪表盘",
         "url": "https://themeselection.com/item/sneat-vuetify-vuejs-laravel-admin-template/?ref=14",
         "image": "https://cdn.themeselection.com/ts-assets/sneat/sneat-vuetify-vuejs-laravel-admin-template/banner/banner.png"
       },
       {
         "name": "Materio - NuxtJS Dashboard",
         "price": 0,
-        "description": "Free & Open Source NuxtJS Admin inspired by Material Design",
+        "description": "受 Material Design 启发的免费开源 NuxtJS 管理后台",
         "url": "https://themeselection.com/item/materio-free-vuetify-nuxtjs-admin-template/?ref=14",
         "image": "https://cdn.themeselection.com/ts-assets/materio/materio-vuetify-nuxtjs-admin-template-free/banner/banner.png"
       },
       {
         "name": "Materio - NuxtJS Dashboard",
         "price": 79,
-        "description": "Incredibly versatile, flexible and powerful NuxtJS Admin Template",
+        "description": "极其灵活且强大的 NuxtJS 管理后台模板",
         "url": "https://themeselection.com/item/materio-vuetify-nuxtjs-admin-template/?ref=14",
         "image": "https://cdn.themeselection.com/ts-assets/materio/materio-vuetify-nuxtjs-admin-template/banner/banner.png"
       }
@@ -379,48 +379,48 @@
   },
   {
     "name": "AdminMart",
-    "description": "Check out top [Vue dashboard templates](https://adminmart.com/templates/vuejs-admin/?ref=34) built by our partners from [AdminMart](https://adminmart.com/?ref=34). Download them to speed up your web development process and build top class web applications.",
+    "description": "看看合作伙伴 [AdminMart](https://adminmart.com/?ref=34) 打造的热门 [Vue 仪表盘模板](https://adminmart.com/templates/vuejs-admin/?ref=34)。下载它们，加速你的 Web 开发流程，构建一流的 Web 应用。",
     "seeMoreUrl": "https://adminmart.com/templates/vuejs-admin/?ref=34",
     "products": [
       {
         "name": "Matdash Free Vuejs Admin Dashboard",
         "price": 0,
-        "description": "Free & Open Source VueJs Admin Template",
+        "description": "免费开源的 VueJs 管理后台模板",
         "url": "https://adminmart.com/product/matdash-free-vuejs-admin-dashboard/?ref=34",
         "image": "https://adminmart.com/wp-content/uploads/2024/05/matdash-vuetifi-vuejs-2.png"
       },
       {
         "name": "Matdash Vuejs Admin Dashboard",
         "price": 49,
-        "description": "Empowering Developers with Unmatched Flexibility and Power",
+        "description": "以无与伦比的灵活性与能力赋能开发者",
         "url": "https://adminmart.com/product/matdash-vuejs-admin-dashboard/?ref=34",
         "image": "https://adminmart.com/wp-content/uploads/2024/05/matdash-vuetify-vuejs-admin-dashboard.png"
       },
       {
         "name": "Modernize Vuetify 3 & Vue 3 Admin Dashboard",
         "price": 49,
-        "description": "Developer Friendly & Most Powerful Vue Admin Dashboard Template",
+        "description": "开发者友好且强大的 Vue 管理后台模板",
         "url": "https://adminmart.com/product/modernize-vuetify-vue-admin-dashboard/?ref=34",
         "image": "https://adminmart.com/wp-content/uploads/2023/02/modernize-vuetify-admin-dashboard-min.png"
       },
       {
         "name": "Modernize Free Vuetify + Vue js Admin Dashboard",
         "price": 0,
-        "description": "Free & Open Source VueJs Admin Template",
+        "description": "免费开源的 VueJs 管理后台模板",
         "url": "https://adminmart.com/product/modernize-free-vuetify-vue-js-admin-dashboard/?ref=34",
         "image": "https://adminmart.com/wp-content/uploads/2023/02/modernize-free-vuetify-admin-dashboard-am-min1.png"
       },
       {
         "name": "Modernize Free NuxtJs Admin Dashboard Template",
         "price": 0,
-        "description": "Free NuxtJs Dashboard Template",
+        "description": "免费 NuxtJs 仪表盘模板",
         "url": "https://adminmart.com/product/modernize-free-vuetify-vue-js-admin-dashboard/?ref=34",
         "image": "https://adminmart.com/wp-content/uploads/2023/02/modernize-free-nuxt-admin-dashboard-am-min.png"
       },
       {
         "name": "Modernize Nuxt Js Admin Dashboard",
         "price": 49,
-        "description": "Rapidly Build Powerful Dashboards with NuxtJs - Vuetify: A Developer's Dream",
+        "description": "借助 NuxtJs 与 Vuetify 快速构建强大仪表盘，堪称开发者梦想组合",
         "url": "https://adminmart.com/product/modernize-nuxt-js-admin-dashboard/?ref=34",
         "image": "https://adminmart.com/wp-content/uploads/2023/02/modernize-nuxt-js-admin-dashboard.png"
       }

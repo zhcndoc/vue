@@ -1,2 +1,2 @@
-Here we are reactively binding element attributes / properties to the state.
-The :title syntax is short for v-bind:title.
+这里我们将元素的 attributes / properties 响应式地绑定到状态上。
+`:title` 语法是 `v-bind:title` 的简写。

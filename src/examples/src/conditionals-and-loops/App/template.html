@@ -1,10 +1,10 @@
-<button @click="show = !show">Toggle List</button>
-<button @click="list.push(list.length + 1)">Push Number</button>
-<button @click="list.pop()">Pop Number</button>
-<button @click="list.reverse()">Reverse List</button>
+<button @click="show = !show">切换列表显示</button>
+<button @click="list.push(list.length + 1)">添加数字</button>
+<button @click="list.pop()">移除末尾数字</button>
+<button @click="list.reverse()">反转列表</button>
 
 <ul v-if="show && list.length">
   <li v-for="item of list">{{ item }}</li>
 </ul>
-<p v-else-if="list.length">List is not empty, but hidden.</p>
-<p v-else>List is empty.</p>
+<p v-else-if="list.length">列表不为空，但被隐藏了。</p>
+<p v-else>列表为空。</p>

@@ -57,13 +57,13 @@ const filtered = computed(() => {
 <template>
   <div id="api-index">
     <div class="header">
-      <h1>API Reference</h1>
+      <h1>API 参考</h1>
       <div class="api-filter">
-        <label for="api-filter">Filter</label>
+        <label for="api-filter">筛选</label>
         <input
           ref="search"
           type="search"
-          placeholder="Enter keyword"
+          placeholder="输入关键字"
           id="api-filter"
           v-model="query"
         />
@@ -93,7 +93,7 @@ const filtered = computed(() => {
     </div>
 
     <div v-if="!filtered.length" class="no-match">
-      No API matching "{{ query }}" found.
+      未找到与 “{{ query }}” 匹配的 API。
     </div>
   </div>
 </template>

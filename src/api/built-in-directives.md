@@ -1,117 +1,117 @@
-# Built-in Directives {#built-in-directives}
+# 内置指令 {#built-in-directives}
 
 ## v-text {#v-text}
 
-Update the element's text content.
+更新元素的文本内容。
 
-- **Expects:** `string`
+- **期望值：** `string`
 
-- **Details**
+- **详情**
 
-  `v-text` works by setting the element's [textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent) property, so it will overwrite any existing content inside the element. If you need to update only part of the `textContent`, you should use [mustache interpolations](/guide/essentials/template-syntax#text-interpolation) instead (ie. <span v-pre>`<span>Keep this but update a {{dynamicPortion}}</span>`</span>).
+  `v-text` 的工作方式是设置元素的 [textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent) 属性，因此它会覆盖元素内部已有的任何内容。如果你只需要更新 `textContent` 的一部分，应该改用 [mustache 插值](/guide/essentials/template-syntax#text-interpolation)（例如 <span v-pre>`<span>Keep this but update a {{dynamicPortion}}</span>`</span>）。
 
-- **Example**
+- **示例**
 
   ```vue-html
   <span v-text="msg"></span>
-  <!-- same as -->
+  <!-- 与下列写法相同 -->
   <span>{{msg}}</span>
   ```
 
-- **See also** [Template Syntax - Text Interpolation](/guide/essentials/template-syntax#text-interpolation)
+- **另见** [模板语法 - 文本插值](/guide/essentials/template-syntax#text-interpolation)
 
 ## v-html {#v-html}
 
-Update the element's [innerHTML](https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML).
+更新元素的 [innerHTML](https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML)。
 
-- **Expects:** `string`
+- **期望值：** `string`
 
-- **Details**
+- **详情**
 
-  Contents of `v-html` are inserted as plain HTML - Vue template syntax will not be processed. If you find yourself trying to compose templates using `v-html`, try to rethink the solution by using components instead.
+  `v-html` 的内容会作为原始 HTML 插入 - Vue 模板语法不会被处理。如果你发现自己试图使用 `v-html` 来组合模板，请考虑改用组件来重新设计解决方案。
 
-  ::: warning Security Note
-  Dynamically rendering arbitrary HTML on your website can be very dangerous because it can easily lead to [XSS attacks](https://en.wikipedia.org/wiki/Cross-site_scripting). Only use `v-html` on trusted content and **never** on user-provided content.
+  ::: warning 安全提示
+  在你的网站上动态渲染任意 HTML 可能非常危险，因为这很容易导致 [XSS 攻击](https://en.wikipedia.org/wiki/Cross-site_scripting)。只应在可信内容上使用 `v-html`，**绝不要**用于用户提供的内容。
   :::
 
-  In [Single-File Components](/guide/scaling-up/sfc), `scoped` styles will not apply to content inside `v-html`, because that HTML is not processed by Vue's template compiler. If you want to target `v-html` content with scoped CSS, you can instead use [CSS modules](./sfc-css-features#css-modules) or an additional, global `<style>` element with a manual scoping strategy such as BEM.
+  在 [单文件组件](/guide/scaling-up/sfc) 中，`scoped` 样式不会应用到 `v-html` 内部的内容，因为该 HTML 不会被 Vue 的模板编译器处理。如果你想通过 scoped CSS 作用于 `v-html` 内容，可以改用 [CSS modules](./sfc-css-features#css-modules)，或者使用额外的全局 `<style>` 元素，并结合手动作用域策略，例如 BEM。
 
-- **Example**
+- **示例**
 
   ```vue-html
   <div v-html="html"></div>
   ```
 
-- **See also** [Template Syntax - Raw HTML](/guide/essentials/template-syntax#raw-html)
+- **另见** [模板语法 - 原始 HTML](/guide/essentials/template-syntax#raw-html)
 
 ## v-show {#v-show}
 
-Toggle the element's visibility based on the truthy-ness of the expression value.
+根据表达式值的真值性来切换元素的可见性。
 
-- **Expects:** `any`
+- **期望值：** `any`
 
-- **Details**
+- **详情**
 
-  `v-show` works by setting the `display` CSS property via inline styles, and will try to respect the initial `display` value when the element is visible. It also triggers transitions when its condition changes.
+  `v-show` 的工作方式是通过内联样式设置 `display` CSS 属性，并且在元素可见时会尽量保留初始的 `display` 值。它还会在条件变化时触发过渡。
 
-- **See also** [Conditional Rendering - v-show](/guide/essentials/conditional#v-show)
+- **另见** [条件渲染 - v-show](/guide/essentials/conditional#v-show)
 
 ## v-if {#v-if}
 
-Conditionally render an element or a template fragment based on the truthy-ness of the expression value.
+根据表达式值的真值性有条件地渲染元素或模板片段。
 
-- **Expects:** `any`
+- **期望值：** `any`
 
-- **Details**
+- **详情**
 
-  When a `v-if` element is toggled, the element and its contained directives / components are destroyed and re-constructed. If the initial condition is falsy, then the inner content won't be rendered at all.
+  当 `v-if` 元素切换时，该元素及其包含的指令 / 组件会被销毁并重新构建。如果初始条件为假，则内部内容根本不会被渲染。
 
-  Can be used on `<template>` to denote a conditional block containing only text or multiple elements.
+  可用于 `<template>`，表示一个仅包含文本或多个元素的条件块。
 
-  This directive triggers transitions when its condition changes.
+  当条件变化时，此指令会触发过渡。
 
-  When used together, `v-if` has a higher priority than `v-for`. We don't recommend using these two directives together on one element — see the [list rendering guide](/guide/essentials/list#v-for-with-v-if) for details.
+  与 `v-for` 同时使用时，`v-if` 的优先级更高。我们不建议在同一个元素上同时使用这两个指令——详情请参见 [列表渲染指南](/guide/essentials/list#v-for-with-v-if)。
 
-- **See also** [Conditional Rendering - v-if](/guide/essentials/conditional#v-if)
+- **另见** [条件渲染 - v-if](/guide/essentials/conditional#v-if)
 
 ## v-else {#v-else}
 
-Denote the "else block" for `v-if` or a `v-if` / `v-else-if` chain.
+表示 `v-if` 或 `v-if` / `v-else-if` 链的“否则块”。
 
-- **Does not expect expression**
+- **不需要表达式**
 
-- **Details**
+- **详情**
 
-  - Restriction: previous sibling element must have `v-if` or `v-else-if`.
+  - 限制：前一个兄弟元素必须有 `v-if` 或 `v-else-if`。
 
-  - Can be used on `<template>` to denote a conditional block containing only text or multiple elements.
+  - 可用于 `<template>`，表示一个仅包含文本或多个元素的条件块。
 
-- **Example**
+- **示例**
 
   ```vue-html
   <div v-if="Math.random() > 0.5">
-    Now you see me
+    现在你看见我了
   </div>
   <div v-else>
-    Now you don't
+    现在你看不见我了
   </div>
   ```
 
-- **See also** [Conditional Rendering - v-else](/guide/essentials/conditional#v-else)
+- **另见** [条件渲染 - v-else](/guide/essentials/conditional#v-else)
 
 ## v-else-if {#v-else-if}
 
-Denote the "else if block" for `v-if`. Can be chained.
+表示 `v-if` 的“否则如果块”。可链式使用。
 
-- **Expects:** `any`
+- **期望值：** `any`
 
-- **Details**
+- **详情**
 
-  - Restriction: previous sibling element must have `v-if` or `v-else-if`.
+  - 限制：前一个兄弟元素必须有 `v-if` 或 `v-else-if`。
 
-  - Can be used on `<template>` to denote a conditional block containing only text or multiple elements.
+  - 可用于 `<template>`，表示一个仅包含文本或多个元素的条件块。
 
-- **Example**
+- **示例**
 
   ```vue-html
   <div v-if="type === 'A'">
@@ -124,21 +124,21 @@ Denote the "else if block" for `v-if`. Can be chained.
     C
   </div>
   <div v-else>
-    Not A/B/C
+    不是 A/B/C
   </div>
   ```
 
-- **See also** [Conditional Rendering - v-else-if](/guide/essentials/conditional#v-else-if)
+- **另见** [条件渲染 - v-else-if](/guide/essentials/conditional#v-else-if)
 
 ## v-for {#v-for}
 
-Render the element or template block multiple times based on the source data.
+根据源数据多次渲染元素或模板块。
 
-- **Expects:** `Array | Object | number | string | Iterable`
+- **期望值：** `Array | Object | number | string | Iterable`
 
-- **Details**
+- **详情**
 
-  The directive's value must use the special syntax `alias in expression` to provide an alias for the current element being iterated on:
+  该指令的值必须使用特殊语法 `alias in expression`，为当前正在迭代的元素提供别名：
 
   ```vue-html
   <div v-for="item in items">
@@ -146,7 +146,7 @@ Render the element or template block multiple times based on the source data.
   </div>
   ```
 
-  Alternatively, you can also specify an alias for the index (or the key if used on an Object):
+  或者，你也可以为索引指定别名（如果用于 Object，则为键）：
 
   ```vue-html
   <div v-for="(item, index) in items"></div>
@@ -154,7 +154,7 @@ Render the element or template block multiple times based on the source data.
   <div v-for="(value, name, index) in object"></div>
   ```
 
-  The default behavior of `v-for` will try to patch the elements in-place without moving them. To force it to reorder elements, you should provide an ordering hint with the `key` special attribute:
+  `v-for` 的默认行为会尝试原地修补元素，而不会移动它们。若要强制重新排序元素，应通过 `key` 特殊属性提供排序提示：
 
   ```vue-html
   <div v-for="item in items" :key="item.id">
@@ -162,247 +162,247 @@ Render the element or template block multiple times based on the source data.
   </div>
   ```
 
-  `v-for` can also work on values that implement the [Iterable Protocol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#The_iterable_protocol), including native `Map` and `Set`.
+  `v-for` 也可用于实现了 [Iterable 协议](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#The_iterable_protocol) 的值，包括原生的 `Map` 和 `Set`。
 
-- **See also**
-  - [List Rendering](/guide/essentials/list)
+- **另见**
+  - [列表渲染](/guide/essentials/list)
 
 ## v-on {#v-on}
 
-Attach an event listener to the element.
+为元素绑定事件监听器。
 
-- **Shorthand:** `@`
+- **简写：** `@`
 
-- **Expects:** `Function | Inline Statement | Object (without argument)`
+- **期望值：** `Function | Inline Statement | Object (without argument)`
 
-- **Argument:** `event` (optional if using Object syntax)
+- **参数：** `event`（如果使用 Object 语法则为可选）
 
-- **Modifiers**
+- **修饰符**
 
-  - `.stop` - call `event.stopPropagation()`.
-  - `.prevent` - call `event.preventDefault()`.
-  - `.capture` - add event listener in capture mode.
-  - `.self` - only trigger handler if event was dispatched from this element.
-  - `.{keyAlias}` - only trigger handler on certain keys.
-  - `.once` - trigger handler at most once.
-  - `.left` - only trigger handler for left button mouse events.
-  - `.right` - only trigger handler for right button mouse events.
-  - `.middle` - only trigger handler for middle button mouse events.
-  - `.passive` - attaches a DOM event with `{ passive: true }`.
+  - `.stop` - 调用 `event.stopPropagation()`。
+  - `.prevent` - 调用 `event.preventDefault()`。
+  - `.capture` - 以捕获模式添加事件监听器。
+  - `.self` - 只有当事件是从该元素本身派发时才触发处理函数。
+  - `.{keyAlias}` - 只在某些按键上触发处理函数。
+  - `.once` - 处理函数最多触发一次。
+  - `.left` - 只为鼠标左键事件触发处理函数。
+  - `.right` - 只为鼠标右键事件触发处理函数。
+  - `.middle` - 只为鼠标中键事件触发处理函数。
+  - `.passive` - 以 `{ passive: true }` 方式附加 DOM 事件。
 
-- **Details**
+- **详情**
 
-  The event type is denoted by the argument. The expression can be a method name, an inline statement, or omitted if there are modifiers present.
+  事件类型由参数指定。表达式可以是方法名、内联语句；如果存在修饰符，也可以省略。
 
-  When used on a normal element, it listens to [**native DOM events**](https://developer.mozilla.org/en-US/docs/Web/Events) only. When used on a custom element component, it listens to **custom events** emitted on that child component.
+  当用于普通元素时，它只监听 [**原生 DOM 事件**](https://developer.mozilla.org/en-US/docs/Web/Events)。当用于自定义元素组件时，它监听的是该子组件发出的 **自定义事件**。
 
-  When listening to native DOM events, the method receives the native event as the only argument. If using inline statement, the statement has access to the special `$event` property: `v-on:click="handle('ok', $event)"`.
+  监听原生 DOM 事件时，方法只接收原生事件作为唯一参数。如果使用内联语句，该语句可以访问特殊的 `$event` 属性：`v-on:click="handle('ok', $event)"`。
 
-  `v-on` also supports binding to an object of event / listener pairs without an argument. Note when using the object syntax, it does not support any modifiers.
+  `v-on` 也支持绑定到一个事件 / 监听器对的对象，而不需要参数。注意，使用对象语法时不支持任何修饰符。
 
-- **Example**
+- **示例**
 
   ```vue-html
-  <!-- method handler -->
+  <!-- 方法处理器 -->
   <button v-on:click="doThis"></button>
 
-  <!-- dynamic event -->
+  <!-- 动态事件 -->
   <button v-on:[event]="doThis"></button>
 
-  <!-- inline statement -->
+  <!-- 内联语句 -->
   <button v-on:click="doThat('hello', $event)"></button>
 
-  <!-- shorthand -->
+  <!-- 简写 -->
   <button @click="doThis"></button>
 
-  <!-- shorthand dynamic event -->
+  <!-- 简写动态事件 -->
   <button @[event]="doThis"></button>
 
-  <!-- stop propagation -->
+  <!-- 阻止冒泡 -->
   <button @click.stop="doThis"></button>
 
-  <!-- prevent default -->
+  <!-- 阻止默认行为 -->
   <button @click.prevent="doThis"></button>
 
-  <!-- prevent default without expression -->
+  <!-- 不带表达式地阻止默认行为 -->
   <form @submit.prevent></form>
 
-  <!-- chain modifiers -->
+  <!-- 链式修饰符 -->
   <button @click.stop.prevent="doThis"></button>
 
-  <!-- key modifier using keyAlias -->
+  <!-- 使用 keyAlias 的按键修饰符 -->
   <input @keyup.enter="onEnter" />
 
-  <!-- the click event will be triggered at most once -->
+  <!-- click 事件最多只会触发一次 -->
   <button v-on:click.once="doThis"></button>
 
-  <!-- object syntax -->
+  <!-- 对象语法 -->
   <button v-on="{ mousedown: doThis, mouseup: doThat }"></button>
   ```
 
-  Listening to custom events on a child component (the handler is called when "my-event" is emitted on the child):
+  监听子组件上的自定义事件（当子组件上触发 "my-event" 时，处理函数会被调用）：
 
   ```vue-html
   <MyComponent @my-event="handleThis" />
 
-  <!-- inline statement -->
+  <!-- 内联语句 -->
   <MyComponent @my-event="handleThis(123, $event)" />
   ```
 
-- **See also**
-  - [Event Handling](/guide/essentials/event-handling)
-  - [Components - Custom Events](/guide/essentials/component-basics#listening-to-events)
+- **另见**
+  - [事件处理](/guide/essentials/event-handling)
+  - [组件 - 自定义事件](/guide/essentials/component-basics#listening-to-events)
 
 ## v-bind {#v-bind}
 
-Dynamically bind one or more attributes, or a component prop to an expression.
+动态绑定一个或多个属性，或将组件 prop 绑定到表达式。
 
-- **Shorthand:**
-  - `:` or `.` (when using `.prop` modifier)
-  - Omitting value (when attribute and bound value has the same name, requires 3.4+)
+- **简写：**
+  - `:` 或 `.`（使用 `.prop` 修饰符时）
+  - 省略值（当属性名与绑定值同名时，需要 3.4+）
 
-- **Expects:** `any (with argument) | Object (without argument)`
+- **期望值：** `any (with argument) | Object (without argument)`
 
-- **Argument:** `attrOrProp (optional)`
+- **参数：** `attrOrProp`（可选）
 
-- **Modifiers**
+- **修饰符**
 
-  - `.camel` - transform the kebab-case attribute name into camelCase.
-  - `.prop` - force a binding to be set as a DOM property (3.2+).
-  - `.attr` - force a binding to be set as a DOM attribute (3.2+).
+  - `.camel` - 将 kebab-case 属性名转换为 camelCase。
+  - `.prop` - 强制将绑定设置为 DOM property（3.2+）。
+  - `.attr` - 强制将绑定设置为 DOM attribute（3.2+）。
 
-- **Usage**
+- **用法**
 
-  When used to bind the `class` or `style` attribute, `v-bind` supports additional value types such as Array or Objects. See linked guide section below for more details.
+  当用于绑定 `class` 或 `style` 属性时，`v-bind` 支持 Array 或 Object 等额外的值类型。更多细节请参见下方链接的指南章节。
 
-  When setting a binding on an element, Vue by default checks whether the element has the key defined as a property using an `in` operator check. If the property is defined, Vue will set the value as a DOM property instead of an attribute. This should work in most cases, but you can override this behavior by explicitly using `.prop` or `.attr` modifiers. This is sometimes necessary, especially when [working with custom elements](/guide/extras/web-components#passing-dom-properties).
+  当在元素上设置绑定时，Vue 默认会通过 `in` 运算符检查该元素是否定义了该键作为 property。如果该 property 已定义，Vue 会将值设置为 DOM property 而不是 attribute。这在大多数情况下都可行，但你可以通过显式使用 `.prop` 或 `.attr` 修饰符来覆盖此行为。在某些情况下这是必要的，尤其是在 [使用自定义元素时](/guide/extras/web-components#passing-dom-properties)。
 
-  When used for component prop binding, the prop must be properly declared in the child component.
+  当用于组件 prop 绑定时，prop 必须在子组件中被正确声明。
 
-  When used without an argument, can be used to bind an object containing attribute name-value pairs.
+  不带参数使用时，可用于绑定一个包含属性名-值对的对象。
 
-- **Example**
+- **示例**
 
   ```vue-html
-  <!-- bind an attribute -->
+  <!-- 绑定一个属性 -->
   <img v-bind:src="imageSrc" />
 
-  <!-- dynamic attribute name -->
+  <!-- 动态属性名 -->
   <button v-bind:[key]="value"></button>
 
-  <!-- shorthand -->
+  <!-- 简写 -->
   <img :src="imageSrc" />
 
-  <!-- same-name shorthand (3.4+), expands to :src="src" -->
+  <!-- 同名简写（3.4+），展开为 :src="src" -->
   <img :src />
 
-  <!-- shorthand dynamic attribute name -->
+  <!-- 简写动态属性名 -->
   <button :[key]="value"></button>
 
-  <!-- with inline string concatenation -->
+  <!-- 使用内联字符串拼接 -->
   <img :src="'/path/to/images/' + fileName" />
 
-  <!-- class binding -->
+  <!-- class 绑定 -->
   <div :class="{ red: isRed }"></div>
   <div :class="[classA, classB]"></div>
   <div :class="[classA, { classB: isB, classC: isC }]"></div>
 
-  <!-- style binding -->
+  <!-- style 绑定 -->
   <div :style="{ fontSize: size + 'px' }"></div>
   <div :style="[styleObjectA, styleObjectB]"></div>
 
-  <!-- binding an object of attributes -->
+  <!-- 绑定一个属性对象 -->
   <div v-bind="{ id: someProp, 'other-attr': otherProp }"></div>
 
-  <!-- prop binding. "prop" must be declared in the child component. -->
+  <!-- prop 绑定。"prop" 必须在子组件中声明。 -->
   <MyComponent :prop="someThing" />
 
-  <!-- pass down parent props in common with a child component -->
+  <!-- 向下传递与子组件共有的父组件 props -->
   <MyComponent v-bind="$props" />
 
   <!-- XLink -->
   <svg><a :xlink:special="foo"></a></svg>
   ```
 
-  The `.prop` modifier also has a dedicated shorthand, `.`:
+  `.prop` 修饰符也有一个专用简写 `.`：
 
   ```vue-html
   <div :someProperty.prop="someObject"></div>
 
-  <!-- equivalent to -->
+  <!-- 等价于 -->
   <div .someProperty="someObject"></div>
   ```
 
-  The `.camel` modifier allows camelizing a `v-bind` attribute name when using in-DOM templates, e.g. the SVG `viewBox` attribute:
+  `.camel` 修饰符允许在 DOM 内模板中使用时将 `v-bind` 属性名驼峰化，例如 SVG 的 `viewBox` 属性：
 
   ```vue-html
   <svg :view-box.camel="viewBox"></svg>
   ```
 
-  `.camel` is not needed if you are using string templates, or pre-compiling the template with a build step.
+  如果你使用字符串模板，或者通过构建步骤预编译模板，就不需要 `.camel`。
 
-- **See also**
-  - [Class and Style Bindings](/guide/essentials/class-and-style)
-  - [Components - Prop Passing Details](/guide/components/props#prop-passing-details)
+- **另见**
+  - [Class 和 Style 绑定](/guide/essentials/class-and-style)
+  - [组件 - Prop 传递详情](/guide/components/props#prop-passing-details)
 
 ## v-model {#v-model}
 
-Create a two-way binding on a form input element or a component.
+在表单输入元素或组件上创建双向绑定。
 
-- **Expects:** varies based on value of form inputs element or output of components
+- **期望值：** 根据表单输入元素的值或组件的输出而变化
 
-- **Limited to:**
+- **仅限于：**
 
   - `<input>`
   - `<select>`
   - `<textarea>`
-  - components
+  - 组件
 
-- **Modifiers**
+- **修饰符**
 
-  - [`.lazy`](/guide/essentials/forms#lazy) - listen to `change` events instead of `input`
-  - [`.number`](/guide/essentials/forms#number) - cast valid input string to numbers
-  - [`.trim`](/guide/essentials/forms#trim) - trim input
+  - [`.lazy`](/guide/essentials/forms#lazy) - 监听 `change` 事件而不是 `input`
+  - [`.number`](/guide/essentials/forms#number) - 将有效的输入字符串转换为数字
+  - [`.trim`](/guide/essentials/forms#trim) - 去除输入内容两端空白
 
-- **See also**
+- **另请参阅**
 
-  - [Form Input Bindings](/guide/essentials/forms)
-  - [Component Events - Usage with `v-model`](/guide/components/v-model)
+  - [表单输入绑定](/guide/essentials/forms)
+  - [组件事件 - 与 `v-model` 一起使用](/guide/components/v-model)
 
 ## v-slot {#v-slot}
 
-Denote named slots or scoped slots that expect to receive props.
+表示接收 props 的命名插槽或作用域插槽。
 
-- **Shorthand:** `#`
+- **简写：** `#`
 
-- **Expects:** JavaScript expression that is valid in a function argument position, including support for destructuring. Optional - only needed if expecting props to be passed to the slot.
+- **期望值：** 在函数参数位置有效的 JavaScript 表达式，支持解构。可选——仅在期望将 props 传递给插槽时需要。
 
-- **Argument:** slot name (optional, defaults to `default`)
+- **参数：** 插槽名（可选，默认为 `default`）
 
-- **Limited to:**
+- **仅限于：**
 
   - `<template>`
-  - [components](/guide/components/slots#scoped-slots) (for a lone default slot with props)
+  - [组件](/guide/components/slots#scoped-slots)（用于带有 props 的单个默认插槽）
 
-- **Example**
+- **示例**
 
   ```vue-html
-  <!-- Named slots -->
+  <!-- 命名插槽 -->
   <BaseLayout>
     <template v-slot:header>
-      Header content
+      头部内容
     </template>
 
     <template v-slot:default>
-      Default slot content
+      默认插槽内容
     </template>
 
     <template v-slot:footer>
-      Footer content
+      底部内容
     </template>
   </BaseLayout>
 
-  <!-- Named slot that receives props -->
+  <!-- 接收 props 的命名插槽 -->
   <InfiniteScroll>
     <template v-slot:item="slotProps">
       <div class="item">
@@ -411,72 +411,72 @@ Denote named slots or scoped slots that expect to receive props.
     </template>
   </InfiniteScroll>
 
-  <!-- Default slot that receive props, with destructuring -->
+  <!-- 接收 props 的默认插槽，使用解构 -->
   <Mouse v-slot="{ x, y }">
-    Mouse position: {{ x }}, {{ y }}
+    鼠标位置：{{ x }}, {{ y }}
   </Mouse>
   ```
 
-- **See also**
-  - [Components - Slots](/guide/components/slots)
+- **另请参阅**
+  - [组件 - 插槽](/guide/components/slots)
 
 ## v-pre {#v-pre}
 
-Skip compilation for this element and all its children.
+跳过该元素及其所有子元素的编译。
 
-- **Does not expect expression**
+- **不期望表达式**
 
-- **Details**
+- **详情**
 
-  Inside the element with `v-pre`, all Vue template syntax will be preserved and rendered as-is. The most common use case of this is displaying raw mustache tags.
+  在带有 `v-pre` 的元素内部，所有 Vue 模板语法都会被保留并按原样渲染。它最常见的用途是显示原始的 mustache 标签。
 
-- **Example**
+- **示例**
 
   ```vue-html
-  <span v-pre>{{ this will not be compiled }}</span>
+  <span v-pre>{{ 这不会被编译 }}</span>
   ```
 
 ## v-once {#v-once}
 
-Render the element and component once only, and skip future updates.
+只渲染元素和组件一次，并跳过后续更新。
 
-- **Does not expect expression**
+- **不期望表达式**
 
-- **Details**
+- **详情**
 
-  On subsequent re-renders, the element/component and all its children will be treated as static content and skipped. This can be used to optimize update performance.
+  在后续重新渲染时，该元素/组件及其所有子元素都会被视为静态内容并跳过。这可用于优化更新性能。
 
   ```vue-html
-  <!-- single element -->
-  <span v-once>This will never change: {{msg}}</span>
-  <!-- the element have children -->
+  <!-- 单个元素 -->
+  <span v-once>这将永远不会改变：{{msg}}</span>
+  <!-- 该元素有子元素 -->
   <div v-once>
-    <h1>Comment</h1>
+    <h1>注释</h1>
     <p>{{msg}}</p>
   </div>
-  <!-- component -->
+  <!-- 组件 -->
   <MyComponent v-once :comment="msg"></MyComponent>
-  <!-- `v-for` directive -->
+  <!-- `v-for` 指令 -->
   <ul>
     <li v-for="i in list" v-once>{{i}}</li>
   </ul>
   ```
 
-  Since 3.2, you can also memoize part of the template with invalidation conditions using [`v-memo`](#v-memo).
+  自 3.2 起，你也可以使用带失效条件的 [`v-memo`](#v-memo) 来记忆模板的一部分。
 
-- **See also**
-  - [Data Binding Syntax - interpolations](/guide/essentials/template-syntax#text-interpolation)
+- **另请参阅**
+  - [数据绑定语法 - 插值](/guide/essentials/template-syntax#text-interpolation)
   - [v-memo](#v-memo)
 
 ## v-memo {#v-memo}
 
-- Only supported in 3.2+
+- 仅在 3.2+ 中受支持
 
-- **Expects:** `any[]`
+- **期望值：** `any[]`
 
-- **Details**
+- **详情**
 
-  Memoize a sub-tree of the template. Can be used on both elements and components. The directive expects a fixed-length array of dependency values to compare for the memoization. If every value in the array was the same as last render, then updates for the entire sub-tree will be skipped. For example:
+  对模板的某个子树进行记忆。可用于元素和组件。该指令期望一个固定长度的依赖值数组，用于比较是否可以复用记忆结果。如果数组中的每个值都与上一次渲染时相同，那么整个子树的更新都会被跳过。例如：
 
   ```vue-html
   <div v-memo="[valueA, valueB]">
@@ -484,47 +484,47 @@ Render the element and component once only, and skip future updates.
   </div>
   ```
 
-  When the component re-renders, if both `valueA` and `valueB` remain the same, all updates for this `<div>` and its children will be skipped. In fact, even the Virtual DOM VNode creation will also be skipped since the memoized copy of the sub-tree can be reused.
+  当组件重新渲染时，如果 `valueA` 和 `valueB` 都保持不变，那么这个 `<div>` 及其子元素的所有更新都会被跳过。实际上，甚至连 Virtual DOM VNode 的创建也会被跳过，因为可以复用该子树已记忆的副本。
 
-  It is important to specify the memoization array correctly, otherwise we may skip updates that should indeed be applied. `v-memo` with an empty dependency array (`v-memo="[]"`) would be functionally equivalent to `v-once`.
+  正确指定记忆数组非常重要，否则我们可能会跳过本应应用的更新。空依赖数组（`v-memo="[]"`）在功能上等同于 `v-once`。
 
-  **Usage with `v-for`**
+  **与 `v-for` 一起使用**
 
-  `v-memo` is provided solely for micro optimizations in performance-critical scenarios and should be rarely needed. The most common case where this may prove helpful is when rendering large `v-for` lists (where `length > 1000`):
+  `v-memo` 仅用于性能关键场景中的微优化，通常很少需要。它最常见且可能有帮助的场景是渲染大型 `v-for` 列表（其中 `length > 1000`）：
 
   ```vue-html
   <div v-for="item in list" :key="item.id" v-memo="[item.id === selected]">
     <p>ID: {{ item.id }} - selected: {{ item.id === selected }}</p>
-    <p>...more child nodes</p>
+    <p>...更多子节点</p>
   </div>
   ```
 
-  When the component's `selected` state changes, a large amount of VNodes will be created even though most of the items remained exactly the same. The `v-memo` usage here is essentially saying "only update this item if it went from non-selected to selected, or the other way around". This allows every unaffected item to reuse its previous VNode and skip diffing entirely. Note we don't need to include `item.id` in the memo dependency array here since Vue automatically infers it from the item's `:key`.
+  当组件的 `selected` 状态变化时，即使大多数条目完全没有变化，也会创建大量 VNode。这里使用 `v-memo` 基本上是在说：“只有当这个条目从未选中变为已选中，或反过来时，才更新它。” 这样每个未受影响的条目都可以复用之前的 VNode，并完全跳过 diff。注意这里不需要把 `item.id` 包含在记忆依赖数组中，因为 Vue 会自动根据该条目的 `:key` 推断出来。
 
   :::warning
-  When using `v-memo` with `v-for`, make sure they are used on the same element. **`v-memo` does not work inside `v-for`.**
+  当将 `v-memo` 与 `v-for` 一起使用时，请确保它们用在同一个元素上。**`v-memo` 在 `v-for` 内部不起作用。**
   :::
 
-  `v-memo` can also be used on components to manually prevent unwanted updates in certain edge cases where the child component update check has been de-optimized. But again, it is the developer's responsibility to specify correct dependency arrays to avoid skipping necessary updates.
+  `v-memo` 也可以用于组件，在某些子组件更新检查被去优化的边缘情况下，手动阻止不必要的更新。但同样，开发者有责任指定正确的依赖数组，以避免跳过必要的更新。
 
-- **See also**
+- **另请参阅**
   - [v-once](#v-once)
 
 ## v-cloak {#v-cloak}
 
-Used to hide un-compiled template until it is ready.
+用于在模板准备好之前隐藏未编译的模板。
 
-- **Does not expect expression**
+- **不期望表达式**
 
-- **Details**
+- **详情**
 
-  **This directive is only needed in no-build-step setups.**
+  **此指令仅在无需构建步骤的设置中需要。**
 
-  When using in-DOM templates, there can be a "flash of un-compiled templates": the user may see raw mustache tags until the mounted component replaces them with rendered content.
+  使用 DOM 内模板时，可能会出现“未编译模板闪现”：在挂载的组件将其替换为渲染内容之前，用户可能会看到原始的 mustache 标签。
 
-  `v-cloak` will remain on the element until the associated component instance is mounted. Combined with CSS rules such as `[v-cloak] { display: none }`, it can be used to hide the raw templates until the component is ready.
+  `v-cloak` 会一直保留在元素上，直到关联的组件实例被挂载。结合像 `[v-cloak] { display: none }` 这样的 CSS 规则，它可用于在组件准备好之前隐藏原始模板。
 
-- **Example**
+- **示例**
 
   ```css
   [v-cloak] {
@@ -538,4 +538,4 @@ Used to hide un-compiled template until it is ready.
   </div>
   ```
 
-  The `<div>` will not be visible until the compilation is done.
+  直到编译完成之前，`<div>` 都不会可见。

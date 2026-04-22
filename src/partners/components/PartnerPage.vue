@@ -17,7 +17,7 @@ const p = (data as Partner[]).find(
 const { name, description, hiring, contact, contactPage, website } = p
 
 const contactLink = computed(() => {
-  return contact ? `mailto:${contact}?subject=Looking for a Vue.js Partner` : contactPage
+  return contact ? `mailto:${contact}?subject=寻找 Vue.js 合作伙伴` : contactPage
 })
 </script>
 
@@ -25,20 +25,20 @@ const contactLink = computed(() => {
   <div class="partner-page">
     <div class="back">
       <a href="/partners/all.html"
-        ><VTIconChevronLeft class="icon" />Back to all partners</a
+        ><VTIconChevronLeft class="icon" />返回所有合作伙伴</a
       >
     </div>
 
     <PartnerCard hero page :data="p" />
 
     <div class="description">
-      <h2>About {{ name }}</h2>
+      <h2>关于 {{ name }}</h2>
       <p v-for="(desc, index) in description" :key="index" v-html="desc"></p>
     </div>
 
     <div class="actions">
       <a :href="website.url" target="_blank" @click="track"
-        >Visit Website</a
+        >访问网站</a
       >
       <a
         v-if="contact || contactPage"
@@ -46,12 +46,12 @@ const contactLink = computed(() => {
         :href="contactLink"
         target="_blank"
         @click="track"
-        >Contact</a
+        >联系</a
       >
     </div>
 
     <div class="hiring" v-if="hiring">
-      <a :href="hiring" @click="track">{{ name }} is hiring!</a>
+      <a :href="hiring" @click="track">{{ name }} 正在招聘！</a>
     </div>
   </div>
 </template>

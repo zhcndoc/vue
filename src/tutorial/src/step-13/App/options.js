@@ -6,7 +6,7 @@ export default {
   },
   data() {
     return {
-      childMsg: 'No child msg yet'
+      childMsg: '还没有来自子组件的消息'
     }
   }
 }

@@ -1,10 +1,10 @@
-# Custom Renderer API {#custom-renderer-api}
+# 自定义渲染器 API {#custom-renderer-api}
 
 ## createRenderer() {#createrenderer}
 
-Creates a custom renderer. By providing platform-specific node creation and manipulation APIs, you can leverage Vue's core runtime to target non-DOM environments.
+创建一个自定义渲染器。通过提供平台特定的节点创建和操作 API，你可以利用 Vue 的核心运行时来适配非 DOM 环境。
 
-- **Type**
+- **类型**
 
   ```ts
   function createRenderer<HostNode, HostElement>(
@@ -53,7 +53,7 @@ Creates a custom renderer. By providing platform-specific node creation and mani
   }
   ```
 
-- **Example**
+- **示例**
 
   ```js
   import { createRenderer } from '@vue/runtime-core'
@@ -66,12 +66,12 @@ Creates a custom renderer. By providing platform-specific node creation and mani
     // ...
   })
 
-  // `render` is the low-level API
-  // `createApp` returns an app instance
+  // `render` 是底层 API
+  // `createApp` 返回一个应用实例
   export { render, createApp }
 
-  // re-export Vue core APIs
+  // 重新导出 Vue 核心 API
   export * from '@vue/runtime-core'
   ```
 
-  Vue's own `@vue/runtime-dom` is [implemented using the same API](https://github.com/vuejs/core/blob/main/packages/runtime-dom/src/index.ts). For a simpler implementation, check out [`@vue/runtime-test`](https://github.com/vuejs/core/blob/main/packages/runtime-test/src/index.ts) which is a private package for Vue's own unit testing.
+  Vue 自己的 `@vue/runtime-dom` [就是使用相同的 API 实现的](https://github.com/vuejs/core/blob/main/packages/runtime-dom/src/index.ts)。如果想看更简单的实现，可以查看 [`@vue/runtime-test`](https://github.com/vuejs/core/blob/main/packages/runtime-test/src/index.ts)，它是 Vue 自己单元测试所用的一个私有包。

@@ -13,18 +13,16 @@ onMounted(load)
   <section id="hero">
     <img id="uwu" alt="Vue.js Kawaii Logo by @icarusgkx" />
     <h1 class="tagline">
-      The
-      <span class="accent">Progressive</span>
-      <br />JavaScript Framework
+      <span class="accent">渐进式</span>
+      <br />JavaScript 框架
     </h1>
     <p class="description">
-      An approachable, performant and versatile framework for building web
-      user interfaces.
+      易学易用、性能出色，适用场景丰富的 Web 用户界面框架。
     </p>
     <p class="actions">
       <VueMasteryModal />
       <a class="get-started" href="/guide/introduction.html">
-        Get Started
+        开始使用
         <svg
           class="icon"
           xmlns="http://www.w3.org/2000/svg"
@@ -37,9 +35,9 @@ onMounted(load)
           />
         </svg>
       </a>
-      <a class="setup" href="/guide/quick-start.html">Install</a>
+      <a class="setup" href="/guide/quick-start.html">安装</a>
       <a class="security" href="https://v2.vuejs.org/eol/" target="_blank">
-        Get Security Updates for Vue 2
+        获取 Vue 2 的安全更新
         <svg
           class="icon"
           xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +52,7 @@ onMounted(load)
   </section>
 
   <section v-if="data && data.special" id="special-spsr">
-    <span class="lead">Special Sponsor</span>
+    <span class="lead">特别赞助商</span>
     <template v-for="{ url, img, name, description } of data.special">
       <a :href="url" target="_blank" rel="sponsored noopener">
         <picture v-if="img.endsWith('png')">
@@ -78,39 +76,36 @@ onMounted(load)
   <section v-else id="special-spsr">
     <span>
       <a href="/sponsor/#tier-benefits">
-        Special Sponsor slot is now vacant - Inquire now
+        特别赞助席位目前空缺，立即咨询
       </a>
     </span>
   </section>
 
   <section id="highlights" class="vt-box-container">
     <div class="vt-box">
-      <h2>Approachable</h2>
+      <h2>易学易用</h2>
       <p>
-        Builds on top of standard HTML, CSS and JavaScript with intuitive
-        API and world-class documentation.
+        基于标准 HTML、CSS 和 JavaScript 构建，拥有直观的 API 与一流的文档。
       </p>
     </div>
     <div class="vt-box">
-      <h2>Performant</h2>
+      <h2>性能出色</h2>
       <p>
-        Truly reactive, compiler-optimized rendering system that rarely
-        requires manual optimization.
+        真正响应式、经编译器优化的渲染系统，通常无需手动优化。
       </p>
     </div>
     <div class="vt-box">
-      <h2>Versatile</h2>
+      <h2>灵活多用</h2>
       <p>
-        A rich, incrementally adoptable ecosystem that scales between a
-        library and a full-featured framework.
+        丰富且可渐进采用的生态系统，既能作为轻量库，也能胜任全功能框架。
       </p>
     </div>
   </section>
 
   <section id="spsrs">
-    <h2>Platinum Sponsors</h2>
+    <h2>铂金赞助商</h2>
     <SponsorsGroup tier="platinum" placement="landing" />
-    <h2>Gold Sponsors</h2>
+    <h2>黄金赞助商</h2>
     <SponsorsGroup tier="gold" placement="landing" />
   </section>
 

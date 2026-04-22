@@ -1,14 +1,14 @@
-# Component Registration {#component-registration}
+# 组件注册 {#component-registration}
 
-> This page assumes you've already read the [Components Basics](/guide/essentials/component-basics). Read that first if you are new to components.
+> 本页假设你已经阅读过 [组件基础](/guide/essentials/component-basics)。如果你是组件新手，请先阅读那一页。
 
-<VueSchoolLink href="https://vueschool.io/lessons/vue-3-global-vs-local-vue-components" title="Free Vue.js Component Registration Lesson"/>
+<VueSchoolLink href="https://vueschool.io/lessons/vue-3-global-vs-local-vue-components" title="免费的 Vue.js 组件注册课程"/>
 
-A Vue component needs to be "registered" so that Vue knows where to locate its implementation when it is encountered in a template. There are two ways to register components: global and local.
+Vue 组件需要先进行“注册”，这样当 Vue 在模板中遇到它时，才能知道去哪里找到它的实现。组件有两种注册方式：全局注册和局部注册。
 
-## Global Registration {#global-registration}
+## 全局注册 {#global-registration}
 
-We can make components available globally in the current [Vue application](/guide/essentials/application) using the `.component()` method:
+我们可以使用 `.component()` 方法，让组件在当前 [Vue 应用程序](/guide/essentials/application)中全局可用：
 
 ```js
 import { createApp } from 'vue'
@@ -16,16 +16,16 @@ import { createApp } from 'vue'
 const app = createApp({})
 
 app.component(
-  // the registered name
+  // 注册的名称
   'MyComponent',
-  // the implementation
+  // 实现
   {
     /* ... */
   }
 )
 ```
 
-If using SFCs, you will be registering the imported `.vue` files:
+如果使用单文件组件（SFC），你将注册导入的 `.vue` 文件：
 
 ```js
 import MyComponent from './App.vue'
@@ -33,7 +33,7 @@ import MyComponent from './App.vue'
 app.component('MyComponent', MyComponent)
 ```
 
-The `.component()` method can be chained:
+`.component()` 方法可以链式调用：
 
 ```js
 app
@@ -42,30 +42,30 @@ app
   .component('ComponentC', ComponentC)
 ```
 
-Globally registered components can be used in the template of any component within this application:
+全局注册的组件可以在此应用程序内任何组件的模板中使用：
 
 ```vue-html
-<!-- this will work in any component inside the app -->
+<!-- 这在应用中的任何组件里都可以工作 -->
 <ComponentA/>
 <ComponentB/>
 <ComponentC/>
 ```
 
-This even applies to all subcomponents, meaning all three of these components will also be available _inside each other_.
+这甚至适用于所有子组件，这意味着这三个组件也都可以在彼此内部使用。
 
-## Local Registration {#local-registration}
+## 局部注册 {#local-registration}
 
-While convenient, global registration has a few drawbacks:
+虽然很方便，但全局注册有一些缺点：
 
-1. Global registration prevents build systems from removing unused components (a.k.a "tree-shaking"). If you globally register a component but end up not using it anywhere in your app, it will still be included in the final bundle.
+1. 全局注册会阻止构建系统移除未使用的组件（即“tree-shaking”）。如果你全局注册了一个组件，但最终在应用中的任何地方都没有使用它，它仍然会被包含在最终打包结果中。
 
-2. Global registration makes dependency relationships less explicit in large applications. It makes it difficult to locate a child component's implementation from a parent component using it. This can affect long-term maintainability similar to using too many global variables.
+2. 全局注册会让大型应用中的依赖关系不够明确。对于父组件使用的子组件，很难从父组件中定位其实现。这会影响长期维护性，类似于使用过多全局变量。
 
-Local registration scopes the availability of the registered components to the current component only. It makes the dependency relationship more explicit, and is more tree-shaking friendly.
+局部注册会将已注册组件的可用范围限制在当前组件内。这样能让依赖关系更加明确，也更利于 tree-shaking。
 
 <div class="composition-api">
 
-When using SFC with `<script setup>`, imported components can be locally used without registration:
+在使用带有 `<script setup>` 的 SFC 时，导入的组件可以直接在局部使用，无需注册：
 
 ```vue
 <script setup>
@@ -77,7 +77,7 @@ import ComponentA from './ComponentA.vue'
 </template>
 ```
 
-In non-`<script setup>`, you will need to use the `components` option:
+在非 `<script setup>` 中，你需要使用 `components` 选项：
 
 ```js
 import ComponentA from './ComponentA.js'
@@ -95,7 +95,7 @@ export default {
 </div>
 <div class="options-api">
 
-Local registration is done using the `components` option:
+局部注册通过 `components` 选项完成：
 
 ```vue
 <script>
@@ -115,7 +115,7 @@ export default {
 
 </div>
 
-For each property in the `components` object, the key will be the registered name of the component, while the value will contain the implementation of the component. The above example is using the ES2015 property shorthand and is equivalent to:
+对于 `components` 对象中的每个属性，键将是组件的注册名称，而值将包含组件的实现。上面的示例使用了 ES2015 的属性简写，等价于：
 
 ```js
 export default {
@@ -126,16 +126,16 @@ export default {
 }
 ```
 
-Note that **locally registered components are _not_ also available in descendant components**. In this case, `ComponentA` will be made available to the current component only, not any of its child or descendant components.
+请注意，**局部注册的组件也 _不会_ 在后代组件中可用**。在这种情况下，`ComponentA` 只会对当前组件可用，不会对其任何子组件或后代组件可用。
 
-## Component Name Casing {#component-name-casing}
+## 组件名称大小写 {#component-name-casing}
 
-Throughout the guide, we are using PascalCase names when registering components. This is because:
+在整个指南中，我们在注册组件时使用 PascalCase 命名。这是因为：
 
-1. PascalCase names are valid JavaScript identifiers. This makes it easier to import and register components in JavaScript. It also helps IDEs with auto-completion.
+1. PascalCase 名称是有效的 JavaScript 标识符。这使得在 JavaScript 中导入和注册组件更容易，也有助于 IDE 的自动补全。
 
-2. `<PascalCase />` makes it more obvious that this is a Vue component instead of a native HTML element in templates. It also differentiates Vue components from custom elements (web components).
+2. `<PascalCase />` 更清楚地表明这是一个 Vue 组件，而不是模板中的原生 HTML 元素。它也将 Vue 组件与自定义元素（web components）区分开来。
 
-This is the recommended style when working with SFC or string templates. However, as discussed in [in-DOM Template Parsing Caveats](/guide/essentials/component-basics#in-dom-template-parsing-caveats), PascalCase tags are not usable in in-DOM templates.
+当使用 SFC 或字符串模板时，推荐使用这种风格。不过，正如在 [DOM 内模板解析注意事项](/guide/essentials/component-basics#in-dom-template-parsing-caveats) 中所讨论的，PascalCase 标签不能在 DOM 内模板中使用。
 
-Luckily, Vue supports resolving kebab-case tags to components registered using PascalCase. This means a component registered as `MyComponent` can be referenced inside a Vue template (or inside an HTML element rendered by Vue) via both `<MyComponent>` and `<my-component>`. This allows us to use the same JavaScript component registration code regardless of template source.
+幸运的是，Vue 支持将 kebab-case 标签解析为使用 PascalCase 注册的组件。这意味着，一个注册为 `MyComponent` 的组件，可以在 Vue 模板中（或者在 Vue 渲染的 HTML 元素中）通过 `<MyComponent>` 和 `<my-component>` 两种方式引用。这使我们能够无论模板来源如何，都使用相同的 JavaScript 组件注册代码。

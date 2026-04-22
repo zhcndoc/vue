@@ -8,15 +8,15 @@
   Bind to a method/function.
   The @click syntax is short for v-on:click.
 -->
-<button @click="reverseMessage">Reverse Message</button>
+<button @click="reverseMessage">反转消息</button>
 
 <!-- Can also be an inline expression statement -->
-<button @click="message += '!'">Append "!"</button>
+<button @click="message += '!'">追加 “!”</button>
 
 <!--
   Vue also provides modifiers for common tasks
   such as e.preventDefault() and e.stopPropagation()
 -->
 <a href="https://vuejs.org" @click.prevent="notify">
-  A link with e.preventDefault()
+  一个使用了 e.preventDefault() 的链接
 </a>

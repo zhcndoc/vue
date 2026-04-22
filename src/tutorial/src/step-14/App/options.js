@@ -6,7 +6,7 @@ export default {
   },
   data() {
     return {
-      msg: 'from parent'
+      msg: '来自父组件'
     }
   }
 }

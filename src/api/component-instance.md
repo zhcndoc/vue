@@ -1,16 +1,16 @@
-# Component Instance {#component-instance}
+# 组件实例 {#component-instance}
 
 :::info
-This page documents the built-in properties and methods exposed on the component public instance, i.e. `this`.
+本页记录了组件公共实例上暴露的内置属性和方法，也就是 `this`。
 
-All properties listed on this page are readonly (except nested properties in `$data`).
+本页列出的所有属性都是只读的（`$data` 中的嵌套属性除外）。
 :::
 
 ## $data {#data}
 
-The object returned from the [`data`](./options-state#data) option, made reactive by the component. The component instance proxies access to the properties on its data object.
+由 [`data`](./options-state#data) 选项返回的对象，经过组件处理后变为响应式。组件实例会代理对其 data 对象属性的访问。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentPublicInstance {
@@ -20,9 +20,9 @@ The object returned from the [`data`](./options-state#data) option, made reactiv
 
 ## $props {#props}
 
-An object representing the component's current, resolved props.
+表示组件当前已解析 props 的对象。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentPublicInstance {
@@ -30,15 +30,15 @@ An object representing the component's current, resolved props.
   }
   ```
 
-- **Details**
+- **详细信息**
 
-  Only props declared via the [`props`](./options-state#props) option will be included. The component instance proxies access to the properties on its props object.
+  只会包含通过 [`props`](./options-state#props) 选项声明的 props。组件实例会代理对其 props 对象属性的访问。
 
 ## $el {#el}
 
-The root DOM node that the component instance is managing.
+组件实例正在管理的根 DOM 节点。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentPublicInstance {
@@ -46,23 +46,23 @@ The root DOM node that the component instance is managing.
   }
   ```
 
-- **Details**
+- **详细信息**
 
-  `$el` will be `undefined` until the component is [mounted](./options-lifecycle#mounted).
+  在组件被 [挂载](./options-lifecycle#mounted) 之前，`$el` 将是 `undefined`。
 
-  - For components with a single root element, `$el` will point to that element.
-  - For components with text root, `$el` will point to the text node.
-  - For components with multiple root nodes, `$el` will be the placeholder DOM node that Vue uses to keep track of the component's position in the DOM (a text node, or a comment node in SSR hydration mode).
+  - 对于只有单个根元素的组件，`$el` 将指向该元素。
+  - 对于文本根节点的组件，`$el` 将指向该文本节点。
+  - 对于具有多个根节点的组件，`$el` 将是 Vue 用来跟踪组件在 DOM 中位置的占位 DOM 节点（一个文本节点，或者在 SSR hydration 模式下是一个注释节点）。
 
   :::tip
-  For consistency, it is recommended to use [template refs](/guide/essentials/template-refs) for direct access to elements instead of relying on `$el`.
+  为保持一致性，建议使用[模板引用](/guide/essentials/template-refs)直接访问元素，而不要依赖 `$el`。
   :::
 
 ## $options {#options}
 
-The resolved component options used for instantiating the current component instance.
+用于实例化当前组件实例的已解析组件选项。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentPublicInstance {
@@ -70,15 +70,15 @@ The resolved component options used for instantiating the current component inst
   }
   ```
 
-- **Details**
+- **详细信息**
 
-  The `$options` object exposes the resolved options for the current component and is the merge result of these possible sources:
+  `$options` 对象暴露了当前组件的已解析选项，它是以下可能来源的合并结果：
 
-  - Global mixins
-  - Component `extends` base
-  - Component mixins
+  - 全局混入
+  - 组件 `extends` 基础选项
+  - 组件混入
 
-  It is typically used to support custom component options:
+  它通常用于支持自定义组件选项：
 
   ```js
   const app = createApp({
@@ -89,13 +89,13 @@ The resolved component options used for instantiating the current component inst
   })
   ```
 
-- **See also** [`app.config.optionMergeStrategies`](/api/application#app-config-optionmergestrategies)
+- **另请参阅** [`app.config.optionMergeStrategies`](/api/application#app-config-optionmergestrategies)
 
 ## $parent {#parent}
 
-The parent instance, if the current instance has one. It will be `null` for the root instance itself.
+父实例，如果当前实例有父实例的话。根实例本身则为 `null`。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentPublicInstance {
@@ -105,9 +105,9 @@ The parent instance, if the current instance has one. It will be `null` for the 
 
 ## $root {#root}
 
-The root component instance of the current component tree. If the current instance has no parents this value will be itself.
+当前组件树的根组件实例。如果当前实例没有父级，则此值就是它自身。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentPublicInstance {
@@ -117,9 +117,9 @@ The root component instance of the current component tree. If the current instan
 
 ## $slots {#slots}
 
-An object representing the [slots](/guide/components/slots) passed by the parent component.
+表示父组件传递的[插槽](/guide/components/slots)的对象。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentPublicInstance {
@@ -129,21 +129,21 @@ An object representing the [slots](/guide/components/slots) passed by the parent
   type Slot = (...args: any[]) => VNode[]
   ```
 
-- **Details**
+- **详细信息**
 
-  Typically used when manually authoring [render functions](/guide/extras/render-function), but can also be used to detect whether a slot is present.
+  通常在手动编写[渲染函数](/guide/extras/render-function)时使用，但也可用于检测某个插槽是否存在。
 
-  Each slot is exposed on `this.$slots` as a function that returns an array of vnodes under the key corresponding to that slot's name. The default slot is exposed as `this.$slots.default`.
+  每个插槽都会在 `this.$slots` 上以一个函数形式暴露，该函数会返回对应插槽名称键下的 vnode 数组。默认插槽会以 `this.$slots.default` 暴露。
 
-  If a slot is a [scoped slot](/guide/components/slots#scoped-slots), arguments passed to the slot functions are available to the slot as its slot props.
+  如果某个插槽是[作用域插槽](/guide/components/slots#scoped-slots)，传递给插槽函数的参数会作为该插槽的 slot props 提供给插槽。
 
-- **See also** [Render Functions - Rendering Slots](/guide/extras/render-function#rendering-slots)
+- **另请参阅** [渲染函数 - 渲染插槽](/guide/extras/render-function#rendering-slots)
 
 ## $refs {#refs}
 
-An object of DOM elements and component instances, registered via [template refs](/guide/essentials/template-refs).
+通过[模板引用](/guide/essentials/template-refs)注册的 DOM 元素和组件实例对象。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentPublicInstance {
@@ -151,16 +151,16 @@ An object of DOM elements and component instances, registered via [template refs
   }
   ```
 
-- **See also**
+- **另请参阅**
 
-  - [Template refs](/guide/essentials/template-refs)
-  - [Special Attributes - ref](./built-in-special-attributes.md#ref)
+  - [模板引用](/guide/essentials/template-refs)
+  - [特殊 Attribute - ref](./built-in-special-attributes.md#ref)
 
 ## $attrs {#attrs}
 
-An object that contains the component's fallthrough attributes.
+包含组件透传 attribute 的对象。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentPublicInstance {
@@ -168,21 +168,21 @@ An object that contains the component's fallthrough attributes.
   }
   ```
 
-- **Details**
+- **详细信息**
 
-  [Fallthrough Attributes](/guide/components/attrs) are attributes and event handlers passed by the parent component, but not declared as a prop or an emitted event by the child.
+  [透传 Attribute](/guide/components/attrs) 是由父组件传递的 attribute 和事件监听器，但没有被子组件声明为 prop 或已发出的事件。
 
-  By default, everything in `$attrs` will be automatically inherited on the component's root element if there is only a single root element. This behavior is disabled if the component has multiple root nodes, and can be explicitly disabled with the [`inheritAttrs`](./options-misc#inheritattrs) option.
+  默认情况下，如果只有单个根元素，`$attrs` 中的所有内容都会自动继承到组件的根元素上。如果组件有多个根节点，此行为会被禁用，也可以通过 [`inheritAttrs`](./options-misc#inheritattrs) 选项显式禁用。
 
-- **See also**
+- **另请参阅**
 
-  - [Fallthrough Attributes](/guide/components/attrs)
+  - [透传 Attribute](/guide/components/attrs)
 
 ## $watch() {#watch}
 
-Imperative API for creating watchers.
+用于创建侦听器的命令式 API。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentPublicInstance {
@@ -200,9 +200,9 @@ Imperative API for creating watchers.
   ) => void
 
   interface WatchOptions {
-    immediate?: boolean // default: false
-    deep?: boolean // default: false
-    flush?: 'pre' | 'post' | 'sync' // default: 'pre'
+    immediate?: boolean // 默认：false
+    deep?: boolean // 默认：false
+    flush?: 'pre' | 'post' | 'sync' // 默认：'pre'
     onTrack?: (event: DebuggerEvent) => void
     onTrigger?: (event: DebuggerEvent) => void
   }
@@ -210,62 +210,62 @@ Imperative API for creating watchers.
   type StopHandle = () => void
   ```
 
-- **Details**
+- **详细信息**
 
-  The first argument is the watch source. It can be a component property name string, a simple dot-delimited path string, or a [getter function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get#description).
+  第一个参数是侦听源。它可以是组件属性名字符串、简单的点分隔路径字符串，或者一个[getter 函数](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get#description)。
 
-  The second argument is the callback function. The callback receives the new value and the old value of the watched source.
+  第二个参数是回调函数。该回调会接收被侦听源的新值和旧值。
 
-  - **`immediate`**: trigger the callback immediately on watcher creation. Old value will be `undefined` on the first call.
-  - **`deep`**: force deep traversal of the source if it is an object, so that the callback fires on deep mutations. See [Deep Watchers](/guide/essentials/watchers#deep-watchers).
-  - **`flush`**: adjust the callback's flush timing. See [Callback Flush Timing](/guide/essentials/watchers#callback-flush-timing) and [`watchEffect()`](/api/reactivity-core#watcheffect).
-  - **`onTrack / onTrigger`**: debug the watcher's dependencies. See [Watcher Debugging](/guide/extras/reactivity-in-depth#watcher-debugging).
+  - **`immediate`**：在侦听器创建时立即触发回调。第一次调用时旧值将为 `undefined`。
+  - **`deep`**：如果源是对象，则强制对其进行深层遍历，以便在深层变化时触发回调。参见[深层侦听器](/guide/essentials/watchers#deep-watchers)。
+  - **`flush`**：调整回调的刷新时机。参见[回调刷新时机](/guide/essentials/watchers#callback-flush-timing) 和 [`watchEffect()`](/api/reactivity-core#watcheffect)。
+  - **`onTrack / onTrigger`**：调试侦听器的依赖。参见[侦听器调试](/guide/extras/reactivity-in-depth#watcher-debugging)。
 
-- **Example**
+- **示例**
 
-  Watch a property name:
+  侦听属性名：
 
   ```js
   this.$watch('a', (newVal, oldVal) => {})
   ```
 
-  Watch a dot-delimited path:
+  侦听点分隔路径：
 
   ```js
   this.$watch('a.b', (newVal, oldVal) => {})
   ```
 
-  Using getter for more complex expressions:
+  对于更复杂的表达式，使用 getter：
 
   ```js
   this.$watch(
-    // every time the expression `this.a + this.b` yields
-    // a different result, the handler will be called.
-    // It's as if we were watching a computed property
-    // without defining the computed property itself.
+    // 每当表达式 `this.a + this.b`
+    // 得到不同结果时，处理函数就会被调用。
+    // 这就像我们在侦听一个计算属性，
+    // 但并没有定义这个计算属性本身。
     () => this.a + this.b,
     (newVal, oldVal) => {}
   )
   ```
 
-  Stopping the watcher:
+  停止侦听器：
 
   ```js
   const unwatch = this.$watch('a', cb)
 
-  // later...
+  // 稍后...
   unwatch()
   ```
 
-- **See also**
-  - [Options - `watch`](/api/options-state#watch)
-  - [Guide - Watchers](/guide/essentials/watchers)
+- **另请参阅**
+  - [选项 - `watch`](/api/options-state#watch)
+  - [指南 - 侦听器](/guide/essentials/watchers)
 
 ## $emit() {#emit}
 
-Trigger a custom event on the current instance. Any additional arguments will be passed into the listener's callback function.
+在当前实例上触发一个自定义事件。任何额外参数都会传入监听器的回调函数中。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentPublicInstance {
@@ -273,29 +273,29 @@ Trigger a custom event on the current instance. Any additional arguments will be
   }
   ```
 
-- **Example**
+- **示例**
 
   ```js
   export default {
     created() {
-      // only event
+      // 仅事件
       this.$emit('foo')
-      // with additional arguments
+      // 带额外参数
       this.$emit('bar', 1, 2, 3)
     }
   }
   ```
 
-- **See also**
+- **另请参阅**
 
-  - [Component - Events](/guide/components/events)
-  - [`emits` option](./options-state#emits)
+  - [组件 - 事件](/guide/components/events)
+  - [`emits` 选项](./options-state#emits)
 
 ## $forceUpdate() {#forceupdate}
 
-Force the component instance to re-render.
+强制组件实例重新渲染。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentPublicInstance {
@@ -303,15 +303,15 @@ Force the component instance to re-render.
   }
   ```
 
-- **Details**
+- **详细信息**
 
-  This should be rarely needed given Vue's fully automatic reactivity system. The only cases where you may need it is when you have explicitly created non-reactive component state using advanced reactivity APIs.
+  鉴于 Vue 完全自动化的响应式系统，通常很少需要这样做。只有在你使用高级响应式 API 显式创建了非响应式的组件状态时，才可能需要它。
 
 ## $nextTick() {#nexttick}
 
-Instance-bound version of the global [`nextTick()`](./general#nexttick).
+绑定到实例的全局 [`nextTick()`](./general#nexttick) 版本。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentPublicInstance {
@@ -319,8 +319,8 @@ Instance-bound version of the global [`nextTick()`](./general#nexttick).
   }
   ```
 
-- **Details**
+- **详细信息**
 
-  The only difference from the global version of `nextTick()` is that the callback passed to `this.$nextTick()` will have its `this` context bound to the current component instance.
+  与全局版本的 `nextTick()` 唯一的区别在于，传递给 `this.$nextTick()` 的回调，其 `this` 上下文会绑定到当前组件实例。
 
-- **See also** [`nextTick()`](./general#nexttick)
+- **另请参阅** [`nextTick()`](./general#nexttick)

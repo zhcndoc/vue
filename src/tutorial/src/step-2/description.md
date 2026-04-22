@@ -1,16 +1,16 @@
-# Declarative Rendering {#declarative-rendering}
+# 声明式渲染 {#declarative-rendering}
 
 <div class="sfc">
 
-What you see in the editor is a Vue Single-File Component (SFC). An SFC is a reusable self-contained block of code that encapsulates HTML, CSS and JavaScript that belong together, written inside a `.vue` file.
+你在编辑器中看到的是一个 Vue 单文件组件（SFC）。SFC 是一个可复用的、自包含的代码块，它封装了属于同一组件的 HTML、CSS 和 JavaScript，并写在一个 `.vue` 文件中。
 
 </div>
 
-The core feature of Vue is **declarative rendering**: using a template syntax that extends HTML, we can describe how the HTML should look based on JavaScript state. When the state changes, the HTML updates automatically.
+Vue 的核心特性是**声明式渲染**：使用扩展了 HTML 的模板语法，我们可以根据 JavaScript 状态来描述 HTML 应该是什么样子。当状态发生变化时，HTML 会自动更新。
 
 <div class="composition-api">
 
-State that can trigger updates when changed is considered **reactive**. We can declare reactive state using Vue's `reactive()` API. Objects created from `reactive()` are JavaScript [Proxies](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) that work just like normal objects:
+当某个状态变化时能够触发更新，这个状态就被认为是**响应式**的。我们可以使用 Vue 的 `reactive()` API 来声明响应式状态。由 `reactive()` 创建的对象是 JavaScript [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)，它们的工作方式就和普通对象一样：
 
 ```js
 import { reactive } from 'vue'
@@ -23,7 +23,7 @@ console.log(counter.count) // 0
 counter.count++
 ```
 
-`reactive()` only works on objects (including arrays and built-in types like `Map` and `Set`). `ref()`, on the other hand, can take any value type and create an object that exposes the inner value under a `.value` property:
+`reactive()` 只能作用于对象（包括数组以及像 `Map` 和 `Set` 这样的内置类型）。另一方面，`ref()` 可以接受任何值类型，并创建一个对象，通过 `.value` 属性暴露内部值：
 
 ```js
 import { ref } from 'vue'
@@ -34,17 +34,17 @@ console.log(message.value) // "Hello World!"
 message.value = 'Changed'
 ```
 
-Details on `reactive()` and `ref()` are discussed in <a target="_blank" href="/guide/essentials/reactivity-fundamentals.html">Guide - Reactivity Fundamentals</a>.
+关于 `reactive()` 和 `ref()` 的详细内容会在 <a target="_blank" href="/guide/essentials/reactivity-fundamentals.html">指南 - 响应式基础</a> 中讨论。
 
 <div class="sfc">
 
-Reactive state declared in the component's `<script setup>` block can be used directly in the template. This is how we can render dynamic text based on the value of the `counter` object and `message` ref, using mustaches syntax:
+在组件的 `<script setup>` 块中声明的响应式状态可以直接在模板中使用。这就是我们如何使用 mustaches 语法，根据 `counter` 对象和 `message` ref 的值来渲染动态文本：
 
 </div>
 
 <div class="html">
 
-The object being passed to `createApp()` is a Vue component. A component's state should be declared inside its `setup()` function, and returned using an object:
+传递给 `createApp()` 的对象是一个 Vue 组件。组件的状态应该在它的 `setup()` 函数内部声明，并通过一个对象返回：
 
 ```js{2,5}
 setup() {
@@ -57,7 +57,7 @@ setup() {
 }
 ```
 
-Properties in the returned object will be made available in the template. This is how we can render dynamic text based on the value of `message`, using mustaches syntax:
+返回对象中的属性将可以在模板中使用。这就是我们如何使用 mustaches 语法，根据 `message` 的值来渲染动态文本：
 
 </div>
 
@@ -66,15 +66,15 @@ Properties in the returned object will be made available in the template. This i
 <p>Count is: {{ counter.count }}</p>
 ```
 
-Notice how we did not need to use `.value` when accessing the `message` ref in templates: it is automatically unwrapped for more succinct usage.
+注意在模板中访问 `message` ref 时，我们并不需要使用 `.value`：它会自动解包，从而使用起来更简洁。
 
 </div>
 
 <div class="options-api">
 
-State that can trigger updates when changed are considered **reactive**. In Vue, reactive state is held in components. <span class="html">In the example code, the object being passed to `createApp()` is a component.</span>
+当某个状态变化时能够触发更新，这个状态就被认为是**响应式**的。在 Vue 中，响应式状态保存在组件里。<span class="html">在示例代码中，传递给 `createApp()` 的对象是一个组件。</span>
 
-We can declare reactive state using the `data` component option, which should be a function that returns an object:
+我们可以使用 `data` 组件选项来声明响应式状态，它应该是一个返回对象的函数：
 
 <div class="sfc">
 
@@ -103,7 +103,7 @@ createApp({
 
 </div>
 
-The `message` property will be made available in the template. This is how we can render dynamic text based on the value of `message`, using mustaches syntax:
+`message` 属性将可以在模板中使用。这就是我们如何使用 mustaches 语法，根据 `message` 的值来渲染动态文本：
 
 ```vue-html
 <h1>{{ message }}</h1>
@@ -111,7 +111,7 @@ The `message` property will be made available in the template. This is how we ca
 
 </div>
 
-The content inside the mustaches is not limited to just identifiers or paths - we can use any valid JavaScript expression:
+mustaches 中的内容不只局限于标识符或路径——我们可以使用任何有效的 JavaScript 表达式：
 
 ```vue-html
 <h1>{{ message.split('').reverse().join('') }}</h1>
@@ -119,12 +119,12 @@ The content inside the mustaches is not limited to just identifiers or paths - w
 
 <div class="composition-api">
 
-Now, try to create some reactive state yourself, and use it to render dynamic text content for the `<h1>` in the template.
+现在，试着自己创建一些响应式状态，并用它为模板中的 `<h1>` 渲染动态文本内容。
 
 </div>
 
 <div class="options-api">
 
-Now, try to create a data property yourself, and use it as the text content for the `<h1>` in the template.
+现在，试着自己创建一个 data 属性，并将它用作模板中 `<h1>` 的文本内容。
 
 </div>

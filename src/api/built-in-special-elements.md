@@ -1,12 +1,12 @@
-# Built-in Special Elements {#built-in-special-elements}
+# 内置特殊元素 {#built-in-special-elements}
 
-:::info Not Components
-`<component>`, `<slot>` and `<template>` are component-like features and part of the template syntax. They are not true components and are compiled away during template compilation. As such, they are conventionally written with lowercase in templates.
+:::info 非组件
+`<component>`、`<slot>` 和 `<template>` 是类似组件的特性，属于模板语法的一部分。它们不是真正的组件，并且会在模板编译过程中被编译掉。因此，在模板中它们通常以小写形式书写。
 :::
 
 ## `<component>` {#component}
 
-A "meta component" for rendering dynamic components or elements.
+用于渲染动态组件或元素的“元组件”。
 
 - **Props**
 
@@ -16,17 +16,17 @@ A "meta component" for rendering dynamic components or elements.
   }
   ```
 
-- **Details**
+- **细节**
 
-  The actual component to render is determined by the `is` prop.
+  实际要渲染的组件由 `is` prop 决定。
 
-  - When `is` is a string, it could be either an HTML tag name or a component's registered name.
+  - 当 `is` 是字符串时，它可以是 HTML 标签名，也可以是组件的注册名。
 
-  - Alternatively, `is` can also be directly bound to the definition of a component.
+  - 另外，`is` 也可以直接绑定到某个组件的定义。
 
-- **Example**
+- **示例**
 
-  Rendering components by registered name (Options API):
+  按注册名渲染组件（Options API）：
 
   ```vue
   <script>
@@ -48,7 +48,7 @@ A "meta component" for rendering dynamic components or elements.
   </template>
   ```
 
-  Rendering components by definition (Composition API with `<script setup>`):
+  按定义渲染组件（使用 `<script setup>` 的 Composition API）：
 
   ```vue
   <script setup>
@@ -61,13 +61,13 @@ A "meta component" for rendering dynamic components or elements.
   </template>
   ```
 
-  Rendering HTML elements:
+  渲染 HTML 元素：
 
   ```vue-html
   <component :is="href ? 'a' : 'span'"></component>
   ```
 
-  The [built-in components](./built-in-components) can all be passed to `is`, but you must register them if you want to pass them by name. For example:
+  [内置组件](./built-in-components) 都可以传给 `is`，但如果你想通过名称传递它们，就必须先注册。例如：
 
   ```vue
   <script>
@@ -88,9 +88,9 @@ A "meta component" for rendering dynamic components or elements.
   </template>
   ```
 
-  Registration is not required if you pass the component itself to `is` rather than its name, e.g. in `<script setup>`.
+  如果你传给 `is` 的是组件本身而不是它的名称，则不需要注册，例如在 `<script setup>` 中。
 
-  If `v-model` is used on a `<component>` tag, the template compiler will expand it to a `modelValue` prop and `update:modelValue` event listener, much like it would for any other component. However, this won't be compatible with native HTML elements, such as `<input>` or `<select>`. As a result, using `v-model` with a dynamically created native element won't work:
+  如果在 `<component>` 标签上使用了 `v-model`，模板编译器会将其展开为 `modelValue` prop 和 `update:modelValue` 事件监听器，就像它对其他组件所做的那样。然而，这与原生 HTML 元素（例如 `<input>` 或 `<select>`）不兼容。因此，在动态创建的原生元素上使用 `v-model` 将不起作用：
 
   ```vue
   <script setup>
@@ -101,64 +101,63 @@ A "meta component" for rendering dynamic components or elements.
   </script>
 
   <template>
-    <!-- This won't work as 'input' is a native HTML element -->
+    <!-- 这不会起作用，因为 'input' 是一个原生 HTML 元素 -->
     <component :is="tag" v-model="username" />
   </template>
   ```
 
-  In practice, this edge case isn't common as native form fields are typically wrapped in components in real applications. If you do need to use a native element directly then you can split the `v-model` into an attribute and event manually.
+  在实践中，这种边缘情况并不常见，因为原生表单字段在真实应用中通常会被封装在组件里。如果你确实需要直接使用原生元素，那么可以手动将 `v-model` 拆分为属性和事件。
 
-- **See also** [Dynamic Components](/guide/essentials/component-basics#dynamic-components)
+- **另见** [动态组件](/guide/essentials/component-basics#dynamic-components)
 
 ## `<slot>` {#slot}
 
-Denotes slot content outlets in templates.
+表示模板中的插槽内容出口。
 
 - **Props**
 
   ```ts
   interface SlotProps {
     /**
-     * Any props passed to <slot> to passed as arguments
-     * for scoped slots
+     * 传递给 <slot> 的任意 props，会作为作用域插槽的参数传入
      */
     [key: string]: any
     /**
-     * Reserved for specifying slot name.
+     * 保留用于指定插槽名称。
      */
     name?: string
   }
   ```
 
-- **Details**
+- **细节**
 
-  The `<slot>` element can use the `name` attribute to specify a slot name. When no `name` is specified, it will render the default slot. Additional attributes passed to the slot element will be passed as slot props to the scoped slot defined in the parent.
+  `<slot>` 元素可以使用 `name` 属性来指定插槽名称。当未指定 `name` 时，它会渲染默认插槽。传递给该插槽元素的额外属性会作为插槽 props 传递给父组件中定义的作用域插槽。
 
-  The element itself will be replaced by its matched slot content.
+  元素本身会被其匹配到的插槽内容替换。
 
-  `<slot>` elements in Vue templates are compiled into JavaScript, so they are not to be confused with [native `<slot>` elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot).
+  Vue 模板中的 `<slot>` 元素会被编译成 JavaScript，因此不要将它与 [原生 `<slot>` 元素](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot)混淆。
 
-- **See also** [Component - Slots](/guide/components/slots)
+- **另见** [组件 - 插槽](/guide/components/slots)
 
 ## `<template>` {#template}
 
-The `<template>` tag is used as a placeholder when we want to use a built-in directive without rendering an element in the DOM.
+`<template>` 标签用作占位符，当我们希望使用内置指令而不在 DOM 中渲染元素时会用到它。
 
-- **Details**
+- **细节**
 
-  The special handling for `<template>` is only triggered if it is used with one of these directives:
+  对 `<template>` 的特殊处理只有在它与以下指令之一一起使用时才会触发：
 
-  - `v-if`, `v-else-if`, or `v-else`
+  - `v-if`、`v-else-if` 或 `v-else`
   - `v-for`
   - `v-slot`
 
-  If none of those directives are present then it will be rendered as a [native `<template>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template) instead.
+  如果没有这些指令，那么它会被当作 [原生 `<template>` 元素](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template)来渲染。
 
-  A `<template>` with a `v-for` can also have a [`key` attribute](/api/built-in-special-attributes#key). All other attributes and directives will be discarded, as they aren't meaningful without a corresponding element.
+  带有 `v-for` 的 `<template>` 也可以拥有一个 [`key` 属性](/api/built-in-special-attributes#key)。其他所有属性和指令都会被丢弃，因为在没有对应元素的情况下它们没有意义。
 
-  Single-file components use a [top-level `<template>` tag](/api/sfc-spec#language-blocks) to wrap the entire template. That usage is separate from the use of `<template>` described above. That top-level tag is not part of the template itself and doesn't support template syntax, such as directives.
+  单文件组件使用一个 [顶层 `<template>` 标签](/api/sfc-spec#language-blocks) 来包裹整个模板。该用法与上面描述的 `<template>` 用法是分开的。那个顶层标签不属于模板本身，并且不支持模板语法，例如指令。
 
-- **See also**
-  - [Guide - `v-if` on `<template>`](/guide/essentials/conditional#v-if-on-template)
-  - [Guide - `v-for` on `<template>`](/guide/essentials/list#v-for-on-template)
-  - [Guide - Named slots](/guide/components/slots#named-slots)
+- **另见**
+  - [指南 - 在 `<template>` 上使用 `v-if`](/guide/essentials/conditional#v-if-on-template)
+  - [指南 - 在 `<template>` 上使用 `v-for`](/guide/essentials/list#v-for-on-template)
+  - [指南 - 命名插槽](/guide/components/slots#named-slots)

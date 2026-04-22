@@ -1,10 +1,10 @@
-# Options: Misc {#options-misc}
+# 选项：杂项 {#options-misc}
 
 ## name {#name}
 
-Explicitly declare a display name for the component.
+显式声明组件的显示名称。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentOptions {
@@ -12,43 +12,43 @@ Explicitly declare a display name for the component.
   }
   ```
 
-- **Details**
+- **详情**
 
-  The name of a component is used for the following:
+  组件名称用于以下场景：
 
-  - Recursive self-reference in the component's own template
-  - Display in Vue DevTools' component inspection tree
-  - Display in warning component traces
+  - 在组件自身模板中进行递归自引用
+  - 在 Vue DevTools 的组件检查树中显示
+  - 在警告信息的组件追踪中显示
 
-  When you use Single-File Components, the component already infers its own name from the filename. For example, a file named `MyComponent.vue` will have the inferred display name "MyComponent".
+  当你使用单文件组件时，组件已经会从文件名推断出自己的名称。例如，名为 `MyComponent.vue` 的文件会推断出显示名称 `"MyComponent"`。
 
-  Another case is that when a component is registered globally with [`app.component`](/api/application#app-component), the global ID is automatically set as its name.
+  另一种情况是，当组件通过 [`app.component`](/api/application#app-component) 全局注册时，全局 ID 会自动被设置为其名称。
 
-  The `name` option allows you to override the inferred name, or to explicitly provide a name when no name can be inferred (e.g. when not using build tools, or an inlined non-SFC component).
+  `name` 选项允许你覆盖推断出的名称，或者在无法推断名称时显式提供一个名称（例如，在不使用构建工具时，或者是内联的非 SFC 组件）。
 
-  There is one case where `name` is explicitly necessary: when matching against cacheable components in [`<KeepAlive>`](/guide/built-ins/keep-alive) via its `include / exclude` props.
+  有一种情况需要显式指定 `name`：当通过 [`<KeepAlive>`](/guide/built-ins/keep-alive) 的 `include / exclude` 属性匹配可缓存组件时。
 
   :::tip
-  Since version 3.2.34, a single-file component using `<script setup>` will automatically infer its `name` option based on the filename, removing the need to manually declare the name even when used with `<KeepAlive>`.
+  自 3.2.34 版本起，使用 `<script setup>` 的单文件组件会根据文件名自动推断其 `name` 选项，因此即使在与 `<KeepAlive>` 一起使用时，也不再需要手动声明名称。
   :::
 
 ## inheritAttrs {#inheritattrs}
 
-Controls whether the default component attribute fallthrough behavior should be enabled.
+控制是否启用默认的组件属性透传行为。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentOptions {
-    inheritAttrs?: boolean // default: true
+    inheritAttrs?: boolean // 默认：true
   }
   ```
 
-- **Details**
+- **详情**
 
-  By default, parent scope attribute bindings that are not recognized as props will "fallthrough". This means that when we have a single-root component, these bindings will be applied to the root element of the child component as normal HTML attributes. When authoring a component that wraps a target element or another component, this may not always be the desired behavior. By setting `inheritAttrs` to `false`, this default behavior can be disabled. The attributes are available via the `$attrs` instance property and can be explicitly bound to a non-root element using `v-bind`.
+  默认情况下，父作用域中未被识别为 props 的属性绑定会“透传”下去。这意味着当我们有一个单根组件时，这些绑定会像普通 HTML 属性一样应用到子组件的根元素上。当编写一个包裹目标元素或另一个组件的组件时，这种默认行为并不总是符合预期。通过将 `inheritAttrs` 设置为 `false`，可以禁用这种默认行为。这些属性可以通过 `$attrs` 实例属性访问，并且可以使用 `v-bind` 显式绑定到非根元素上。
 
-- **Example**
+- **示例**
 
   <div class="options-api">
 
@@ -76,7 +76,7 @@ Controls whether the default component attribute fallthrough behavior should be 
   </div>
   <div class="composition-api">
 
-  When declaring this option in a component that uses `<script setup>`, you can use the [`defineOptions`](/api/sfc-script-setup#defineoptions) macro:
+  在使用 `<script setup>` 的组件中声明此选项时，你可以使用 [`defineOptions`](/api/sfc-script-setup#defineoptions) 宏：
 
   ```vue
   <script setup>
@@ -101,19 +101,19 @@ Controls whether the default component attribute fallthrough behavior should be 
 
   </div>
 
-- **See also**
+- **另见**
 
-  - [Fallthrough Attributes](/guide/components/attrs)
+  - [透传属性](/guide/components/attrs)
   <div class="composition-api">
 
-  - [Using `inheritAttrs` in normal `<script>`](/api/sfc-script-setup.html#usage-alongside-normal-script)
+  - [在普通 `<script>` 中使用 `inheritAttrs`](/api/sfc-script-setup.html#usage-alongside-normal-script)
   </div>
 
 ## components {#components}
 
-An object that registers components to be made available to the component instance.
+一个用于注册组件、使其可在组件实例中使用的对象。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentOptions {
@@ -121,7 +121,7 @@ An object that registers components to be made available to the component instan
   }
   ```
 
-- **Example**
+- **示例**
 
   ```js
   import Foo from './Foo.vue'
@@ -129,21 +129,21 @@ An object that registers components to be made available to the component instan
 
   export default {
     components: {
-      // shorthand
+      // 简写
       Foo,
-      // register under a different name
+      // 以不同名称注册
       RenamedBar: Bar
     }
   }
   ```
 
-- **See also** [Component Registration](/guide/components/registration)
+- **另见** [组件注册](/guide/components/registration)
 
 ## directives {#directives}
 
-An object that registers directives to be made available to the component instance.
+一个用于注册指令、使其可在组件实例中使用的对象。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentOptions {
@@ -151,12 +151,12 @@ An object that registers directives to be made available to the component instan
   }
   ```
 
-- **Example**
+- **示例**
 
   ```js
   export default {
     directives: {
-      // enables v-focus in template
+      // 在模板中启用 v-focus
       focus: {
         mounted(el) {
           el.focus()
@@ -170,4 +170,4 @@ An object that registers directives to be made available to the component instan
   <input v-focus>
   ```
 
-- **See also** [Custom Directives](/guide/reusability/custom-directives)
+- **另见** [自定义指令](/guide/reusability/custom-directives)

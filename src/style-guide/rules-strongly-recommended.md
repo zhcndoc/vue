@@ -1,19 +1,19 @@
-# Priority B Rules: Strongly Recommended {#priority-b-rules-strongly-recommended}
+# 优先级 B 规则：强烈推荐 {#priority-b-rules-strongly-recommended}
 
-::: warning Note
-This Vue.js Style Guide is outdated and needs to be reviewed. If you have any questions or suggestions, please [open an issue](https://github.com/vuejs/docs/issues/new).
+::: warning 注意
+本 Vue.js 风格指南已过时，需要审查。如果你有任何问题或建议，请[提交 issue](https://github.com/vuejs/docs/issues/new)。
 :::
 
-These rules have been found to improve readability and/or developer experience in most projects. Your code will still run if you violate them, but violations should be rare and well-justified.
+这些规则已被证明在大多数项目中有助于提升可读性和/或开发者体验。即使你违反了它们，代码仍然可以运行，但违规应当是少数且有充分理由的。
 
-## Component files {#component-files}
+## 组件文件 {#component-files}
 
-**Whenever a build system is available to concatenate files, each component should be in its own file.**
+**只要有可用于合并文件的构建系统，每个组件都应该放在自己的文件中。**
 
-This helps you to more quickly find a component when you need to edit it or review how to use it.
+这有助于你在需要编辑组件或查看如何使用它时，更快地找到它。
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>坏</h3>
 
 ```js
 app.component('TodoList', {
@@ -28,7 +28,7 @@ app.component('TodoItem', {
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>好</h3>
 
 ```
 components/
@@ -44,14 +44,14 @@ components/
 
 </div>
 
-## Single-file component filename casing {#single-file-component-filename-casing}
+## 单文件组件文件名大小写 {#single-file-component-filename-casing}
 
-**Filenames of [Single-File Components](/guide/scaling-up/sfc) should either be always PascalCase or always kebab-case.**
+**[单文件组件](/guide/scaling-up/sfc)的文件名应始终使用 PascalCase 或始终使用 kebab-case。**
 
-PascalCase works best with autocompletion in code editors, as it's consistent with how we reference components in JS(X) and templates, wherever possible. However, mixed case filenames can sometimes create issues on case-insensitive file systems, which is why kebab-case is also perfectly acceptable.
+PascalCase 与代码编辑器中的自动补全配合得最好，因为它与我们在 JS(X) 和模板中引用组件的方式保持一致，只要有可能都是如此。不过，混合大小写的文件名有时会在大小写不敏感的文件系统上引发问题，因此 kebab-case 也完全可以接受。
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>坏</h3>
 
 ```
 components/
@@ -66,7 +66,7 @@ components/
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>好</h3>
 
 ```
 components/
@@ -80,28 +80,28 @@ components/
 
 </div>
 
-## Base component names {#base-component-names}
+## 基础组件名称 {#base-component-names}
 
-**Base components (a.k.a. presentational, dumb, or pure components) that apply app-specific styling and conventions should all begin with a specific prefix, such as `Base`, `App`, or `V`.**
+**为应用特定的样式和约定提供支持的基础组件（也称展示型、傻瓜型或纯组件）都应该以特定前缀开头，例如 `Base`、`App` 或 `V`。**
 
-::: details Detailed Explanation
-These components lay the foundation for consistent styling and behavior in your application. They may **only** contain:
+::: details 详细说明
+这些组件为应用中的一致样式和行为奠定基础。它们可能**只**包含：
 
-- HTML elements,
-- other base components, and
-- 3rd-party UI components.
+- HTML 元素，
+- 其他基础组件，以及
+- 第三方 UI 组件。
 
-But they'll **never** contain global state (e.g. from a [Pinia](https://pinia.vuejs.org/) store).
+但它们**绝不会**包含全局状态（例如来自 [Pinia](https://pinia.vuejs.org/) store）。
 
-Their names often include the name of an element they wrap (e.g. `BaseButton`, `BaseTable`), unless no element exists for their specific purpose (e.g. `BaseIcon`). If you build similar components for a more specific context, they will almost always consume these components (e.g. `BaseButton` may be used in `ButtonSubmit`).
+它们的名称通常会包含其包裹的元素名称（例如 `BaseButton`、`BaseTable`），除非它们的特定用途没有对应元素（例如 `BaseIcon`）。如果你为更具体的上下文构建类似组件，它们几乎总是会消费这些组件（例如 `BaseButton` 可能会在 `ButtonSubmit` 中使用）。
 
-Some advantages of this convention:
+这种约定有一些优点：
 
-- When organized alphabetically in editors, your app's base components are all listed together, making them easier to identify.
+- 在编辑器中按字母顺序排列时，你应用的基础组件会被一起列出，因此更容易识别。
 
-- Since component names should always be multi-word, this convention prevents you from having to choose an arbitrary prefix for simple component wrappers (e.g. `MyButton`, `VueButton`).
+- 由于组件名称应始终为多词名称，这种约定可以避免你为简单的组件包装器去选择一个随意的前缀（例如 `MyButton`、`VueButton`）。
 
-- Since these components are so frequently used, you may want to simply make them global instead of importing them everywhere. A prefix makes this possible with Webpack:
+- 由于这些组件使用非常频繁，你可能希望直接将它们注册为全局组件，而不是到处导入它们。使用前缀可以让 Webpack 实现这一点：
 
   ```js
   const requireComponent = require.context(
@@ -123,7 +123,7 @@ Some advantages of this convention:
   :::
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>坏</h3>
 
 ```
 components/
@@ -135,7 +135,7 @@ components/
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>好</h3>
 
 ```
 components/
@@ -160,14 +160,14 @@ components/
 
 </div>
 
-## Tightly coupled component names {#tightly-coupled-component-names}
+## 紧密耦合的组件名称 {#tightly-coupled-component-names}
 
-**Child components that are tightly coupled with their parent should include the parent component name as a prefix.**
+**与父组件紧密耦合的子组件，应在名称中包含父组件名称作为前缀。**
 
-If a component only makes sense in the context of a single parent component, that relationship should be evident in its name. Since editors typically organize files alphabetically, this also keeps these related files next to each other.
+如果一个组件只在某个单一父组件的上下文中才有意义，那么这种关系就应该在它的名称中体现出来。由于编辑器通常按字母顺序组织文件，这也能让这些相关文件彼此相邻。
 
-::: details Detailed Explanation
-You might be tempted to solve this problem by nesting child components in directories named after their parent. For example:
+::: details 详细说明
+你可能会想通过将子组件嵌套在以其父组件命名的目录中来解决这个问题。例如：
 
 ```
 components/
@@ -178,7 +178,7 @@ components/
    |- index.vue
 ```
 
-or:
+或者：
 
 ```
 components/
@@ -189,14 +189,14 @@ components/
 |- TodoList.vue
 ```
 
-This isn't recommended, as it results in:
+不推荐这样做，因为这会导致：
 
-- Many files with similar names, making rapid file switching in code editors more difficult.
-- Many nested sub-directories, which increases the time it takes to browse components in an editor's sidebar.
+- 很多文件名称相似，使得在代码编辑器中快速切换文件更困难。
+- 很多嵌套子目录，会增加在编辑器侧边栏中浏览组件所需的时间。
   :::
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>坏</h3>
 
 ```
 components/
@@ -214,7 +214,7 @@ components/
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>好</h3>
 
 ```
 components/
@@ -231,24 +231,24 @@ components/
 
 </div>
 
-## Order of words in component names {#order-of-words-in-component-names}
+## 组件名称中的词序 {#order-of-words-in-component-names}
 
-**Component names should start with the highest-level (often most general) words and end with descriptive modifying words.**
+**组件名称应以最高层级（通常是最通用）的词开头，并以描述性的修饰词结尾。**
 
-::: details Detailed Explanation
-You may be wondering:
+::: details 详细说明
+你可能会想：
 
-> "Why would we force component names to use less natural language?"
+> “为什么我们要强制组件名称使用不那么自然的语言顺序？”
 
-In natural English, adjectives and other descriptors do typically appear before the nouns, while exceptions require connector words. For example:
+在自然英语中，形容词和其他修饰语通常出现在名词前面，而例外情况则需要连接词。例如：
 
 - Coffee _with_ milk
 - Soup _of the_ day
 - Visitor _to the_ museum
 
-You can definitely include these connector words in component names if you'd like, but the order is still important.
+如果你愿意，完全可以在组件名称中包含这些连接词，但顺序仍然很重要。
 
-Also note that **what's considered "highest-level" will be contextual to your app**. For example, imagine an app with a search form. It may include components like this one:
+另外要注意，**什么算作“最高层级”会因你的应用而异**。例如，设想一个带有搜索表单的应用。它可能包含如下组件：
 
 ```
 components/
@@ -260,7 +260,7 @@ components/
 |- TermsCheckbox.vue
 ```
 
-As you might notice, it's quite difficult to see which components are specific to the search. Now let's rename the components according to the rule:
+你可能会注意到，很难看出哪些组件是搜索相关的。现在根据这条规则重命名这些组件：
 
 ```
 components/
@@ -272,17 +272,17 @@ components/
 |- SettingsCheckboxTerms.vue
 ```
 
-Since editors typically organize files alphabetically, all the important relationships between components are now evident at a glance.
+由于编辑器通常按字母顺序组织文件，现在一眼就能看出组件之间所有重要的关系。
 
-You might be tempted to solve this problem differently, nesting all the search components under a "search" directory, then all the settings components under a "settings" directory. We only recommend considering this approach in very large apps (e.g. 100+ components), for these reasons:
+你可能会想用另一种方式解决这个问题：将所有搜索组件放在一个“search”目录下，再将所有设置组件放在一个“settings”目录下。我们只建议在非常大的应用中（例如 100+ 个组件）考虑这种方法，原因如下：
 
-- It generally takes more time to navigate through nested sub-directories, than scrolling through a single `components` directory.
-- Name conflicts (e.g. multiple `ButtonDelete.vue` components) make it more difficult to quickly navigate to a specific component in a code editor.
-- Refactoring becomes more difficult, because find-and-replace often isn't sufficient to update relative references to a moved component.
+- 与在单个 `components` 目录中滚动相比，浏览嵌套子目录通常需要更多时间。
+- 命名冲突（例如多个 `ButtonDelete.vue` 组件）会使在代码编辑器中快速导航到特定组件变得更困难。
+- 重构会变得更困难，因为“查找并替换”通常不足以更新已移动组件的相对引用。
   :::
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>坏</h3>
 
 ```
 components/
@@ -297,7 +297,7 @@ components/
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>好</h3>
 
 ```
 components/
@@ -311,115 +311,115 @@ components/
 
 </div>
 
-## Self-closing components {#self-closing-components}
+## 自闭合组件 {#self-closing-components}
 
-**Components with no content should be self-closing in [Single-File Components](/guide/scaling-up/sfc), string templates, and [JSX](/guide/extras/render-function#jsx-tsx) - but never in in-DOM templates.**
+**在[单文件组件](/guide/scaling-up/sfc)、字符串模板和 [JSX](/guide/extras/render-function#jsx-tsx) 中，没有内容的组件应使用自闭合形式——但在 in-DOM 模板中绝不应如此。**
 
-Components that self-close communicate that they not only have no content, but are **meant** to have no content. It's the difference between a blank page in a book and one labeled "This page intentionally left blank." Your code is also cleaner without the unnecessary closing tag.
+自闭合的组件表明它们不仅没有内容，而且**本来就**不应该有内容。这就像书里的一页空白页和标注着“本页故意留白”的页面之间的区别。你的代码也会因为省去不必要的闭合标签而更简洁。
 
-Unfortunately, HTML doesn't allow custom elements to be self-closing - only [official "void" elements](https://www.w3.org/TR/html/syntax.html#void-elements). That's why the strategy is only possible when Vue's template compiler can reach the template before the DOM, then serve the DOM spec-compliant HTML.
+不幸的是，HTML 不允许自定义元素自闭合——只有 [官方的“空元素”](https://www.w3.org/TR/html/syntax.html#void-elements) 才可以。这就是为什么只有当 Vue 的模板编译器能在 DOM 之前处理模板时，这种策略才可行，然后再输出符合 DOM 规范的 HTML。
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>坏</h3>
 
 ```vue-html
-<!-- In Single-File Components, string templates, and JSX -->
+<!-- 在单文件组件、字符串模板和 JSX 中 -->
 <MyComponent></MyComponent>
 ```
 
 ```vue-html
-<!-- In in-DOM templates -->
+<!-- 在 in-DOM 模板中 -->
 <my-component/>
 ```
 
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>好</h3>
 
 ```vue-html
-<!-- In Single-File Components, string templates, and JSX -->
+<!-- 在单文件组件、字符串模板和 JSX 中 -->
 <MyComponent/>
 ```
 
 ```vue-html
-<!-- In in-DOM templates -->
+<!-- 在 in-DOM 模板中 -->
 <my-component></my-component>
 ```
 
 </div>
 
-## Component name casing in templates {#component-name-casing-in-templates}
+## 模板中的组件名称大小写 {#component-name-casing-in-templates}
 
-**In most projects, component names should always be PascalCase in [Single-File Components](/guide/scaling-up/sfc) and string templates - but kebab-case in in-DOM templates.**
+**在大多数项目中，组件名称在[单文件组件](/guide/scaling-up/sfc)和字符串模板中应始终使用 PascalCase，但在 in-DOM 模板中应使用 kebab-case。**
 
-PascalCase has a few advantages over kebab-case:
+与 kebab-case 相比，PascalCase 有几个优点：
 
-- Editors can autocomplete component names in templates, because PascalCase is also used in JavaScript.
-- `<MyComponent>` is more visually distinct from a single-word HTML element than `<my-component>`, because there are two character differences (the two capitals), rather than just one (a hyphen).
-- If you use any non-Vue custom elements in your templates, such as a web component, PascalCase ensures that your Vue components remain distinctly visible.
+- 编辑器可以在模板中自动补全组件名称，因为 JavaScript 中也使用 PascalCase。
+- `<MyComponent>` 与单词形式的 HTML 元素相比，比 `<my-component>` 更加醒目，因为前者有两个字符差异（两个大写字母），而后者只有一个（一个连字符）。
+- 如果你在模板中使用任何非 Vue 的自定义元素，例如 web component，PascalCase 可以确保你的 Vue 组件仍然清晰可见。
 
-Unfortunately, due to HTML's case insensitivity, in-DOM templates must still use kebab-case.
+不幸的是，由于 HTML 不区分大小写，in-DOM 模板仍然必须使用 kebab-case。
 
-Also note that if you've already invested heavily in kebab-case, consistency with HTML conventions and being able to use the same casing across all your projects may be more important than the advantages listed above. In those cases, **using kebab-case everywhere is also acceptable.**
+另外要注意，如果你已经在 kebab-case 上投入很多，那么与 HTML 约定保持一致，并且能在所有项目中使用相同的大小写格式，可能比上面列出的优点更重要。在这些情况下，**全局使用 kebab-case 也是可以接受的。**
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>坏</h3>
 
 ```vue-html
-<!-- In Single-File Components and string templates -->
+<!-- 在单文件组件和字符串模板中 -->
 <mycomponent/>
 ```
 
 ```vue-html
-<!-- In Single-File Components and string templates -->
+<!-- 在单文件组件和字符串模板中 -->
 <myComponent/>
 ```
 
 ```vue-html
-<!-- In in-DOM templates -->
+<!-- 在 in-DOM 模板中 -->
 <MyComponent></MyComponent>
 ```
 
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>好</h3>
 
 ```vue-html
-<!-- In Single-File Components and string templates -->
+<!-- 在单文件组件和字符串模板中 -->
 <MyComponent/>
 ```
 
 ```vue-html
-<!-- In in-DOM templates -->
+<!-- 在 in-DOM 模板中 -->
 <my-component></my-component>
 ```
 
-OR
+或者
 
 ```vue-html
-<!-- Everywhere -->
+<!-- 在所有地方 -->
 <my-component></my-component>
 ```
 
 </div>
 
-## Component name casing in JS/JSX {#component-name-casing-in-js-jsx}
+## JS/JSX 中的组件名称大小写 {#component-name-casing-in-js-jsx}
 
-**Component names in JS/[JSX](/guide/extras/render-function#jsx-tsx) should always be PascalCase, though they may be kebab-case inside strings for simpler applications that only use global component registration through `app.component`.**
+**JS/[JSX](/guide/extras/render-function#jsx-tsx) 中的组件名称应始终使用 PascalCase，不过对于仅通过 `app.component` 进行全局组件注册、且应用较简单的场景，也可以在字符串中使用 kebab-case。**
 
-::: details Detailed Explanation
-In JavaScript, PascalCase is the convention for classes and prototype constructors - essentially, anything that can have distinct instances. Vue components also have instances, so it makes sense to also use PascalCase. As an added benefit, using PascalCase within JSX (and templates) allows readers of the code to more easily distinguish between components and HTML elements.
+::: details 详细说明
+在 JavaScript 中，PascalCase 是类和原型构造函数的惯例——本质上，任何可以拥有不同实例的东西都是如此。Vue 组件也有实例，因此使用 PascalCase 也是合理的。额外的好处是，在 JSX（以及模板）中使用 PascalCase，可以让代码读者更容易区分组件和 HTML 元素。
 
-However, for applications that use **only** global component definitions via `app.component`, we recommend kebab-case instead. The reasons are:
+不过，对于**仅**通过 `app.component` 使用全局组件定义的应用，我们更推荐使用 kebab-case。原因如下：
 
-- It's rare that global components are ever referenced in JavaScript, so following a convention for JavaScript makes less sense.
-- These applications always include many in-DOM templates, where [kebab-case **must** be used](#component-name-casing-in-templates).
+- 全局组件很少会在 JavaScript 中被引用，因此遵循 JavaScript 的命名惯例意义不大。
+- 这类应用总是包含许多 DOM 内模板，而 [kebab-case **必须** 使用](#component-name-casing-in-templates)。
   :::
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>错误</h3>
 
 ```js
 app.component('myComponent', {
@@ -448,7 +448,7 @@ export default {
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>正确</h3>
 
 ```js
 app.component('MyComponent', {
@@ -475,14 +475,14 @@ export default {
 
 </div>
 
-## Full-word component names {#full-word-component-names}
+## 组件名称使用完整单词 {#full-word-component-names}
 
-**Component names should prefer full words over abbreviations.**
+**组件名称应优先使用完整单词，而不是缩写。**
 
-The autocompletion in editors make the cost of writing longer names very low, while the clarity they provide is invaluable. Uncommon abbreviations, in particular, should always be avoided.
+编辑器中的自动补全使得输入较长名称的成本非常低，而它们带来的清晰度却非常有价值。尤其应始终避免使用不常见的缩写。
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>错误</h3>
 
 ```
 components/
@@ -493,7 +493,7 @@ components/
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>正确</h3>
 
 ```
 components/
@@ -503,12 +503,12 @@ components/
 
 </div>
 
-## Prop name casing {#prop-name-casing}
+## Prop 名称大小写 {#prop-name-casing}
 
-**Prop names should always use camelCase during declaration. When used inside in-DOM templates, props should be kebab-cased. Single-File Components templates and [JSX](/guide/extras/render-function#jsx-tsx) can use either kebab-case or camelCase props. Casing should be consistent - if you choose to use camelCased props, make sure you don't use kebab-cased ones in your application**
+**Prop 名称在声明时应始终使用 camelCase。当在 DOM 内模板中使用时，props 应使用 kebab-case。单文件组件模板和 [JSX](/guide/extras/render-function#jsx-tsx) 可以使用 kebab-case 或 camelCase 的 props。大小写应保持一致——如果你选择使用 camelCase 的 props，请确保在应用中不要使用 kebab-case 的 props**
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>错误</h3>
 
 <div class="options-api">
 
@@ -531,14 +531,14 @@ const props = defineProps({
 </div>
 
 ```vue-html
-// for in-DOM templates
+// 对于 DOM 内模板
 <welcome-message greetingText="hi"></welcome-message>
 ```
 
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>正确</h3>
 
 <div class="options-api">
 
@@ -561,28 +561,28 @@ const props = defineProps({
 </div>
 
 ```vue-html
-// for SFC - please make sure your casing is consistent throughout the project
-// you can use either convention but we don't recommend mixing two different casing styles
+// 对于 SFC - 请确保整个项目中的大小写保持一致
+// 你可以使用任一约定，但我们不建议混用两种不同的大小写风格
 <WelcomeMessage greeting-text="hi"/>
-// or
+// 或者
 <WelcomeMessage greetingText="hi"/>
 ```
 
 ```vue-html
-// for in-DOM templates
+// 对于 DOM 内模板
 <welcome-message greeting-text="hi"></welcome-message>
 ```
 
 </div>
 
-## Multi-attribute elements {#multi-attribute-elements}
+## 多属性元素 {#multi-attribute-elements}
 
-**Elements with multiple attributes should span multiple lines, with one attribute per line.**
+**带有多个属性的元素应该换行书写，每行一个属性。**
 
-In JavaScript, splitting objects with multiple properties over multiple lines is widely considered a good convention, because it's much easier to read. Our templates and [JSX](/guide/extras/render-function#jsx-tsx) deserve the same consideration.
+在 JavaScript 中，将包含多个属性的对象拆分到多行，通常被认为是一种良好惯例，因为这样更易于阅读。我们的模板和 [JSX](/guide/extras/render-function#jsx-tsx) 也应如此。
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>错误</h3>
 
 ```vue-html
 <img src="https://vuejs.org/images/logo.png" alt="Vue Logo">
@@ -595,7 +595,7 @@ In JavaScript, splitting objects with multiple properties over multiple lines is
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>正确</h3>
 
 ```vue-html
 <img
@@ -614,14 +614,14 @@ In JavaScript, splitting objects with multiple properties over multiple lines is
 
 </div>
 
-## Simple expressions in templates {#simple-expressions-in-templates}
+## 模板中的简单表达式 {#simple-expressions-in-templates}
 
-**Component templates should only include simple expressions, with more complex expressions refactored into computed properties or methods.**
+**组件模板中应只包含简单表达式，更复杂的表达式应重构到计算属性或方法中。**
 
-Complex expressions in your templates make them less declarative. We should strive to describe _what_ should appear, not _how_ we're computing that value. Computed properties and methods also allow the code to be reused.
+模板中的复杂表达式会降低其声明性。我们应努力描述“应该显示什么”，而不是“我们如何计算这个值”。计算属性和方法也允许代码复用。
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>错误</h3>
 
 ```vue-html
 {{
@@ -634,17 +634,17 @@ Complex expressions in your templates make them less declarative. We should stri
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>正确</h3>
 
 ```vue-html
-<!-- In a template -->
+<!-- 在模板中 -->
 {{ normalizedFullName }}
 ```
 
 <div class="options-api">
 
 ```js
-// The complex expression has been moved to a computed property
+// 复杂表达式已被移到计算属性中
 computed: {
   normalizedFullName() {
     return this.fullName.split(' ')
@@ -659,7 +659,7 @@ computed: {
 <div class="composition-api">
 
 ```js
-// The complex expression has been moved to a computed property
+// 复杂表达式已被移到计算属性中
 const normalizedFullName = computed(() =>
   fullName.value
     .split(' ')
@@ -672,30 +672,30 @@ const normalizedFullName = computed(() =>
 
 </div>
 
-## Simple computed properties {#simple-computed-properties}
+## 简单的计算属性 {#simple-computed-properties}
 
-**Complex computed properties should be split into as many simpler properties as possible.**
+**复杂的计算属性应尽可能拆分为更多更简单的属性。**
 
-::: details Detailed Explanation
-Simpler, well-named computed properties are:
+::: details 详细说明
+更简单、命名良好的计算属性具有以下优点：
 
-- **Easier to test**
+- **更容易测试**
 
-  When each computed property contains only a very simple expression, with very few dependencies, it's much easier to write tests confirming that it works correctly.
+  当每个计算属性只包含一个非常简单的表达式，并且依赖项很少时，就更容易编写测试来确认它能正确工作。
 
-- **Easier to read**
+- **更容易阅读**
 
-  Simplifying computed properties forces you to give each value a descriptive name, even if it's not reused. This makes it much easier for other developers (and future you) to focus in on the code they care about and figure out what's going on.
+  简化计算属性会迫使你为每个值提供一个描述性的名称，即使它没有被复用。这会让其他开发者（以及未来的你）更容易聚焦在他们关心的代码上，并弄清楚究竟发生了什么。
 
-- **More adaptable to changing requirements**
+- **更能适应需求变化**
 
-  Any value that can be named might be useful to the view. For example, we might decide to display a message telling the user how much money they saved. We might also decide to calculate sales tax, but perhaps display it separately, rather than as part of the final price.
+  任何可以命名的值都可能对视图有用。例如，我们可能决定显示一条消息，告诉用户他们节省了多少钱。我们也可能决定计算销售税，但也许会将其单独显示，而不是作为最终价格的一部分。
 
-  Small, focused computed properties make fewer assumptions about how information will be used, so require less refactoring as requirements change.
+  小而聚焦的计算属性对信息将如何被使用所做的假设更少，因此在需求变化时需要更少的重构。
   :::
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>错误</h3>
 
 <div class="options-api">
 
@@ -727,7 +727,7 @@ const price = computed(() => {
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>正确</h3>
 
 <div class="options-api">
 
@@ -767,14 +767,14 @@ const finalPrice = computed(() => basePrice.value - discount.value)
 
 </div>
 
-## Quoted attribute values {#quoted-attribute-values}
+## 带引号的属性值 {#quoted-attribute-values}
 
-**Non-empty HTML attribute values should always be inside quotes (single or double, whichever is not used in JS).**
+**非空的 HTML 属性值应始终放在引号中（单引号或双引号，取决于在 JS 中没有被使用的那一种）。**
 
-While attribute values without any spaces are not required to have quotes in HTML, this practice often leads to _avoiding_ spaces, making attribute values less readable.
+虽然没有空格的属性值在 HTML 中不强制要求加引号，但这种做法常常会导致人们为了避免空格而牺牲可读性，使属性值变得不够清晰。
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>错误</h3>
 
 ```vue-html
 <input type=text>
@@ -787,7 +787,7 @@ While attribute values without any spaces are not required to have quotes in HTM
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>正确</h3>
 
 ```vue-html
 <input type="text">
@@ -799,12 +799,12 @@ While attribute values without any spaces are not required to have quotes in HTM
 
 </div>
 
-## Directive shorthands {#directive-shorthands}
+## 指令简写 {#directive-shorthands}
 
-**Directive shorthands (`:` for `v-bind:`, `@` for `v-on:` and `#` for `v-slot`) should be used always or never.**
+**指令简写（`:` 代表 `v-bind:`，`@` 代表 `v-on:`，`#` 代表 `v-slot`）应当始终使用或始终不使用。**
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>错误</h3>
 
 ```vue-html
 <input
@@ -822,18 +822,18 @@ While attribute values without any spaces are not required to have quotes in HTM
 
 ```vue-html
 <template v-slot:header>
-  <h1>Here might be a page title</h1>
+  <h1>这里可能是一个页面标题</h1>
 </template>
 
 <template #footer>
-  <p>Here's some contact info</p>
+  <p>这里有一些联系信息</p>
 </template>
 ```
 
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>正确</h3>
 
 ```vue-html
 <input
@@ -865,21 +865,21 @@ While attribute values without any spaces are not required to have quotes in HTM
 
 ```vue-html
 <template v-slot:header>
-  <h1>Here might be a page title</h1>
+  <h1>这里可能是一个页面标题</h1>
 </template>
 
 <template v-slot:footer>
-  <p>Here's some contact info</p>
+  <p>这里有一些联系信息</p>
 </template>
 ```
 
 ```vue-html
 <template #header>
-  <h1>Here might be a page title</h1>
+  <h1>这里可能是一个页面标题</h1>
 </template>
 
 <template #footer>
-  <p>Here's some contact info</p>
+  <p>这里有一些联系信息</p>
 </template>
 ```
 

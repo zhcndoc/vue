@@ -6,14 +6,12 @@ defineProps<{ title?: string }>()
 
 <template>
   <PageHero>
-    <template #title>{{ title || 'Vue Partners' }}</template>
+    <template #title>{{ title || 'Vue 合作伙伴' }}</template>
     <template #lead>
       <p>
-        Vue Partners are Vue-team endorsed agencies that provide first-class
-        Vue consulting and development services. If your company is
-        interested in being listed as a partner, please
+        Vue 合作伙伴是经过 Vue 团队认可、能够提供一流 Vue 咨询与开发服务的机构。如果你的公司有兴趣加入合作伙伴列表，请
         <a class="link" href="https://airtable.com/shrCQhat57SApJI2l" target="_blank"
-          >register your interest here</a
+          >在这里提交意向</a
         >.
       </p>
     </template>

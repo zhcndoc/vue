@@ -93,14 +93,14 @@ function resolveList(data: SponsorData) {
       href="/sponsor/"
       class="spsr-item action"
       @click="track(true)"
-      >Become a Sponsor</a
+      >成为赞助商</a
     >
     <a
       v-if="tier === 'special' && data && !data[tier]?.length"
       href="/sponsor/#tier-benefits"
       class="spsr-item action"
       @click="track(true)"
-      >Inquire about Special Sponsorship</a
+      >咨询特别赞助</a
     >
   </div>
 </template>

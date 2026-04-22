@@ -1,16 +1,16 @@
-# TypeScript with Composition API {#typescript-with-composition-api}
+# 使用 Composition API 的 TypeScript {#typescript-with-composition-api}
 
-<ScrimbaLink href="https://scrimba.com/links/vue-ts-composition-api" title="Free Vue.js TypeScript with Composition API Lesson" type="scrimba">
-  Watch an interactive video lesson on Scrimba
+<ScrimbaLink href="https://scrimba.com/links/vue-ts-composition-api" title="免费的 Vue.js Composition API TypeScript 课程" type="scrimba">
+  在 Scrimba 上观看交互式视频课程
 </ScrimbaLink>
 
-> This page assumes you've already read the overview on [Using Vue with TypeScript](./overview).
+> 本页假设你已经阅读过 [在 Vue 中使用 TypeScript](./overview) 的概述。
 
-## Typing Component Props {#typing-component-props}
+## 为组件 Props 添加类型 {#typing-component-props}
 
-### Using `<script setup>` {#using-script-setup}
+### 使用 `<script setup>` {#using-script-setup}
 
-When using `<script setup>`, the `defineProps()` macro supports inferring the props types based on its argument:
+使用 `<script setup>` 时，`defineProps()` 宏支持根据其参数推断 props 类型：
 
 ```vue
 <script setup lang="ts">
@@ -24,9 +24,9 @@ props.bar // number | undefined
 </script>
 ```
 
-This is called "runtime declaration", because the argument passed to `defineProps()` will be used as the runtime `props` option.
+这被称为“运行时声明”，因为传递给 `defineProps()` 的参数会被用作运行时的 `props` 选项。
 
-However, it is usually more straightforward to define props with pure types via a generic type argument:
+不过，通常使用泛型类型参数通过纯类型来定义 props 会更直接：
 
 ```vue
 <script setup lang="ts">
@@ -37,11 +37,11 @@ const props = defineProps<{
 </script>
 ```
 
-This is called "type-based declaration". The compiler will try to do its best to infer the equivalent runtime options based on the type argument. In this case, our second example compiles into the exact same runtime options as the first example.
+这被称为“基于类型的声明”。编译器会尽最大努力根据类型参数推断出等价的运行时选项。在这个例子中，第二个示例编译后的运行时选项与第一个示例完全相同。
 
-You can use either type-based declaration OR runtime declaration, but you cannot use both at the same time.
+你可以使用基于类型的声明或运行时声明，但不能同时使用两者。
 
-We can also move the props types into a separate interface:
+我们也可以把 props 类型放到单独的接口中：
 
 ```vue
 <script setup lang="ts">
@@ -54,7 +54,7 @@ const props = defineProps<Props>()
 </script>
 ```
 
-This also works if `Props` is imported from another file such as a relative import, a path alias (e.g., `@/types`), or an external dependency (e.g., `node_modules`). This feature requires TypeScript to be a peer dependency of Vue.
+如果 `Props` 是从其他文件导入的，这同样可行，例如相对路径导入、路径别名（如 `@/types`），或外部依赖（如 `node_modules`）。此功能要求 TypeScript 作为 Vue 的同级依赖。
 
 ```vue
 <script setup lang="ts">
@@ -64,15 +64,15 @@ const props = defineProps<Props>()
 </script>
 ```
 
-#### Syntax Limitations {#syntax-limitations}
+#### 语法限制 {#syntax-limitations}
 
-In version 3.2 and below, the generic type parameter for `defineProps()` were limited to a type literal or a reference to a local interface.
+在 3.2 及以下版本中，`defineProps()` 的泛型类型参数仅限于类型字面量或对本地接口的引用。
 
-This limitation was resolved in 3.3. The latest version of Vue supports referencing imported and a limited set of complex types in the type parameter position. However, because the type to runtime conversion is still AST-based, some complex types that require actual type analysis, e.g. conditional types, are not supported. You can use conditional types for the type of a single prop, but not the entire props object.
+这个限制在 3.3 中得到了修复。Vue 的最新版本支持在类型参数位置引用导入的类型，以及一部分复杂类型。不过，由于类型到运行时的转换仍然基于 AST，因此某些需要真正类型分析的复杂类型，例如条件类型，并不受支持。你可以将条件类型用于单个 prop 的类型，但不能用于整个 props 对象。
 
-### Props Default Values {#props-default-values}
+### Props 默认值 {#props-default-values}
 
-When using type-based declaration, we lose the ability to declare default values for the props. This can be resolved by using [Reactive Props Destructure](/guide/components/props#reactive-props-destructure) <sup class="vt-badge" data-text="3.5+" />:
+使用基于类型的声明时，我们会失去为 props 声明默认值的能力。可以通过使用 [Reactive Props Destructure](/guide/components/props#reactive-props-destructure) <sup class="vt-badge" data-text="3.5+" /> 来解决：
 
 ```ts
 interface Props {
@@ -83,7 +83,7 @@ interface Props {
 const { msg = 'hello', labels = ['one', 'two'] } = defineProps<Props>()
 ```
 
-In 3.4 and below, Reactive Props Destructure is not enabled by default. An alternative is to use the `withDefaults` compiler macro:
+在 3.4 及以下版本中，Reactive Props Destructure 默认未启用。另一种方法是使用 `withDefaults` 编译器宏：
 
 ```ts
 interface Props {
@@ -97,15 +97,15 @@ const props = withDefaults(defineProps<Props>(), {
 })
 ```
 
-This will be compiled to equivalent runtime props `default` options. In addition, the `withDefaults` helper provides type checks for the default values, and ensures the returned `props` type has the optional flags removed for properties that do have default values declared.
+这会被编译为等价的运行时 props `default` 选项。此外，`withDefaults` 辅助函数会对默认值进行类型检查，并确保返回的 `props` 类型中，对于那些已声明默认值的属性，会移除其可选标记。
 
 :::info
-Note that default values for mutable reference types (like arrays or objects) should be wrapped in functions when using `withDefaults` to avoid accidental modification and external side effects. This ensures each component instance gets its own copy of the default value. This is **not** necessary when using default values with destructure.
+请注意，可变引用类型（如数组或对象）的默认值在使用 `withDefaults` 时应包裹在函数中，以避免意外修改和外部副作用。这可以确保每个组件实例都拥有自己的默认值副本。使用解构时的默认值则**不需要**这样做。
 :::
 
-### Without `<script setup>` {#without-script-setup}
+### 不使用 `<script setup>` {#without-script-setup}
 
-If not using `<script setup>`, it is necessary to use `defineComponent()` to enable props type inference. The type of the props object passed to `setup()` is inferred from the `props` option.
+如果不使用 `<script setup>`，则需要使用 `defineComponent()` 来启用 props 类型推断。传递给 `setup()` 的 props 对象类型会根据 `props` 选项推断出来。
 
 ```ts
 import { defineComponent } from 'vue'
@@ -115,14 +115,14 @@ export default defineComponent({
     message: String
   },
   setup(props) {
-    props.message // <-- type: string
+    props.message // <-- 类型：string
   }
 })
 ```
 
-### Complex prop types {#complex-prop-types}
+### 复杂的 prop 类型 {#complex-prop-types}
 
-With type-based declaration, a prop can use a complex type much like any other type:
+使用基于类型的声明时，prop 可以像其他类型一样使用复杂类型：
 
 ```vue
 <script setup lang="ts">
@@ -138,7 +138,7 @@ const props = defineProps<{
 </script>
 ```
 
-For runtime declaration, we can use the `PropType` utility type:
+对于运行时声明，我们可以使用 `PropType` 工具类型：
 
 ```ts
 import type { PropType } from 'vue'
@@ -148,7 +148,7 @@ const props = defineProps({
 })
 ```
 
-This works in much the same way if we're specifying the `props` option directly:
+如果我们直接指定 `props` 选项，工作方式也大致相同：
 
 ```ts
 import { defineComponent } from 'vue'
@@ -161,36 +161,36 @@ export default defineComponent({
 })
 ```
 
-The `props` option is more commonly used with the Options API, so you'll find more detailed examples in the guide to [TypeScript with Options API](/guide/typescript/options-api#typing-component-props). The techniques shown in those examples also apply to runtime declarations using `defineProps()`.
+`props` 选项更常与 Options API 一起使用，因此在 [TypeScript 与 Options API](/guide/typescript/options-api#typing-component-props) 的指南中你会找到更详细的示例。上述示例中展示的技巧也同样适用于使用 `defineProps()` 的运行时声明。
 
-## Typing Component Emits {#typing-component-emits}
+## 为组件 Emits 添加类型 {#typing-component-emits}
 
-In `<script setup>`, the `emit` function can also be typed using either runtime declaration OR type declaration:
+在 `<script setup>` 中，`emit` 函数也可以通过运行时声明或类型声明来添加类型：
 
 ```vue
 <script setup lang="ts">
-// runtime
+// 运行时
 const emit = defineEmits(['change', 'update'])
 
-// options based
+// 基于选项
 const emit = defineEmits({
   change: (id: number) => {
-    // return `true` or `false` to indicate
-    // validation pass / fail
+    // 返回 `true` 或 `false` 以表示
+    // 校验通过 / 失败
   },
   update: (value: string) => {
-    // return `true` or `false` to indicate
-    // validation pass / fail
+    // 返回 `true` 或 `false` 以表示
+    // 校验通过 / 失败
   }
 })
 
-// type-based
+// 基于类型
 const emit = defineEmits<{
   (e: 'change', id: number): void
   (e: 'update', value: string): void
 }>()
 
-// 3.3+: alternative, more succinct syntax
+// 3.3+：另一种更简洁的语法
 const emit = defineEmits<{
   change: [id: number]
   update: [value: string]
@@ -198,14 +198,14 @@ const emit = defineEmits<{
 </script>
 ```
 
-The type argument can be one of the following:
+类型参数可以是以下几种之一：
 
-1. A callable function type, but written as a type literal with [Call Signatures](https://www.typescriptlang.org/docs/handbook/2/functions.html#call-signatures). It will be used as the type of the returned `emit` function.
-2. A type literal where the keys are the event names, and values are array / tuple types representing the additional accepted parameters for the event. The example above is using named tuples so each argument can have an explicit name.
+1. 一个可调用函数类型，但要写成带有 [调用签名](https://www.typescriptlang.org/docs/handbook/2/functions.html#call-signatures) 的类型字面量。它将被用作返回的 `emit` 函数的类型。
+2. 一个类型字面量，其中键为事件名，值为数组 / 元组类型，表示该事件额外接受的参数。上面的示例使用的是命名元组，因此每个参数都可以有明确的名称。
 
-As we can see, the type declaration gives us much finer-grained control over the type constraints of emitted events.
+如你所见，类型声明让我们能够对触发的事件的类型约束进行更细粒度的控制。
 
-When not using `<script setup>`, `defineComponent()` is able to infer the allowed events for the `emit` function exposed on the setup context:
+在不使用 `<script setup>` 时，`defineComponent()` 能够推断在 setup 上下文中暴露的 `emit` 函数所允许的事件：
 
 ```ts
 import { defineComponent } from 'vue'
@@ -213,26 +213,26 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   emits: ['change'],
   setup(props, { emit }) {
-    emit('change') // <-- type check / auto-completion
+    emit('change') // <-- 类型检查 / 自动补全
   }
 })
 ```
 
-## Typing `ref()` {#typing-ref}
+## 为 `ref()` 添加类型 {#typing-ref}
 
-Refs infer the type from the initial value:
+Ref 会根据初始值推断类型：
 
 ```ts
 import { ref } from 'vue'
 
-// inferred type: Ref<number>
+// 推断类型：Ref<number>
 const year = ref(2020)
 
-// => TS Error: Type 'string' is not assignable to type 'number'.
+// => TS 错误：类型 'string' 不能赋值给类型 'number'。
 year.value = '2020'
 ```
 
-Sometimes we may need to specify complex types for a ref's inner value. We can do that by using the `Ref` type:
+有时我们可能需要为 ref 的内部值指定复杂类型。可以使用 `Ref` 类型来做到这一点：
 
 ```ts
 import { ref } from 'vue'
@@ -240,37 +240,37 @@ import type { Ref } from 'vue'
 
 const year: Ref<string | number> = ref('2020')
 
-year.value = 2020 // ok!
+year.value = 2020 // 可以！
 ```
 
-Or, by passing a generic argument when calling `ref()` to override the default inference:
+或者，在调用 `ref()` 时传入泛型参数，以覆盖默认推断：
 
 ```ts
-// resulting type: Ref<string | number>
+// 结果类型：Ref<string | number>
 const year = ref<string | number>('2020')
 
-year.value = 2020 // ok!
+year.value = 2020 // 可以！
 ```
 
-If you specify a generic type argument but omit the initial value, the resulting type will be a union type that includes `undefined`:
+如果你指定了泛型类型参数，但省略初始值，结果类型将是包含 `undefined` 的联合类型：
 
 ```ts
-// inferred type: Ref<number | undefined>
+// 推断类型：Ref<number | undefined>
 const n = ref<number>()
 ```
 
-## Typing `reactive()` {#typing-reactive}
+## 为 `reactive()` 添加类型 {#typing-reactive}
 
-`reactive()` also implicitly infers the type from its argument:
+`reactive()` 也会根据其参数隐式推断类型：
 
 ```ts
 import { reactive } from 'vue'
 
-// inferred type: { title: string }
+// 推断类型：{ title: string }
 const book = reactive({ title: 'Vue 3 Guide' })
 ```
 
-To explicitly type a `reactive` property, we can use interfaces:
+要显式为 `reactive` 属性添加类型，我们可以使用接口：
 
 ```ts
 import { reactive } from 'vue'
@@ -284,41 +284,41 @@ const book: Book = reactive({ title: 'Vue 3 Guide' })
 ```
 
 :::tip
-It's not recommended to use the generic argument of `reactive()` because the returned type, which handles nested ref unwrapping, is different from the generic argument type.
+不建议使用 `reactive()` 的泛型参数，因为返回类型（它负责处理嵌套 ref 的解包）与泛型参数类型并不相同。
 :::
 
-## Typing `computed()` {#typing-computed}
+## 为 `computed()` 添加类型 {#typing-computed}
 
-`computed()` infers its type based on the getter's return value:
+`computed()` 会根据 getter 的返回值推断其类型：
 
 ```ts
 import { ref, computed } from 'vue'
 
 const count = ref(0)
 
-// inferred type: ComputedRef<number>
+// 推断类型：ComputedRef<number>
 const double = computed(() => count.value * 2)
 
-// => TS Error: Property 'split' does not exist on type 'number'
+// => TS 错误：属性 'split' 不存在于类型 'number' 上
 const result = double.value.split('')
 ```
 
-You can also specify an explicit type via a generic argument:
+你也可以通过泛型参数显式指定类型：
 
 ```ts
 const double = computed<number>(() => {
-  // type error if this doesn't return a number
+  // 如果这里没有返回一个 number，就会报类型错误
 })
 ```
 
-## Typing Event Handlers {#typing-event-handlers}
+## 为事件处理器添加类型 {#typing-event-handlers}
 
-When dealing with native DOM events, it might be useful to type the argument we pass to the handler correctly. Let's take a look at this example:
+处理原生 DOM 事件时，正确为传递给处理器的参数添加类型会很有用。让我们看一下这个例子：
 
 ```vue
 <script setup lang="ts">
 function handleChange(event) {
-  // `event` implicitly has `any` type
+  // `event` 隐式具有 `any` 类型
   console.log(event.target.value)
 }
 </script>
@@ -328,7 +328,7 @@ function handleChange(event) {
 </template>
 ```
 
-Without type annotation, the `event` argument will implicitly have a type of `any`. This will also result in a TS error if `"strict": true` or `"noImplicitAny": true` are used in `tsconfig.json`. It is therefore recommended to explicitly annotate the argument of event handlers. In addition, you may need to use type assertions when accessing the properties of `event`:
+如果不加类型注解，`event` 参数将会隐式具有 `any` 类型。如果在 `tsconfig.json` 中使用了 `"strict": true` 或 `"noImplicitAny": true`，这也会导致 TS 错误。因此建议显式为事件处理器的参数添加类型注解。此外，在访问 `event` 的属性时，你可能还需要使用类型断言：
 
 ```ts
 function handleChange(event: Event) {
@@ -336,9 +336,9 @@ function handleChange(event: Event) {
 }
 ```
 
-## Typing Provide / Inject {#typing-provide-inject}
+## 输入 / 注入的类型标注 {#typing-provide-inject}
 
-Provide and inject are usually performed in separate components. To properly type injected values, Vue provides an `InjectionKey` interface, which is a generic type that extends `Symbol`. It can be used to sync the type of the injected value between the provider and the consumer:
+provide 和 inject 通常在不同的组件中执行。为了正确地为注入值添加类型，Vue 提供了 `InjectionKey` 接口，它是一个扩展自 `Symbol` 的泛型类型。它可用于在提供者和消费者之间同步注入值的类型：
 
 ```ts
 import { provide, inject } from 'vue'
@@ -346,47 +346,47 @@ import type { InjectionKey } from 'vue'
 
 const key = Symbol() as InjectionKey<string>
 
-provide(key, 'foo') // providing non-string value will result in error
+provide(key, 'foo') // 提供非字符串值会导致错误
 
-const foo = inject(key) // type of foo: string | undefined
+const foo = inject(key) // foo 的类型：string | undefined
 ```
 
-It's recommended to place the injection key in a separate file so that it can be imported in multiple components.
+建议将注入 key 放在单独的文件中，这样可以在多个组件中导入。
 
-When using string injection keys, the type of the injected value will be `unknown`, and needs to be explicitly declared via a generic type argument:
+当使用字符串注入 key 时，注入值的类型将是 `unknown`，并且需要通过泛型类型参数显式声明：
 
 ```ts
-const foo = inject<string>('foo') // type: string | undefined
+const foo = inject<string>('foo') // 类型：string | undefined
 ```
 
-Notice the injected value can still be `undefined`, because there is no guarantee that a provider will provide this value at runtime.
+请注意，注入值仍然可能是 `undefined`，因为运行时无法保证提供者一定会提供这个值。
 
-The `undefined` type can be removed by providing a default value:
+可以通过提供默认值来移除 `undefined` 类型：
 
 ```ts
-const foo = inject<string>('foo', 'bar') // type: string
+const foo = inject<string>('foo', 'bar') // 类型：string
 ```
 
-If you are sure that the value is always provided, you can also force cast the value:
+如果你确定该值总是会被提供，也可以强制类型转换：
 
 ```ts
 const foo = inject('foo') as string
 ```
 
-## Typing Template Refs {#typing-template-refs}
+## 模板引用的类型标注 {#typing-template-refs}
 
-With Vue 3.5 and `@vue/language-tools` 2.1 (powering both the IDE language service and `vue-tsc`), the type of refs created by `useTemplateRef()` in SFCs can be **automatically inferred** for static refs based on what element the matching `ref` attribute is used on.
+在 Vue 3.5 和 `@vue/language-tools` 2.1（同时支持 IDE 语言服务和 `vue-tsc`）中，SFC 里通过 `useTemplateRef()` 创建的 ref 类型，可以根据匹配的 `ref` 属性所使用的元素，针对静态 ref **自动推断**。
 
-In cases where auto-inference is not possible, you can still cast the template ref to an explicit type via the generic argument:
+在无法自动推断的情况下，你仍然可以通过泛型参数将模板 ref 转换为显式类型：
 
 ```ts
 const el = useTemplateRef<HTMLInputElement>('el')
 ```
 
 <details>
-<summary>Usage before 3.5</summary>
+<summary>3.5 之前的用法</summary>
 
-Template refs should be created with an explicit generic type argument and an initial value of `null`:
+模板 ref 应使用显式的泛型类型参数，并将初始值设为 `null` 创建：
 
 ```vue
 <script setup lang="ts">
@@ -406,17 +406,17 @@ onMounted(() => {
 
 </details>
 
-To get the right DOM interface you can check pages like [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#technical_summary).
+要获取正确的 DOM 接口，你可以查看像 [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#technical_summary) 这样的页面。
 
-Note that for strict type safety, it is necessary to use optional chaining or type guards when accessing `el.value`. This is because the initial ref value is `null` until the component is mounted, and it can also be set to `null` if the referenced element is unmounted by `v-if`.
+请注意，为了严格的类型安全，在访问 `el.value` 时需要使用可选链或类型守卫。这是因为在组件挂载之前，初始 ref 值是 `null`，并且如果被 `v-if` 引用的元素被卸载，它也可能被设为 `null`。
 
-## Typing Component Template Refs {#typing-component-template-refs}
+## 组件模板引用的类型标注 {#typing-component-template-refs}
 
-With Vue 3.5 and `@vue/language-tools` 2.1 (powering both the IDE language service and `vue-tsc`), the type of refs created by `useTemplateRef()` in SFCs can be **automatically inferred** for static refs based on what element or component the matching `ref` attribute is used on.
+在 Vue 3.5 和 `@vue/language-tools` 2.1（同时支持 IDE 语言服务和 `vue-tsc`）中，SFC 里通过 `useTemplateRef()` 创建的 ref 类型，可以根据匹配的 `ref` 属性所使用的元素或组件，针对静态 ref **自动推断**。
 
-In cases where auto-inference is not possible (e.g. non-SFC usage or dynamic components), you can still cast the template ref to an explicit type via the generic argument.
+在无法自动推断的情况下（例如非 SFC 用法或动态组件），你仍然可以通过泛型参数将模板 ref 转换为显式类型。
 
-In order to get the instance type of an imported component, we need to first get its type via `typeof`, then use TypeScript's built-in `InstanceType` utility to extract its instance type:
+为了获取导入组件的实例类型，我们需要先通过 `typeof` 获取其类型，然后使用 TypeScript 内置的 `InstanceType` 工具类型来提取其实例类型：
 
 ```vue{6,7} [App.vue]
 <script setup lang="ts">
@@ -435,7 +435,7 @@ const compRef = useTemplateRef<FooType | BarType>('comp')
 </template>
 ```
 
-In cases where the exact type of the component isn't available or isn't important, `ComponentPublicInstance` can be used instead. This will only include properties that are shared by all components, such as `$el`:
+在组件的确切类型不可用或并不重要的情况下，可以改用 `ComponentPublicInstance`。这只会包含所有组件共享的属性，例如 `$el`：
 
 ```ts
 import { useTemplateRef } from 'vue'
@@ -444,7 +444,7 @@ import type { ComponentPublicInstance } from 'vue'
 const child = useTemplateRef<ComponentPublicInstance>('child')
 ```
 
-In cases where the component referenced is a [generic component](/guide/typescript/overview.html#generic-components), for instance `MyGenericModal`:
+在被引用的组件是一个[泛型组件](/guide/typescript/overview.html#generic-components)时，例如 `MyGenericModal`：
 
 ```vue [MyGenericModal.vue]
 <script setup lang="ts" generic="ContentType extends string | number">
@@ -460,7 +460,7 @@ defineExpose({
 </script>
 ```
 
-It needs to be referenced using `ComponentExposed` from the [`vue-component-type-helpers`](https://www.npmjs.com/package/vue-component-type-helpers) library as `InstanceType` won't work.
+需要使用 [`vue-component-type-helpers`](https://www.npmjs.com/package/vue-component-type-helpers) 库中的 `ComponentExposed` 来引用，因为 `InstanceType` 不起作用。
 
 ```vue [App.vue]
 <script setup lang="ts">
@@ -477,11 +477,11 @@ const openModal = () => {
 </script>
 ```
 
-Note that with `@vue/language-tools` 2.1+, static template refs' types can be automatically inferred and the above is only needed in edge cases.
+请注意，在 `@vue/language-tools` 2.1+ 中，静态模板 ref 的类型可以自动推断，上面的写法只在边缘情况下才需要。
 
-## Typing Global Custom Directives {#typing-global-custom-directives}
+## 全局自定义指令的类型标注 {#typing-global-custom-directives}
 
-In order to get type hints and type checking for global custom directives declared with `app.directive()`, you can extend `GlobalDirectives`
+为了获得通过 `app.directive()` 声明的全局自定义指令的类型提示和类型检查，你可以扩展 `GlobalDirectives`
 
 ```ts [src/directives/highlight.ts]
 import type { Directive } from 'vue'
@@ -490,7 +490,7 @@ export type HighlightDirective = Directive<HTMLElement, string>
 
 declare module 'vue' {
   export interface GlobalDirectives {
-    // prefix with v (v-highlight)
+    // 前缀加 v（v-highlight）
     vHighlight: HighlightDirective
   }
 }
@@ -504,12 +504,12 @@ export default {
 
 ```ts [main.ts]
 import highlight from './directives/highlight'
-// ...other code
+// ...其他代码
 const app = createApp(App)
 app.directive('highlight', highlight)
 ```
 
-Usage in component
+在组件中的使用
 
 ```vue [App.vue]
 <template>

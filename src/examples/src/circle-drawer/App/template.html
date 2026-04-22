@@ -1,8 +1,8 @@
 <svg @click="onClick">
   <foreignObject x="0" y="40%" width="100%" height="200">
     <p class="tip">
-      Click on the canvas to draw a circle. Click on a circle to select it.
-      Right-click on the canvas to adjust the radius of the selected circle.
+      点击画布绘制圆。点击某个圆可选中它。
+      在画布上右键可以调整当前选中圆的半径。
     </p>
   </foreignObject>
   <circle
@@ -17,11 +17,11 @@
 </svg>
 
 <div class="controls">
-  <button @click="undo" :disabled="index <= 0">Undo</button>
-  <button @click="redo" :disabled="index >= history.length - 1">Redo</button>
+  <button @click="undo" :disabled="index <= 0">撤销</button>
+  <button @click="redo" :disabled="index >= history.length - 1">重做</button>
 </div>
 
 <div class="dialog" v-if="adjusting" @click.stop>
-  <p>Adjust radius of circle at ({{ selected.cx }}, {{ selected.cy }})</p>
+  <p>调整位于 ({{ selected.cx }}, {{ selected.cy }}) 的圆的半径</p>
   <input type="range" v-model="selected.r" min="1" max="300">
 </div>

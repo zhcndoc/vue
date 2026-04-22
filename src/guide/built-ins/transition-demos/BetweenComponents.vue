@@ -1,8 +1,8 @@
 <script setup>
 import { h, ref } from 'vue'
 
-const CompA = () => h('div', 'Component A')
-const CompB = () => h('div', 'Component B')
+const CompA = () => h('div', '组件 A')
+const CompB = () => h('div', '组件 B')
 
 const activeComponent = ref(CompA)
 </script>

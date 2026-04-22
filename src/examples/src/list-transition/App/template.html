@@ -1,6 +1,6 @@
-<button @click="insert">Insert at random index</button>
-<button @click="reset">Reset</button>
-<button @click="shuffle">Shuffle</button>
+<button @click="insert">在随机位置插入</button>
+<button @click="reset">重置</button>
+<button @click="shuffle">打乱</button>
 
 <TransitionGroup tag="ul" name="fade" class="container">
   <li v-for="item in items" class="item" :key="item">

@@ -1,10 +1,10 @@
-# Server-Side Rendering API {#server-side-rendering-api}
+# 服务端渲染 API {#server-side-rendering-api}
 
 ## renderToString() {#rendertostring}
 
-- **Exported from `vue/server-renderer`**
+- **从 `vue/server-renderer` 导出**
 
-- **Type**
+- **类型**
 
   ```ts
   function renderToString(
@@ -13,7 +13,7 @@
   ): Promise<string>
   ```
 
-- **Example**
+- **示例**
 
   ```js
   import { createSSRApp } from 'vue'
@@ -30,9 +30,9 @@
   })()
   ```
 
-  ### SSR Context {#ssr-context}
+  ### SSR 上下文 {#ssr-context}
 
-  You can pass an optional context object, which can be used to record additional data during the render, for example [accessing content of Teleports](/guide/scaling-up/ssr#teleports):
+  你可以传入一个可选的上下文对象，它可用于在渲染期间记录额外数据，例如[访问 Teleports 的内容](/guide/scaling-up/ssr#teleports)：
 
   ```js
   const ctx = {}
@@ -41,17 +41,17 @@
   console.log(ctx.teleports) // { '#teleported': 'teleported content' }
   ```
 
-  Most other SSR APIs on this page also optionally accept a context object. The context object can be accessed in component code via the [useSSRContext](#usessrcontext) helper.
+  本页中的大多数其他 SSR API 也都可选择性地接受一个上下文对象。可以通过 [useSSRContext](#usessrcontext) 辅助函数在组件代码中访问该上下文对象。
 
-- **See also** [Guide - Server-Side Rendering](/guide/scaling-up/ssr)
+- **另请参见** [指南 - 服务端渲染](/guide/scaling-up/ssr)
 
 ## renderToNodeStream() {#rendertonodestream}
 
-Renders input as a [Node.js Readable stream](https://nodejs.org/api/stream.html#stream_class_stream_readable).
+将输入渲染为 [Node.js 可读流](https://nodejs.org/api/stream.html#stream_class_stream_readable)。
 
-- **Exported from `vue/server-renderer`**
+- **从 `vue/server-renderer` 导出**
 
-- **Type**
+- **类型**
 
   ```ts
   function renderToNodeStream(
@@ -60,24 +60,24 @@ Renders input as a [Node.js Readable stream](https://nodejs.org/api/stream.html#
   ): Readable
   ```
 
-- **Example**
+- **示例**
 
   ```js
-  // inside a Node.js http handler
+  // 在 Node.js http 处理程序中
   renderToNodeStream(app).pipe(res)
   ```
 
-  :::tip Note
-  This method is not supported in the ESM build of `vue/server-renderer`, which is decoupled from Node.js environments. Use [`pipeToNodeWritable`](#pipetonodewritable) instead.
+  :::tip 注意
+  该方法不受 `vue/server-renderer` 的 ESM 构建支持，因为它与 Node.js 环境解耦。请改用 [`pipeToNodeWritable`](#pipetonodewritable)。
   :::
 
 ## pipeToNodeWritable() {#pipetonodewritable}
 
-Render and pipe to an existing [Node.js Writable stream](https://nodejs.org/api/stream.html#stream_writable_streams) instance.
+将渲染结果输出并管道到一个现有的 [Node.js 可写流](https://nodejs.org/api/stream.html#stream_writable_streams)实例。
 
-- **Exported from `vue/server-renderer`**
+- **从 `vue/server-renderer` 导出**
 
-- **Type**
+- **类型**
 
   ```ts
   function pipeToNodeWritable(
@@ -87,20 +87,20 @@ Render and pipe to an existing [Node.js Writable stream](https://nodejs.org/api/
   ): void
   ```
 
-- **Example**
+- **示例**
 
   ```js
-  // inside a Node.js http handler
+  // 在 Node.js http 处理程序中
   pipeToNodeWritable(app, {}, res)
   ```
 
 ## renderToWebStream() {#rendertowebstream}
 
-Renders input as a [Web ReadableStream](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API).
+将输入渲染为 [Web 可读流](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API)。
 
-- **Exported from `vue/server-renderer`**
+- **从 `vue/server-renderer` 导出**
 
-- **Type**
+- **类型**
 
   ```ts
   function renderToWebStream(
@@ -109,24 +109,24 @@ Renders input as a [Web ReadableStream](https://developer.mozilla.org/en-US/docs
   ): ReadableStream
   ```
 
-- **Example**
+- **示例**
 
   ```js
-  // inside an environment with ReadableStream support
+  // 在支持 ReadableStream 的环境中
   return new Response(renderToWebStream(app))
   ```
 
-  :::tip Note
-  In environments that do not expose `ReadableStream` constructor in the global scope, [`pipeToWebWritable()`](#pipetowebwritable) should be used instead.
+  :::tip 注意
+  在全局作用域中不暴露 `ReadableStream` 构造函数的环境中，应改用 [`pipeToWebWritable()`](#pipetowebwritable)。
   :::
 
 ## pipeToWebWritable() {#pipetowebwritable}
 
-Render and pipe to an existing [Web WritableStream](https://developer.mozilla.org/en-US/docs/Web/API/WritableStream) instance.
+将渲染结果输出并管道到一个现有的 [Web 可写流](https://developer.mozilla.org/en-US/docs/Web/API/WritableStream)实例。
 
-- **Exported from `vue/server-renderer`**
+- **从 `vue/server-renderer` 导出**
 
-- **Type**
+- **类型**
 
   ```ts
   function pipeToWebWritable(
@@ -136,13 +136,13 @@ Render and pipe to an existing [Web WritableStream](https://developer.mozilla.or
   ): void
   ```
 
-- **Example**
+- **示例**
 
-  This is typically used in combination with [`TransformStream`](https://developer.mozilla.org/en-US/docs/Web/API/TransformStream):
+  这通常与 [`TransformStream`](https://developer.mozilla.org/en-US/docs/Web/API/TransformStream) 配合使用：
 
   ```js
-  // TransformStream is available in environments such as CloudFlare workers.
-  // in Node.js, TransformStream needs to be explicitly imported from 'stream/web'
+  // TransformStream 可用于 CloudFlare workers 等环境中。
+  // 在 Node.js 中，TransformStream 需要显式从 'stream/web' 中导入
   const { readable, writable } = new TransformStream()
   pipeToWebWritable(app, {}, writable)
 
@@ -151,11 +151,11 @@ Render and pipe to an existing [Web WritableStream](https://developer.mozilla.or
 
 ## renderToSimpleStream() {#rendertosimplestream}
 
-Renders input in streaming mode using a simple readable interface.
+使用简单的可读接口以流式模式渲染输入。
 
-- **Exported from `vue/server-renderer`**
+- **从 `vue/server-renderer` 导出**
 
-- **Type**
+- **类型**
 
   ```ts
   function renderToSimpleStream(
@@ -170,7 +170,7 @@ Renders input in streaming mode using a simple readable interface.
   }
   ```
 
-- **Example**
+- **示例**
 
   ```js
   let res = ''
@@ -181,14 +181,14 @@ Renders input in streaming mode using a simple readable interface.
     {
       push(chunk) {
         if (chunk === null) {
-          // done
+          // 完成
           console(`render complete: ${res}`)
         } else {
           res += chunk
         }
       },
       destroy(err) {
-        // error encountered
+        // 遇到错误
       }
     }
   )
@@ -196,47 +196,47 @@ Renders input in streaming mode using a simple readable interface.
 
 ## useSSRContext() {#usessrcontext}
 
-A runtime API used to retrieve the context object passed to `renderToString()` or other server render APIs.
+一个运行时 API，用于获取传递给 `renderToString()` 或其他服务端渲染 API 的上下文对象。
 
-- **Type**
+- **类型**
 
   ```ts
   function useSSRContext<T = Record<string, any>>(): T | undefined
   ```
 
-- **Example**
+- **示例**
 
-  The retrieved context can be used to attach information that is needed for rendering the final HTML (e.g. head metadata).
+  获取到的上下文可用于附加最终 HTML 渲染所需的信息（例如 head 元数据）。
 
   ```vue
   <script setup>
   import { useSSRContext } from 'vue'
 
-  // make sure to only call it during SSR
+  // 确保只在 SSR 期间调用它
   // https://vite.dev/guide/ssr.html#conditional-logic
   if (import.meta.env.SSR) {
     const ctx = useSSRContext()
-    // ...attach properties to the context
+    // ...向上下文附加属性
   }
   </script>
   ```
 
 ## data-allow-mismatch <sup class="vt-badge" data-text="3.5+" /> {#data-allow-mismatch}
 
-A special attribute that can be used to suppress [hydration mismatch](/guide/scaling-up/ssr#hydration-mismatch) warnings.
+一个特殊属性，可用于抑制 [hydration mismatch](/guide/scaling-up/ssr#hydration-mismatch) 警告。
 
-- **Example**
+- **示例**
 
   ```html
   <div data-allow-mismatch="text">{{ data.toLocaleString() }}</div>
   ```
 
-  The value can limit the allowed mismatch to a specific type. Allowed values are:
+  该值可以将允许的不匹配限制为特定类型。允许的值有：
 
   - `text`
-  - `children` (only allows mismatch for direct children)
+  - `children`（仅允许直接子节点不匹配）
   - `class`
   - `style`
   - `attribute`
 
-  If no value is provided, all types of mismatches will be allowed.
+  如果未提供值，则允许所有类型的不匹配。

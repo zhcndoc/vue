@@ -2,7 +2,7 @@ import { ref } from 'vue'
 
 export default {
   setup() {
-    const message = ref('Hello World!')
+    const message = ref('你好，世界！')
     const isRed = ref(true)
     const color = ref('green')
 

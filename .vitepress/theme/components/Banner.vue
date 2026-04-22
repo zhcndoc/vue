@@ -24,12 +24,12 @@ function dismiss() {
   <div class="banner" v-if="open">
     <p class="vt-banner-text">
       <span class="vt-main">Vueconf 2026</span>
-      <span class="vt-tagline"> · Join us for all things <span class="vt-main" style="font-weight: 900;">   Vue + AI </span></span>
-      <span class="vt-place"> · VUE2026 FOR 20% OFF!</span>
-      <span class="vt-date"> · May 19-21 2026</span>
+      <span class="vt-tagline"> · 一起探索 <span class="vt-main" style="font-weight: 900;">Vue + AI</span> 的一切</span>
+      <span class="vt-place"> · 使用 VUE2026 享 8 折优惠！</span>
+      <span class="vt-date"> · 2026 年 5 月 19 日至 21 日</span>
       <a target="_blank" class="vt-primary-action"
          href="https://vueconf.us//?utm_source=vuejs&utm_content=top_banner">
-        Register
+        立即报名
       </a>
     </p>
     <button @click="dismiss">

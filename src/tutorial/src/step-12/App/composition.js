@@ -6,7 +6,7 @@ export default {
     ChildComp
   },
   setup() {
-    const greeting = ref('Hello from parent')
+    const greeting = ref('来自父组件的问候')
 
     return {
       greeting

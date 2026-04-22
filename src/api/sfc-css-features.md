@@ -1,8 +1,8 @@
-# SFC CSS Features {#sfc-css-features}
+# SFC CSS 特性 {#sfc-css-features}
 
 ## Scoped CSS {#scoped-css}
 
-When a `<style>` tag has the `scoped` attribute, its CSS will apply to elements of the current component only. This is similar to the style encapsulation found in Shadow DOM. It comes with some caveats, but doesn't require any polyfills. It is achieved by using PostCSS to transform the following:
+当 `<style>` 标签带有 `scoped` 属性时，其 CSS 只会应用于当前组件的元素。这类似于 Shadow DOM 中的样式封装。它有一些注意事项，但不需要任何 polyfill。它是通过使用 PostCSS 将以下内容转换而实现的：
 
 ```vue
 <style scoped>
@@ -16,7 +16,7 @@ When a `<style>` tag has the `scoped` attribute, its CSS will apply to elements 
 </template>
 ```
 
-Into the following:
+转换为以下内容：
 
 ```vue
 <style>
@@ -30,13 +30,13 @@ Into the following:
 </template>
 ```
 
-### Child Component Root Elements {#child-component-root-elements}
+### 子组件根元素 {#child-component-root-elements}
 
-With `scoped`, the parent component's styles will not leak into child components. However, a child component's root node will be affected by both the parent's scoped CSS and the child's scoped CSS. This is by design so that the parent can style the child root element for layout purposes.
+使用 `scoped` 时，父组件的样式不会泄漏到子组件中。不过，子组件的根节点会同时受到父组件的 scoped CSS 和子组件自身 scoped CSS 的影响。这是有意为之，这样父组件就可以为了布局目的来为子组件的根元素设置样式。
 
-### Deep Selectors {#deep-selectors}
+### 深度选择器 {#deep-selectors}
 
-If you want a selector in `scoped` styles to be "deep", i.e. affecting child components, you can use the `:deep()` pseudo-class:
+如果你希望 `scoped` 样式中的某个选择器是“深度”的，也就是会影响子组件，可以使用 `:deep()` 伪类：
 
 ```vue
 <style scoped>
@@ -46,7 +46,7 @@ If you want a selector in `scoped` styles to be "deep", i.e. affecting child com
 </style>
 ```
 
-The above will be compiled into:
+以上内容会被编译为：
 
 ```css
 .a[data-v-f3f3eg9] .b {
@@ -55,12 +55,12 @@ The above will be compiled into:
 ```
 
 :::tip
-DOM content created with `v-html` are not affected by scoped styles, but you can still style them using deep selectors.
+使用 `v-html` 创建的 DOM 内容不会受到 scoped 样式的影响，但你仍然可以使用深度选择器来为它们设置样式。
 :::
 
-### Slotted Selectors {#slotted-selectors}
+### 插槽选择器 {#slotted-selectors}
 
-By default, scoped styles do not affect contents rendered by `<slot/>`, as they are considered to be owned by the parent component passing them in. To explicitly target slot content, use the `:slotted` pseudo-class:
+默认情况下，scoped 样式不会影响由 `<slot/>` 渲染的内容，因为这些内容被视为属于传入它们的父组件。要显式地定位插槽内容，请使用 `:slotted` 伪类：
 
 ```vue
 <style scoped>
@@ -70,9 +70,9 @@ By default, scoped styles do not affect contents rendered by `<slot/>`, as they 
 </style>
 ```
 
-### Global Selectors {#global-selectors}
+### 全局选择器 {#global-selectors}
 
-If you want just one rule to apply globally, you can use the `:global` pseudo-class rather than creating another `<style>` (see below):
+如果你只想让某一条规则全局生效，可以使用 `:global` 伪类，而不是再创建另一个 `<style>`（见下文）：
 
 ```vue
 <style scoped>
@@ -82,29 +82,29 @@ If you want just one rule to apply globally, you can use the `:global` pseudo-cl
 </style>
 ```
 
-### Mixing Local and Global Styles {#mixing-local-and-global-styles}
+### 混合本地和全局样式 {#mixing-local-and-global-styles}
 
-You can also include both scoped and non-scoped styles in the same component:
+你也可以在同一个组件中同时包含 scoped 和非 scoped 样式：
 
 ```vue
 <style>
-/* global styles */
+/* 全局样式 */
 </style>
 
 <style scoped>
-/* local styles */
+/* 本地样式 */
 </style>
 ```
 
-### Scoped Style Tips {#scoped-style-tips}
+### Scoped 样式提示 {#scoped-style-tips}
 
-- **Scoped styles do not eliminate the need for classes**. Due to the way browsers render various CSS selectors, `p { color: red }` will be many times slower when scoped (i.e. when combined with an attribute selector). If you use classes or ids instead, such as in `.example { color: red }`, then you virtually eliminate that performance hit.
+- **Scoped 样式并不会消除对 class 的需求**。由于浏览器渲染各种 CSS 选择器的方式，`p { color: red }` 在 scoped 时（即与属性选择器结合时）会慢很多倍。如果改用 class 或 id，例如 `.example { color: red }`，那么你几乎就能消除这种性能损耗。
 
-- **Be careful with descendant selectors in recursive components!** For a CSS rule with the selector `.a .b`, if the element that matches `.a` contains a recursive child component, then all `.b` in that child component will be matched by the rule.
+- **在递归组件中要小心后代选择器！** 对于选择器为 `.a .b` 的 CSS 规则，如果匹配 `.a` 的元素包含一个递归子组件，那么该子组件中的所有 `.b` 都会被这条规则匹配到。
 
 ## CSS Modules {#css-modules}
 
-A `<style module>` tag is compiled as [CSS Modules](https://github.com/css-modules/css-modules) and exposes the resulting CSS classes to the component as an object under the key of `$style`:
+`<style module>` 标签会被编译为 [CSS Modules](https://github.com/css-modules/css-modules)，并将生成的 CSS 类以 `$style` 为键暴露给组件作为一个对象：
 
 ```vue
 <template>
@@ -118,13 +118,13 @@ A `<style module>` tag is compiled as [CSS Modules](https://github.com/css-modul
 </style>
 ```
 
-The resulting classes are hashed to avoid collision, achieving the same effect of scoping the CSS to the current component only.
+生成的类会被哈希处理以避免冲突，从而达到仅将 CSS 作用域限制在当前组件上的相同效果。
 
-Refer to the [CSS Modules spec](https://github.com/css-modules/css-modules) for more details such as [global exceptions](https://github.com/css-modules/css-modules/blob/master/docs/composition.md#exceptions) and [composition](https://github.com/css-modules/css-modules/blob/master/docs/composition.md#composition).
+更多细节请参考 [CSS Modules 规范](https://github.com/css-modules/css-modules)，例如 [全局例外](https://github.com/css-modules/css-modules/blob/master/docs/composition.md#exceptions) 和 [组合](https://github.com/css-modules/css-modules/blob/master/docs/composition.md#composition)。
 
-### Custom Inject Name {#custom-inject-name}
+### 自定义注入名称 {#custom-inject-name}
 
-You can customize the property key of the injected classes object by giving the `module` attribute a value:
+你可以通过给 `module` 属性赋值来定制注入类对象的属性键：
 
 ```vue
 <template>
@@ -138,22 +138,22 @@ You can customize the property key of the injected classes object by giving the 
 </style>
 ```
 
-### Usage with Composition API {#usage-with-composition-api}
+### 在 Composition API 中使用 {#usage-with-composition-api}
 
-The injected classes can be accessed in `setup()` and `<script setup>` via the `useCssModule` API. For `<style module>` blocks with custom injection names, `useCssModule` accepts the matching `module` attribute value as the first argument:
+注入的类可以在 `setup()` 和 `<script setup>` 中通过 `useCssModule` API 访问。对于带有自定义注入名称的 `<style module>` 块，`useCssModule` 允许将匹配的 `module` 属性值作为第一个参数传入：
 
 ```js
 import { useCssModule } from 'vue'
 
-// inside setup() scope...
-// default, returns classes for <style module>
+// 在 setup() 作用域内...
+// 默认，返回 <style module> 的类
 useCssModule()
 
-// named, returns classes for <style module="classes">
+// 命名，返回 <style module="classes"> 的类
 useCssModule('classes')
 ```
 
-- **Example**
+- **示例**
 
 ```vue
 <script setup lang="ts">
@@ -173,9 +173,9 @@ const classes = useCssModule()
 </style>
 ```
 
-## `v-bind()` in CSS {#v-bind-in-css}
+## CSS 中的 `v-bind()` {#v-bind-in-css}
 
-SFC `<style>` tags support linking CSS values to dynamic component state using the `v-bind` CSS function:
+SFC `<style>` 标签支持使用 `v-bind` CSS 函数将 CSS 值与动态组件状态关联起来：
 
 ```vue
 <template>
@@ -199,7 +199,7 @@ export default {
 </style>
 ```
 
-The syntax works with [`<script setup>`](./sfc-script-setup), and supports JavaScript expressions (must be wrapped in quotes):
+该语法也适用于 [`<script setup>`](./sfc-script-setup)，并支持 JavaScript 表达式（必须用引号包裹）：
 
 ```vue
 <script setup>
@@ -220,4 +220,4 @@ p {
 </style>
 ```
 
-The actual value will be compiled into a hashed CSS custom property, so the CSS is still static. The custom property will be applied to the component's root element via inline styles and reactively updated if the source value changes.
+实际值会被编译为带哈希的 CSS 自定义属性，因此 CSS 仍然是静态的。该自定义属性会通过内联样式应用到组件的根元素上，并在源值变化时进行响应式更新。

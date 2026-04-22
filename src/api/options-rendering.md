@@ -1,10 +1,10 @@
-# Options: Rendering {#options-rendering}
+# 选项：渲染 {#options-rendering}
 
 ## template {#template}
 
-A string template for the component.
+组件的字符串模板。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentOptions {
@@ -12,25 +12,25 @@ A string template for the component.
   }
   ```
 
-- **Details**
+- **详细信息**
 
-  A template provided via the `template` option will be compiled on-the-fly at runtime. It is only supported when using a build of Vue that includes the template compiler. The template compiler is **NOT** included in Vue builds that have the word `runtime` in their names, e.g. `vue.runtime.esm-bundler.js`. Consult the [dist file guide](https://github.com/vuejs/core/tree/main/packages/vue#which-dist-file-to-use) for more details about the different builds.
+  通过 `template` 选项提供的模板会在运行时即时编译。它仅在使用包含模板编译器的 Vue 构建版本时受支持。Vue 中名称包含 `runtime` 的构建版本**不包含**模板编译器，例如 `vue.runtime.esm-bundler.js`。有关不同构建版本的更多细节，请参阅 [dist 文件指南](https://github.com/vuejs/core/tree/main/packages/vue#which-dist-file-to-use)。
 
-  If the string starts with `#` it will be used as a `querySelector` and use the selected element's `innerHTML` as the template string. This allows the source template to be authored using native `<template>` elements.
+  如果字符串以 `#` 开头，它将被用作 `querySelector`，并使用所选元素的 `innerHTML` 作为模板字符串。这使得可以使用原生 `<template>` 元素来编写源模板。
 
-  If the `render` option is also present in the same component, `template` will be ignored.
+  如果同一个组件中也存在 `render` 选项，则会忽略 `template`。
 
-  If the root component of your application doesn't have a `template` or `render` option specified, Vue will try to use the `innerHTML` of the mounted element as the template instead.
+  如果应用的根组件没有指定 `template` 或 `render` 选项，Vue 会尝试使用挂载元素的 `innerHTML` 作为模板。
 
-  :::warning Security Note
-  Only use template sources that you can trust. Do not use user-provided content as your template. See [Security Guide](/guide/best-practices/security#rule-no-1-never-use-non-trusted-templates) for more details.
+  :::warning 安全提示
+  只应使用你信任的模板源。不要将用户提供的内容作为模板使用。更多详情请参阅 [安全指南](/guide/best-practices/security#rule-no-1-never-use-non-trusted-templates)。
   :::
 
 ## render {#render}
 
-A function that programmatically returns the virtual DOM tree of the component.
+一个以编程方式返回组件虚拟 DOM 树的函数。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentOptions {
@@ -51,48 +51,48 @@ A function that programmatically returns the virtual DOM tree of the component.
   type VNodeArrayChildren = (VNodeArrayChildren | VNodeChildAtom)[]
   ```
 
-- **Details**
+- **详细信息**
 
-  `render` is an alternative to string templates that allows you to leverage the full programmatic power of JavaScript to declare the render output of the component.
+  `render` 是字符串模板的替代方案，它允许你充分利用 JavaScript 的编程能力来声明组件的渲染输出。
 
-  Pre-compiled templates, for example those in Single-File Components, are compiled into the `render` option at build time. If both `render` and `template` are present in a component, `render` will take higher priority.
+  预编译模板，例如单文件组件中的模板，会在构建时被编译到 `render` 选项中。如果组件中同时存在 `render` 和 `template`，`render` 的优先级更高。
 
-- **See also**
-  - [Rendering Mechanism](/guide/extras/rendering-mechanism)
-  - [Render Functions](/guide/extras/render-function)
+- **另请参阅**
+  - [渲染机制](/guide/extras/rendering-mechanism)
+  - [渲染函数](/guide/extras/render-function)
 
 ## compilerOptions {#compileroptions}
 
-Configure runtime compiler options for the component's template.
+配置组件模板的运行时编译器选项。
 
-- **Type**
+- **类型**
 
   ```ts
   interface ComponentOptions {
     compilerOptions?: {
       isCustomElement?: (tag: string) => boolean
-      whitespace?: 'condense' | 'preserve' // default: 'condense'
-      delimiters?: [string, string] // default: ['{{', '}}']
-      comments?: boolean // default: false
+      whitespace?: 'condense' | 'preserve' // 默认值：'condense'
+      delimiters?: [string, string] // 默认值：['{{', '}}']
+      comments?: boolean // 默认值：false
     }
   }
   ```
 
-- **Details**
+- **详细信息**
 
-  This config option is only respected when using the full build (i.e. the standalone `vue.js` that can compile templates in the browser). It supports the same options as the app-level [app.config.compilerOptions](/api/application#app-config-compileroptions), and has higher priority for the current component.
+  此配置项仅在使用完整构建时才会生效（即能够在浏览器中编译模板的独立 `vue.js`）。它支持与应用级 [app.config.compilerOptions](/api/application#app-config-compileroptions) 相同的选项，并且对当前组件具有更高优先级。
 
-- **See also** [app.config.compilerOptions](/api/application#app-config-compileroptions)
+- **另请参阅** [app.config.compilerOptions](/api/application#app-config-compileroptions)
 
 ## slots<sup class="vt-badge ts"/> {#slots}
 
-- Only supported in 3.3+
+- 仅在 3.3+ 中支持
 
-An option to assist with type inference when using slots programmatically in render functions.
+用于在渲染函数中以编程方式使用插槽时辅助类型推断的选项。
 
-- **Details**
+- **详细信息**
 
-  This option's runtime value is not used. The actual types should be declared via type casting using the `SlotsType` type helper:
+  此选项的运行时值不会被使用。实际类型应通过使用 `SlotsType` 类型辅助工具进行类型断言来声明：
 
   ```ts
   import { SlotsType } from 'vue'

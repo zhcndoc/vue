@@ -1,25 +1,25 @@
-# Priority D Rules: Use with Caution {#priority-d-rules-use-with-caution}
+# Priority D 规则：谨慎使用 {#priority-d-rules-use-with-caution}
 
-::: warning Note
-This Vue.js Style Guide is outdated and needs to be reviewed. If you have any questions or suggestions, please [open an issue](https://github.com/vuejs/docs/issues/new).
+::: warning 注意
+此 Vue.js 风格指南已过时，需要重新审查。如果你有任何问题或建议，请 [提交 issue](https://github.com/vuejs/docs/issues/new)。
 :::
 
-Some features of Vue exist to accommodate rare edge cases or smoother migrations from a legacy code base. When overused however, they can make your code more difficult to maintain or even become a source of bugs. These rules shine a light on potentially risky features, describing when and why they should be avoided.
+Vue 的一些特性是为了适应罕见的边缘情况，或者让从旧代码库迁移时更顺畅而存在的。然而，当这些特性被过度使用时，它们会让代码更难维护，甚至成为 bug 的来源。这些规则会指出一些潜在有风险的特性，说明何时以及为什么应该避免它们。
 
-## Element selectors with `scoped` {#element-selectors-with-scoped}
+## 带有 `scoped` 的元素选择器 {#element-selectors-with-scoped}
 
-**Element selectors should be avoided with `scoped`.**
+**应避免在 `scoped` 中使用元素选择器。**
 
-Prefer class selectors over element selectors in `scoped` styles, because large numbers of element selectors are slow.
+在 `scoped` 样式中，应优先使用类选择器而不是元素选择器，因为大量元素选择器的性能较差。
 
-::: details Detailed Explanation
-To scope styles, Vue adds a unique attribute to component elements, such as `data-v-f3f3eg9`. Then selectors are modified so that only matching elements with this attribute are selected (e.g. `button[data-v-f3f3eg9]`).
+::: details 详细说明
+为了实现样式作用域，Vue 会给组件元素添加一个唯一属性，例如 `data-v-f3f3eg9`。然后会修改选择器，使其只选择带有该属性的匹配元素（例如 `button[data-v-f3f3eg9]`）。
 
-The problem is that large numbers of element-attribute selectors (e.g. `button[data-v-f3f3eg9]`) will be considerably slower than class-attribute selectors (e.g. `.btn-close[data-v-f3f3eg9]`), so class selectors should be preferred whenever possible.
+问题在于，大量元素-属性选择器（例如 `button[data-v-f3f3eg9]`）的速度会明显慢于类-属性选择器（例如 `.btn-close[data-v-f3f3eg9]`），因此在可能的情况下应优先使用类选择器。
 :::
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>差</h3>
 
 ```vue-html
 <template>
@@ -36,7 +36,7 @@ button {
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>好</h3>
 
 ```vue-html
 <template>
@@ -52,18 +52,18 @@ button {
 
 </div>
 
-## Implicit parent-child communication {#implicit-parent-child-communication}
+## 隐式的父子通信 {#implicit-parent-child-communication}
 
-**Props and events should be preferred for parent-child component communication, instead of `this.$parent` or mutating props.**
+**父子组件通信应优先使用 props 和 events，而不是 `this.$parent` 或直接修改 props。**
 
-An ideal Vue application is props down, events up. Sticking to this convention makes your components much easier to understand. However, there are edge cases where prop mutation or `this.$parent` can simplify two components that are already deeply coupled.
+理想的 Vue 应用是 props 向下传递，events 向上传递。遵循这一约定会让你的组件更容易理解。不过，也存在一些边缘情况，在这些情况下，修改 prop 或使用 `this.$parent` 可以简化两个已经高度耦合的组件。
 
-The problem is, there are also many _simple_ cases where these patterns may offer convenience. Beware: do not be seduced into trading simplicity (being able to understand the flow of your state) for short-term convenience (writing less code).
+问题在于，在很多 _简单_ 的场景中，这些模式也可能带来便利。请注意：不要被“简化”（更容易理解状态流向）所替代的短期便利（更少的代码）所诱惑。
 
 <div class="options-api">
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>差</h3>
 
 ```js
 app.component('TodoItem', {
@@ -109,7 +109,7 @@ app.component('TodoItem', {
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>好</h3>
 
 ```js
 app.component('TodoItem', {
@@ -160,7 +160,7 @@ app.component('TodoItem', {
 <div class="composition-api">
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>差</h3>
 
 ```vue
 <script setup>
@@ -211,7 +211,7 @@ function removeTodo() {
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>好</h3>
 
 ```vue
 <script setup>

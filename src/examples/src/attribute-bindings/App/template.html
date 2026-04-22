@@ -1,6 +1,6 @@
 <p>
   <span :title="message">
-    Hover your mouse over me for a few seconds to see my dynamically bound title!
+    把鼠标悬停在我上面几秒钟，看看我动态绑定的 title！
   </span>
 </p>
 
@@ -9,10 +9,10 @@ class bindings have special support for objects and arrays
 in addition to plain strings
 -->
 <p :class="{ red: isRed }" @click="toggleRed">
-  This should be red... but click me to toggle it.
+  这段文字应该是红色的……点击我可以切换颜色。
 </p>
 
 <!-- style bindings also support object and arrays -->
 <p :style="{ color }" @click="toggleColor">
-  This should be green, and should toggle between green and blue on click.
+  这段文字应该是绿色的，点击后会在绿色和蓝色之间切换。
 </p>
