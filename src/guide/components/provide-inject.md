@@ -6,7 +6,7 @@
 
 通常，当我们需要将数据从父组件传递给子组件时，会使用 [props](/guide/components/props)。然而，设想这样一种情况：我们有一个很大的组件树，而某个深层嵌套的组件需要来自远处祖先组件的某些内容。仅靠 props，我们就不得不把同一个 prop 一路传过整个父链：
 
-![prop drilling diagram](./images/prop-drilling.png)
+![Diagram showing props being passed through multiple levels of components just to reach a deeply nested child](./images/prop-drilling.png)
 
 <!-- https://www.figma.com/file/yNDTtReM2xVgjcGVRzChss/prop-drilling -->
 
@@ -14,7 +14,7 @@
 
 我们可以通过 `provide` 和 `inject` 来解决 prop 逐级传递的问题。父组件可以作为所有后代组件的**依赖提供者**。后代树中的任何组件，无论嵌套多深，都可以注入由其父链上方组件提供的依赖。
 
-![Provide/inject scheme](./images/provide-inject.png)
+![Diagram showing the provide/inject mechanism where a parent component provides a dependency that can be directly injected by a deeply nested child, bypassing intermediate components](./images/provide-inject.png)
 
 <!-- https://www.figma.com/file/PbTJ9oXis5KUawEOWdy2cE/provide-inject -->
 
@@ -28,7 +28,7 @@
 <script setup>
 import { provide } from 'vue'
 
-provide(/* key */ 'message', /* value */ 'hello!')
+provide(/* 键 */ 'message', /* 值 */ 'hello!')
 </script>
 ```
 
@@ -39,7 +39,7 @@ import { provide } from 'vue'
 
 export default {
   setup() {
-    provide(/* key */ 'message', /* value */ 'hello!')
+    provide(/* 键 */ 'message', /* 值 */ 'hello!')
   }
 }
 ```
@@ -184,8 +184,8 @@ export default {
 ```js
 export default {
   inject: {
-    /* local key */ localMessage: {
-      from: /* injection key */ 'message'
+    /* 本地键 */ localMessage: {
+      from: /* 注入键 */ 'message'
     }
   }
 }
@@ -254,10 +254,10 @@ export default {
 <script setup>
 import { provide, ref } from 'vue'
 
-const location = ref('North Pole')
+const location = ref('北极')
 
 function updateLocation() {
-  location.value = 'South Pole'
+  location.value = '南极'
 }
 
 provide('location', {
@@ -287,7 +287,7 @@ const { location, updateLocation } = inject('location')
 import { ref, provide, readonly } from 'vue'
 
 const count = ref(0)
-provide('read-only-count', readonly(count))
+provide('只读计数', readonly(count))
 </script>
 ```
 
@@ -321,7 +321,7 @@ export default {
 
 </div>
 
-## 使用 Symbol 键 {#working-with-symbol-keys}
+## Working with Symbol Keys {#working-with-symbol-keys}
 
 到目前为止，我们在示例中一直使用字符串注入键。如果你正在开发一个拥有许多依赖提供者的大型应用，或者你正在编写会被其他开发者使用的组件，那么最好使用 [Symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) 注入键，以避免潜在的冲突。
 

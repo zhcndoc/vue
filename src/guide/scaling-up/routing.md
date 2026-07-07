@@ -10,9 +10,9 @@
 
 ## 官方路由器 {#official-router}
 
-<!-- TODO update links -->
+<!-- TODO 更新链接 -->
 <div>
-  <VueSchoolLink href="https://vueschool.io/courses/vue-router-4-for-everyone" title="Free Vue Router Course">
+  <VueSchoolLink href="https://vueschool.io/courses/vue-router-4-for-everyone" title="免费 Vue Router 课程">
     在 Vue School 上观看免费视频课程
   </VueSchoolLink>
 </div>
@@ -23,7 +23,7 @@ Vue 非常适合构建 SPA。对于大多数 SPA，建议使用官方支持的 [
 
 如果你只需要非常简单的路由，并且不想引入完整功能的路由库，那么你可以使用 [动态组件](/guide/essentials/component-basics#dynamic-components)，并通过监听浏览器的 [`hashchange` 事件](https://developer.mozilla.org/en-US/docs/Web/API/Window/hashchange_event) 或使用 [History API](https://developer.mozilla.org/en-US/docs/Web/API/History) 来更新当前组件状态。
 
-下面是一个极简示例：
+这是一个非常简陋的示例：
 
 <div class="composition-api">
 

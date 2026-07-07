@@ -278,7 +278,7 @@ type DebuggerEvent = {
 
 ### 计算属性调试 {#computed-debugging}
 
-<!-- TODO options API equivalent -->
+<div class="composition-api">
 
 我们可以通过给 `computed()` 传入第二个选项对象，并提供 `onTrack` 和 `onTrigger` 回调，来调试计算属性：
 
@@ -310,9 +310,17 @@ count.value++
 `onTrack` 和 `onTrigger` 计算属性选项仅在开发模式下生效。
 :::
 
+</div>
+
+<div class="options-api">
+
+计算属性调试选项仅可通过 Composition API 的 `computed()` 函数使用。
+
+</div>
+
 ### 侦听器调试 {#watcher-debugging}
 
-<!-- TODO options API equivalent -->
+<div class="composition-api">
 
 与 `computed()` 类似，侦听器也支持 `onTrack` 和 `onTrigger` 选项：
 
@@ -335,6 +343,32 @@ watchEffect(callback, {
   }
 })
 ```
+
+</div>
+
+<div class="options-api">
+
+通过对象语法声明的侦听器也支持 `onTrack` 和 `onTrigger` 选项：
+
+```js
+export default {
+  watch: {
+    source: {
+      handler() {
+        // ...
+      },
+      onTrack(e) {
+        debugger
+      },
+      onTrigger(e) {
+        debugger
+      }
+    }
+  }
+}
+```
+
+</div>
 
 :::tip
 `onTrack` 和 `onTrigger` 侦听器选项仅在开发模式下生效。

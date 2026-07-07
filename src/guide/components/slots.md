@@ -26,7 +26,7 @@
 
 `<slot>` 元素是一个 **插槽出口**，它表示父组件提供的 **插槽内容** 应该被渲染到哪里。
 
-![slot diagram](./images/slots.png)
+![Diagram showing slot content from the parent being injected into the slot outlet in the child component](./images/slots.png)
 
 <!-- https://www.figma.com/file/LjKTYVL97Ck6TEmBbstavX/slot -->
 
@@ -67,7 +67,7 @@ function FancyButton(slotContent) {
 
 ```vue-html
 <FancyButton>
-  <span style="color:red">Click me!</span>
+  <span style="color:red">点击我！</span>
   <AwesomeIcon name="plus" />
 </FancyButton>
 ```
@@ -104,7 +104,7 @@ Vue 组件的插槽机制受到了 [原生 Web Components 的 `<slot>` 元素](h
 
 ## 备用内容 {#fallback-content}
 
-有些情况下，为插槽指定备用内容（即默认内容）很有用，这些内容只会在没有提供任何内容时才被渲染。例如，在一个 `<SubmitButton>` 组件中：
+有些情况下，为插槽指定备用内容（即默认内容）很有用，这些内容只会在没有提供任何内容时才会被渲染。例如，在一个 `<SubmitButton>` 组件中：
 
 ```vue-html
 <button type="submit">
@@ -117,7 +117,7 @@ Vue 组件的插槽机制受到了 [原生 Web Components 的 `<slot>` 元素](h
 ```vue-html{3}
 <button type="submit">
   <slot>
-    Submit <!-- 备用内容 -->
+    提交 <!-- 备用内容 -->
   </slot>
 </button>
 ```
@@ -207,7 +207,7 @@ Vue 组件的插槽机制受到了 [原生 Web Components 的 `<slot>` 元素](h
 
 `v-slot` 还有一个专用简写 `#`，因此 `<template v-slot:header>` 可以简写为 `<template #header>`。可以把它理解为“将这个模板片段渲染到子组件的 ‘header’ 插槽中”。
 
-![named slots diagram](./images/named-slots.png)
+![Diagram showing multiple named slots in a layout component, with content from the parent being directed to the corresponding header, main, and footer slots](./images/named-slots.png)
 
 <!-- https://www.figma.com/file/2BhP8gVZevttBu9oUmUUyz/named-slot -->
 
@@ -216,16 +216,16 @@ Vue 组件的插槽机制受到了 [原生 Web Components 的 `<slot>` 元素](h
 ```vue-html
 <BaseLayout>
   <template #header>
-    <h1>Here might be a page title</h1>
+    <h1>这里可能是一个页面标题</h1>
   </template>
 
   <template #default>
-    <p>A paragraph for the main content.</p>
-    <p>And another one.</p>
+    <p>主内容的一段文字。</p>
+    <p>还有另一段。</p>
   </template>
 
   <template #footer>
-    <p>Here's some contact info</p>
+    <p>这里是一些联系信息</p>
   </template>
 </BaseLayout>
 ```
@@ -235,15 +235,15 @@ Vue 组件的插槽机制受到了 [原生 Web Components 的 `<slot>` 元素](h
 ```vue-html
 <BaseLayout>
   <template #header>
-    <h1>Here might be a page title</h1>
+    <h1>这里可能是一个页面标题</h1>
   </template>
 
   <!-- 隐式默认插槽 -->
-  <p>A paragraph for the main content.</p>
-  <p>And another one.</p>
+  <p>主内容的一段文字。</p>
+  <p>还有另一段。</p>
 
   <template #footer>
-    <p>Here's some contact info</p>
+    <p>这里是一些联系信息</p>
   </template>
 </BaseLayout>
 ```
@@ -253,14 +253,14 @@ Vue 组件的插槽机制受到了 [原生 Web Components 的 `<slot>` 元素](h
 ```html
 <div class="container">
   <header>
-    <h1>Here might be a page title</h1>
+    <h1>这里可能是一个页面标题</h1>
   </header>
   <main>
-    <p>A paragraph for the main content.</p>
-    <p>And another one.</p>
+    <p>主内容的一段文字。</p>
+    <p>还有另一段。</p>
   </main>
   <footer>
-    <p>Here's some contact info</p>
+    <p>这里是一些联系信息</p>
   </footer>
 </div>
 ```
@@ -325,9 +325,9 @@ function BaseLayout(slots) {
 
 [在 Playground 中试试](https://play.vuejs.org/#eNqVVMtu2zAQ/BWCLZBLIjVoTq4aoA1yaA9t0eaoCy2tJcYUSZCUKyPwv2dJioplOw4C+EDuzM4+ONYT/aZ1tumBLmhhK8O1IxZcr29LyTutjCN3zNRkZVRHLrLcXzz9opRFHvnIxIuDTgvmAG+EFJ4WTnhOCPnQAqvBjHFE2uvbh5Zbgj/XAolwkWN4TM33VI/UalixXvjyo5yeqVVKOpCuyP0ob6utlHL7vUE3U4twkWP4hJq/jiPP4vSSOouNrHiTPVolcclPnl3SSnWaCzC/teNK2pIuSEA8xoRQ/3+GmDM9XKZ41UK1PhF/tIOPlfSPAQtmAyWdMMdMAy7C9/9+wYDnCexU3QtknwH/glWi9z1G2vde1tj2Hi90+yNYhcvmwd4PuHabhvKNeuYu8EuK1rk7M/pLu5+zm5BXyh1uMdnOu3S+95pvSCWYtV9xQcgqaXogj2yu+AqBj1YoZ7NosJLOEq5S9OXtPZtI1gFSppx8engUHs+vVhq9eVhq9ORRrXdpRyseSqfo6SmmnONK6XTw9yis24q448wXSG+0VAb3sSDXeiBoDV6TpWDV+ktENatrdMGCfAoBfL1JYNzzpINJjVFoJ9yKUKho19ul6OFQ6UYPx1rjIpPYeXIc/vXCgjetawzbni0dPnhhJ3T3DMVSruI=)
 
-## 动态插槽名 {#dynamic-slot-names}
+## 动态插槽名称 {#dynamic-slot-names}
 
-[动态指令参数](/guide/essentials/template-syntax.md#dynamic-arguments) 同样适用于 `v-slot`，这允许定义动态插槽名：
+[动态指令参数](/guide/essentials/template-syntax.md#dynamic-arguments) 同样适用于 `v-slot`，这允许定义动态插槽名称：
 
 ```vue-html
 <base-layout>
@@ -367,7 +367,7 @@ function BaseLayout(slots) {
 </MyComponent>
 ```
 
-![作用域插槽示意图](./images/scoped-slots.svg)
+![图示展示了一个作用域插槽，其中子组件将数据传回给父组件提供的插槽内容](./images/scoped-slots.svg)
 
 <!-- https://www.figma.com/file/QRneoj8eIdL1kw3WQaaEyc/scoped-slot -->
 

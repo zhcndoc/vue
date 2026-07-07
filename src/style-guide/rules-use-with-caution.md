@@ -1,10 +1,6 @@
 # Priority D 规则：谨慎使用 {#priority-d-rules-use-with-caution}
 
-::: warning 注意
-此 Vue.js 风格指南已过时，需要重新审查。如果你有任何问题或建议，请 [提交 issue](https://github.com/vuejs/docs/issues/new)。
-:::
-
-Vue 的一些特性是为了适应罕见的边缘情况，或者让从旧代码库迁移时更顺畅而存在的。然而，当这些特性被过度使用时，它们会让代码更难维护，甚至成为 bug 的来源。这些规则会指出一些潜在有风险的特性，说明何时以及为什么应该避免它们。
+Vue 的某些特性是为了适应少见的边缘情况，或帮助从旧代码库更平滑地迁移而存在的。然而，过度使用时，它们会让你的代码更难维护，甚至成为 bug 的来源。这些规则会指出一些可能存在风险的特性，并说明在什么情况下以及为什么应当避免使用它们。
 
 ## 带有 `scoped` 的元素选择器 {#element-selectors-with-scoped}
 
@@ -179,8 +175,6 @@ defineProps({
 
 ```vue
 <script setup>
-import { getCurrentInstance } from 'vue'
-
 const props = defineProps({
   todo: {
     type: Object,
@@ -188,22 +182,17 @@ const props = defineProps({
   }
 })
 
-const instance = getCurrentInstance()
-
-function removeTodo() {
-  const parent = instance.parent
-  if (!parent) return
-
-  parent.props.todos = parent.props.todos.filter((todo) => {
-    return todo.id !== props.todo.id
-  })
+function renameTodo() {
+  // 通过 prop 修改了父组件的响应式对象
+  // 也就是说，子组件正在伸手更改父组件拥有的状态。
+  props.todo.text = 'renamed by child'
 }
 </script>
 
 <template>
   <span>
     {{ todo.text }}
-    <button @click="removeTodo">×</button>
+    <button @click="renameTodo">重命名</button>
   </span>
 </template>
 ```
@@ -232,20 +221,25 @@ const emit = defineEmits(['input'])
 
 ```vue
 <script setup>
-defineProps({
+const props = defineProps({
   todo: {
     type: Object,
     required: true
   }
 })
 
-const emit = defineEmits(['delete'])
+const emit = defineEmits(['update:todo'])
+
+function renameTodo() {
+  // 发出一个新对象 — 由父组件负责更新。
+  emit('update:todo', { ...props.todo, text: 'renamed by parent' })
+}
 </script>
 
 <template>
   <span>
     {{ todo.text }}
-    <button @click="emit('delete')">×</button>
+    <button @click="renameTodo">重命名</button>
   </span>
 </template>
 ```

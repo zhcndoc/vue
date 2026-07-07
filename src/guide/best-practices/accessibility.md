@@ -229,6 +229,31 @@ watch(
 
 ![Chrome Developer Tools showing input accessible name from aria-labelledby](./images/AccessibleARIAlabelledbyDevTools.png)
 
+当这种模式用于可复用组件中时，应使用 [`useId()`](/api/composition-api-helpers.html#useid) 生成 ID，而不是硬编码。这样既能保持每个组件实例的 `id` 值唯一，又能将可见文本与表单控件关联起来：
+
+```vue
+<script setup>
+import { useId } from 'vue'
+
+const sectionId = useId()
+const nameId = useId()
+</script>
+
+<template>
+  <section class="form-section">
+    <h2 :id="sectionId">账单</h2>
+
+    <label :id="nameId" :for="`${nameId}-input`">姓名： </label>
+    <input
+      :id="`${nameId}-input`"
+      type="text"
+      name="name"
+      :aria-labelledby="`${sectionId} ${nameId}`"
+    />
+  </section>
+</template>
+```
+
 #### `aria-describedby` {#aria-describedby}
 
 [aria-describedby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-describedby) 的使用方式与 `aria-labelledby` 类似，但它提供的是带有额外信息的描述，供用户需要时查看。这可以用于描述任何输入框的填写要求：
@@ -294,7 +319,7 @@ watch(
 /* https://www.w3schools.com/howto/howto_css_placeholder.asp */
 
 #lastName::placeholder {
-  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  /* Chrome、Firefox、Opera、Safari 10.1+ */
   color: black;
   opacity: 1; /* Firefox */
 }

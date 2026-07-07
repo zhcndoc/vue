@@ -186,4 +186,8 @@ Vue 团队维护着 [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-v
 - [Codepen 上的 Vue](https://codepen.io/pen/editor/vue)
 - [WebComponents.dev 上的 Vue](https://webcomponents.dev/create/cevue)
 
-<!-- TODO ## 后端框架集成 -->
+## 后端框架集成 {#backend-framework-integrations}
+
+如果你正在将 Vue 与 [Laravel](https://laravel.com/) 一起使用，该框架自带一个官方的 [Vite 插件](https://laravel.com/docs/vite)，可开箱即用地处理资源打包和热模块替换。
+
+对于任何其他后端，请参阅 Vite 的 [后端集成指南](https://vite.dev/guide/backend-integration.html) 以手动进行接入。

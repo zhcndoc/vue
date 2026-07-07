@@ -338,6 +338,30 @@ const post = {
 <BlogPost :id="post.id" :title="post.title" />
 ```
 
+### 合并绑定时的行为 {#merge-behavior-when-combining-bindings}
+
+当在同一个组件上同时使用 `v-bind` 和显式绑定时，Vue 会在内部调用 `mergeProps()` 将它们合并。合并策略取决于键的类型：
+
+- **普通 props** —— 后者覆盖前者：
+
+```vue-html
+<!-- title === 'bar' -->
+<BlogPost title="foo" v-bind="{ title: 'bar' }" />
+```
+
+- **事件监听器** —— 当在 `v-bind` 对象中传递监听器时，使用 [onEventName 键的约定](/guide/extras/render-function#v-on)。同一事件的所有处理函数都会被调用（参见 [`v-on` 监听器继承](/guide/components/attrs#v-on-listener-inheritance)）：
+
+```vue-html
+<!-- logs 1 and 2 -->
+<BlogPost @click="console.log(1)" v-bind="{ onClick: () => console.log(2) }" />
+```
+
+- **`class` 和 `style`** 采用类似的合并策略（参见 [`class` 和 `style` 的合并](/guide/components/attrs#class-and-style-merging)）。
+
+:::tip
+完整的合并规则请参见 [`mergeProps()`](/api/render-function#mergeprops) API 参考。
+:::
+
 ## 单向数据流 {#one-way-data-flow}
 
 所有 props 都会在子属性和父属性之间形成一种**单向下行绑定**：当父属性更新时，会向下传递到子组件，但不会反过来。这可以防止子组件无意中修改父组件的状态，从而让应用的数据流更难理解。

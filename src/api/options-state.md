@@ -45,7 +45,7 @@
   data: (vm) => ({ a: vm.myProp })
   ```
 
-- **另请参阅** [Reactivity in Depth](/guide/extras/reactivity-in-depth)
+- **另请参阅** [响应式原理详解](/guide/extras/reactivity-in-depth)
 
 ## props {#props}
 
@@ -144,7 +144,8 @@
 
   type ComputedGetter<T> = (
     this: ComponentPublicInstance,
-    vm: ComponentPublicInstance
+    vm: ComponentPublicInstance,
+    previous?: T
   ) => T
 
   type ComputedSetter<T> = (
@@ -208,14 +209,14 @@
   ```
 
 - **另请参阅**
-  - [Guide - Computed Properties](/guide/essentials/computed)
-  - [Guide - Typing Computed Properties](/guide/typescript/options-api#typing-computed-properties) <sup class="vt-badge ts" />
+  - [指南 - 计算属性](/guide/essentials/computed)
+  - [指南 - 计算属性的类型声明](/guide/typescript/options-api#typing-computed-properties) <sup class="vt-badge ts" />
 
 ## methods {#methods}
 
-声明要混入组件实例的方法。
+Declare methods to be mixed into the component instance.
 
-- **类型**
+- **Type**
 
   ```ts
   interface ComponentOptions {
@@ -225,13 +226,13 @@
   }
   ```
 
-- **详细说明**
+- **Details**
 
-  已声明的方法可以直接在组件实例上访问，也可以在模板表达式中使用。所有方法的 `this` 上下文都会自动绑定到组件实例，即使它们被传递出去也是如此。
+  Declared methods can be directly accessed on the component instance, and can also be used in template expressions. The `this` context of all methods is automatically bound to the component instance, even when they are passed around.
 
-  声明方法时应避免使用箭头函数，因为它们无法通过 `this` 访问组件实例。
+  Avoid using arrow functions when declaring methods, because they cannot access the component instance through `this`.
 
-- **示例**
+- **Example**
 
   ```js
   export default {
@@ -250,7 +251,7 @@
   }
   ```
 
-- **另请参阅** [Event Handling](/guide/essentials/event-handling)
+- **See also** [Event Handling](/guide/essentials/event-handling)
 
 ## watch {#watch}
 
@@ -439,7 +440,7 @@
 
 ## expose {#expose}
 
-当组件实例通过模板 ref 被父组件访问时，声明要暴露的公共属性。
+Declares the public properties to be exposed when the component instance is accessed by the parent via template refs.
 
 - **类型**
 
@@ -451,17 +452,17 @@
 
 - **详情**
 
-  默认情况下，当通过 `$parent`、`$root` 或模板 ref 访问组件实例时，组件会向父组件暴露所有实例属性。这可能并不理想，因为组件通常会包含应保持私有的内部状态或方法，以避免过度耦合。
+  By default, when a component instance is accessed through `$parent`, `$root`, or a template ref, the component exposes all instance properties to the parent. This may not be ideal, because components often include internal state or methods that should remain private to avoid excessive coupling.
 
-  `expose` 选项接受一个属性名字符串列表。使用 `expose` 时，只有显式列出的属性才会暴露在组件的公共实例上。
+  The `expose` option accepts a list of property name strings. When `expose` is used, only the explicitly listed properties are exposed on the component's public instance.
 
-  `expose` 只影响用户自定义属性——它不会过滤掉内置的组件实例属性。
+  `expose` only affects user-defined properties—it does not filter out built-in component instance properties.
 
 - **示例**
 
   ```js
   export default {
-    // 只有 `publicMethod` 会在公共实例上可用
+    // Only `publicMethod` will be available on the public instance
     expose: ['publicMethod'],
     methods: {
       publicMethod() {

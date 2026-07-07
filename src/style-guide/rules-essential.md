@@ -1,10 +1,6 @@
 # 优先级 A 规则：必需 {#priority-a-rules-essential}
 
-::: warning 注意
-本 Vue.js 风格指南已过时，需要进行审查。如果你有任何问题或建议，请[提交 issue](https://github.com/vuejs/docs/issues/new)。
-:::
-
-这些规则有助于防止错误，因此请不惜一切代价学习并遵守它们。可能存在例外，但应当非常罕见，而且只应由对 JavaScript 和 Vue 都有专业知识的人做出。
+这些规则有助于防止错误，因此务必学习并严格遵守它们。虽然可能存在例外，但这种情况应当非常罕见，并且只有同时精通 JavaScript 和 Vue 的专家才应这样做。
 
 ## 使用多单词组件名 {#use-multi-word-component-names}
 
@@ -337,7 +333,7 @@ const activeUsers = computed(() => {
 
 对于应用程序来说，顶层 `App` 组件和布局组件中的样式可以是全局的，但其他所有组件都应始终使用作用域样式。
 
-这仅与[单文件组件](/guide/scaling-up/sfc)相关。它并不要求必须使用 [`scoped` 属性](https://vue-loader.vuejs.org/guide/scoped-css.html)。作用域可以通过 [CSS modules](https://vue-loader.vuejs.org/guide/css-modules.html)、类似 [BEM](http://getbem.com/) 的基于类的策略，或其他库/约定来实现。
+这仅适用于[单文件组件](/guide/scaling-up/sfc)。它并不要求必须使用[`scoped` 属性](/api/sfc-css-features#scoped-css)。作用域可以通过[CSS modules](/api/sfc-css-features#css-modules)、基于类的策略（如 [BEM](https://getbem.com/)），或其他库/约定来实现。
 
 **不过，组件库应优先使用基于类的策略，而不是使用 `scoped` 属性。**
 

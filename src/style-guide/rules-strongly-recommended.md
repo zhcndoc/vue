@@ -1,10 +1,6 @@
 # 优先级 B 规则：强烈推荐 {#priority-b-rules-strongly-recommended}
 
-::: warning 注意
-本 Vue.js 风格指南已过时，需要审查。如果你有任何问题或建议，请[提交 issue](https://github.com/vuejs/docs/issues/new)。
-:::
-
-这些规则已被证明在大多数项目中有助于提升可读性和/或开发者体验。即使你违反了它们，代码仍然可以运行，但违规应当是少数且有充分理由的。
+这些规则已被发现能够在大多数项目中提升可读性和/或开发者体验。如果你违反它们，代码仍然可以运行，但此类违规应当是少见且有充分理由的。
 
 ## 组件文件 {#component-files}
 
@@ -101,23 +97,15 @@ components/
 
 - 由于组件名称应始终为多词名称，这种约定可以避免你为简单的组件包装器去选择一个随意的前缀（例如 `MyButton`、`VueButton`）。
 
-- 由于这些组件使用非常频繁，你可能希望直接将它们注册为全局组件，而不是到处导入它们。使用前缀可以让 Webpack 实现这一点：
+- 由于这些组件使用得非常频繁，你可能会希望直接将它们设为全局组件，而不是在每个地方都导入。使用前缀可以通过 Vite 实现这一点：
 
   ```js
-  const requireComponent = require.context(
-    './src',
-    true,
-    /Base[A-Z]\w+\.(vue|js)$/
-  )
-  requireComponent.keys().forEach(function (fileName) {
-    let baseComponentConfig = requireComponent(fileName)
-    baseComponentConfig =
-      baseComponentConfig.default || baseComponentConfig
-    const baseComponentName =
-      baseComponentConfig.name ||
-      fileName.replace(/^.+\//, '').replace(/\.\w+$/, '')
-    app.component(baseComponentName, baseComponentConfig)
-  })
+  const modules = import.meta.glob('./src/**/Base*.vue', { eager: true })
+  for (const path in modules) {
+    const config = modules[path].default
+    const name = config.name || path.match(/Base[A-Z]\w+/)[0]
+    app.component(name, config)
+  }
   ```
 
   :::
@@ -317,7 +305,7 @@ components/
 
 自闭合的组件表明它们不仅没有内容，而且**本来就**不应该有内容。这就像书里的一页空白页和标注着“本页故意留白”的页面之间的区别。你的代码也会因为省去不必要的闭合标签而更简洁。
 
-不幸的是，HTML 不允许自定义元素自闭合——只有 [官方的“空元素”](https://www.w3.org/TR/html/syntax.html#void-elements) 才可以。这就是为什么只有当 Vue 的模板编译器能在 DOM 之前处理模板时，这种策略才可行，然后再输出符合 DOM 规范的 HTML。
+不幸的是，HTML 不允许自定义元素自闭合——只有[官方的“空”元素](https://html.spec.whatwg.org/multipage/syntax.html#void-elements)例外。这就是为什么这种策略只有在 Vue 的模板编译器能够在 DOM 之前处理模板时才可行，然后再输出符合 DOM 规范的 HTML。
 
 <div class="style-example style-example-bad">
 <h3>坏</h3>
@@ -585,7 +573,7 @@ const props = defineProps({
 <h3>错误</h3>
 
 ```vue-html
-<img src="https://vuejs.org/images/logo.png" alt="Vue Logo">
+<img src="https://vuejs.org/images/logo.png" alt="Vue 标志">
 ```
 
 ```vue-html
@@ -600,7 +588,7 @@ const props = defineProps({
 ```vue-html
 <img
   src="https://vuejs.org/images/logo.png"
-  alt="Vue Logo"
+  alt="Vue 标志"
 >
 ```
 

@@ -348,7 +348,7 @@ export class AppleFellEvent extends Event {
 让我们为在 Vue 中轻松注册自定义元素类型定义创建一个类型辅助工具：
 
 ```ts [some-lib/src/DefineCustomElement.ts]
-// 我们可以为每个需要定义的元素复用这个类型辅助工具。
+// 我们可以为需要定义的每个元素复用这个类型辅助工具。
 type DefineCustomElement<
   ElementType extends HTMLElement,
   Events extends EventMap = {},

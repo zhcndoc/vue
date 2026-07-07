@@ -1,10 +1,6 @@
 # 优先级 C 规则：推荐 {#priority-c-rules-recommended}
 
-::: warning 注意
-此 Vue.js 风格指南已过时，需要重新审查。如果你有任何问题或建议，请[提交 issue](https://github.com/vuejs/docs/issues/new)。
-:::
-
-当存在多个同样好的选项时，可以任意选择一个以确保一致性。在这些规则中，我们会描述每个可接受的选项，并建议一个默认选择。这意味着你可以在自己的代码库中自由做出不同选择，只要你保持一致并且有充分的理由。请务必有充分的理由！通过适应社区标准，你将会：
+当存在多个同样优秀的选项时，可以任意选择一个以确保一致性。在这些规则中，我们描述每个可接受的选项，并建议一个默认选择。这意味着你完全可以在自己的代码库中做出不同的选择，只要你保持一致并且有充分的理由。不过，请务必有充分的理由！通过适应社区标准，你将：
 
 1. 让大脑更容易解析你遇到的大多数社区代码
 2. 能够在不修改的情况下复制并粘贴大多数社区代码示例
@@ -40,6 +36,7 @@
    - `inheritAttrs`
    - `props`
    - `emits`
+   - `expose`
 
 6. **组合式 API**（使用组合式 API 的入口）
 
@@ -67,6 +64,7 @@
      - `errorCaptured`
      - `renderTracked`
      - `renderTriggered`
+     - `serverPrefetch` (仅限 SSR)
 
 9. **非响应式属性**（独立于响应式系统的实例属性）
 
@@ -169,7 +167,7 @@ computed: {
 <h3>Good</h3>
 
 ```js
-// 没有空格也可以，只要组件
+// 不需要空行也可以，只要组件
 // 仍然易于阅读和导航。
 props: {
   value: {
@@ -262,7 +260,7 @@ const inputClasses = computed(() => {
 **[单文件组件](/guide/scaling-up/sfc) 应始终一致地排列 `<script>`、`<template>` 和 `<style>` 标签，并且 `<style>` 必须放在最后，因为其他两个中至少有一个总是必需的。**
 
 <div class="style-example style-example-bad">
-<h3>Bad</h3>
+<h3>不良</h3>
 
 ```vue-html [ComponentX.vue]
 <style>/* ... */</style>
@@ -285,7 +283,7 @@ const inputClasses = computed(() => {
 </div>
 
 <div class="style-example style-example-good">
-<h3>Good</h3>
+<h3>良好</h3>
 
 ```vue-html [ComponentA.vue]
 <script>/* ... */</script>

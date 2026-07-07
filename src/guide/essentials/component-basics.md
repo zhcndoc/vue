@@ -6,7 +6,7 @@
 
 组件让我们能够将 UI 拆分为独立且可复用的部分，并以孤立的方式思考每一部分。一个应用通常会被组织成一个嵌套组件的树：
 
-![组件树](./images/components.png)
+![Diagram showing a component tree structure with a root component branching into multiple child and nested sub-child components](./images/components.png)
 
 <!-- https://www.figma.com/file/qa7WHDQRWuEZNRs7iZRZSI/components -->
 
@@ -456,14 +456,14 @@ export default {
 
 ```vue-html
 <AlertBox>
-  Something bad happened.
+  某些糟糕的事情发生了。
 </AlertBox>
 ```
 
 它可能会渲染成这样：
 
 :::danger 这是一个用于演示目的的错误
-Something bad happened.
+某些糟糕的事情发生了。
 :::
 
 这可以通过 Vue 的自定义 `<slot>` 元素来实现：
@@ -539,7 +539,7 @@ Something bad happened.
 
 你也可以使用 `is` 属性来创建普通 HTML 元素。
 
-在使用 `<component :is="...">` 在多个组件之间切换时，被切换掉的组件会被卸载。我们可以使用内置的 [`<KeepAlive>` 组件](/guide/built-ins/keep-alive)让非 सक्रिय组件保持“存活”。
+在使用 `<component :is="...">` 在多个组件之间切换时，被切换掉的组件会被卸载。我们可以使用内置的 [`<KeepAlive>` 组件](/guide/built-ins/keep-alive)让非 ակտիվ组件保持“存活”。
 
 ## DOM 内模板解析的注意事项 {#in-dom-template-parsing-caveats}
 
