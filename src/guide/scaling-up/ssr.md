@@ -214,21 +214,7 @@ server.get('/', (req, res) => {
 
 - 以通用的方式管理路由、数据获取和状态管理存储。
 
-完整实现会非常复杂，并且取决于你选择使用的构建工具链。因此，我们强烈建议采用一个更高层、带有明确约定的解决方案，它可以为你抽象掉这些复杂性。下面我们将介绍 Vue 生态中几种推荐的 SSR 方案。
-
-### Nuxt {#nuxt}
-
-[Nuxt](https://nuxt.com/) 是构建在 Vue 生态之上的更高层框架，为编写通用 Vue 应用提供了流畅的开发体验。更棒的是，你还可以把它用作静态站点生成器！我们非常推荐你试一试。
-
-### Quasar {#quasar}
-
-[Quasar](https://quasar.dev) 是一个完整的基于 Vue 的解决方案，它允许你使用同一套代码库同时面向 SPA、SSR、PWA、移动应用、桌面应用和浏览器扩展。不仅能处理构建配置，还提供了一整套符合 Material Design 规范的 UI 组件。
-
-### Vite SSR {#vite-ssr}
-
-Vite 提供了对 Vue 服务端渲染的内置[支持](https://vite.dev/guide/ssr.html)，但它有意保持低层级。如果你希望直接使用 Vite，可以看看 [vite-plugin-ssr](https://vite-plugin-ssr.com/)，这是一个社区插件，可以为你抽象掉许多困难的细节。
-
-你也可以在[这里](https://github.com/vitejs/vite-plugin-vue/tree/main/playground/ssr-vue)找到一个使用手动配置的 Vue + Vite SSR 项目示例，它可以作为进一步开发的基础。请注意，只有在你对 SSR / 构建工具非常熟悉，并且确实想对更高层架构拥有完全控制权时，才推荐这样做。
+完整的实现会相当复杂，并且取决于你选择使用的构建工具链。因此，如果你需要 SSR，我们强烈建议使用 [Vue 框架](/guide/quick-start#frameworks)，因为它们通常内置了 SSR 支持。
 
 ## 编写适合 SSR 的代码 {#writing-ssr-friendly-code}
 

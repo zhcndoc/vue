@@ -24,11 +24,10 @@ aside: false
 
 ## 进行中的语言 {#work-in-progress-languages}
 
-- [العربية / 阿拉伯语](https://ar.vuejs.org/) [[source](https://github.com/vuejs-translations/docs-ar)]
-- [Español / 西班牙语](https://vue3-spanish-docs.netlify.app/) [[source](https://github.com/icarusgk/vuejs-spanish-docs)]
-- [Deutsch / 德语](https://de.vuejs.org/) [[source](https://github.com/vuejs-translations/docs-de)]
+- [العربية / 阿拉伯语](https://ar.vuejs.org/) [[源代码](https://github.com/vuejs-translations/docs-ar)]
+- [Español / 西班牙语](https://vue3-spanish-docs.netlify.app/) [[源代码](https://github.com/icarusgk/vuejs-spanish-docs)]
 
-## 开始新的翻译 {#starting-a-new-translation}
+## 为翻译做贡献 {#contributing-to-translations}
 
 Vue 文档最近经历了一次重大修订，因此其他语言的翻译仍然缺失或处于进行中。
 

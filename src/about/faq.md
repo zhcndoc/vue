@@ -2,7 +2,7 @@
 
 ## 谁维护 Vue？ {#who-maintains-vue}
 
-Vue 是一个独立的、由社区驱动的项目。它由 [Evan You](https://x.com/youyuxi) 于 2014 年创建，最初只是一个个人副项目。如今，Vue 由 [一支来自世界各地、由全职和志愿成员组成的团队](/about/team) 积极维护，Evan 担任项目负责人。你可以在这部 [纪录片](https://www.youtube.com/watch?v=OrxmtDw4pVI) 中了解更多关于 Vue 的故事。
+Vue 是一个独立、由社区驱动的项目。它由 [Evan You](https://x.com/evanyou) 于 2014 年创建，最初是一个个人业余项目。如今，Vue 由[来自世界各地的全职和志愿成员组成的团队](/about/team)积极维护，Evan 担任项目负责人。你可以通过这部[纪录片](https://www.youtube.com/watch?v=OrxmtDw4pVI)进一步了解 Vue 的故事。
 
 Vue 的开发主要通过赞助来资助，自 2016 年以来我们一直在财务上保持可持续。如果你或你的企业受益于 Vue，请考虑通过 [赞助我们](/sponsor/) 来支持 Vue 的开发！
 
@@ -26,7 +26,7 @@ Vue 2.7 于 2022 年 7 月发布，是 Vue 2 版本范围内最后一个次要�
 
 ## Vue 使用什么许可证？ {#what-license-does-vue-use}
 
-Vue 是一个在 [MIT 许可证](https://opensource.org/licenses/MIT) 下发布的免费开源项目。
+Vue 是一个基于 [MIT 许可证](https://opensource.org/licenses/MIT) 发布的免费开源项目。
 
 ## Vue 支持哪些浏览器？ {#what-browsers-does-vue-support}
 

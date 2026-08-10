@@ -5,7 +5,7 @@
 - 代码更简洁，样板代码更少
 - 能够使用纯 TypeScript 声明 props 和触发的事件
 - 更好的运行时性能（模板会在同一作用域内编译为渲染函数，没有中间代理）
-- 更好的 IDE 类型推断性能（语言服务器从代码中提取类型的工作更少）
+- 更好的 IDE 类型推断性能（语言服务器从代码中提取类型的工作更少）。
 
 ## 基础语法 {#basic-syntax}
 
@@ -53,7 +53,7 @@ import { capitalize } from './helpers'
 
 ## 响应式 {#reactivity}
 
-响应式状态需要使用 [Reactivity APIs](./reactivity-core) 显式创建。与 `setup()` 函数返回的值类似，在模板中引用 `ref` 时会自动解包：
+响应式状态需要使用 [响应式 API](./reactivity-core) 显式创建。与 `setup()` 函数返回的值类似，在模板中引用 `ref` 时会自动解包：
 
 ```vue
 <script setup>
@@ -122,7 +122,7 @@ import * as Form from './form-components'
 
 <template>
   <Form.Input>
-    <Form.Label>label</Form.Label>
+    <Form.Label>标签</Form.Label>
   </Form.Input>
 </template>
 ```
@@ -140,7 +140,7 @@ const vMyDirective = {
 }
 </script>
 <template>
-  <h1 v-my-directive>This is a Heading</h1>
+  <h1 v-my-directive>这是一个标题</h1>
 </template>
 ```
 
@@ -314,6 +314,7 @@ const myRef = ref()
 </template>
 ```
 
+另外，在 `defineProps` 中使用 `withDefaults` 时，对于可变引用类型（如数组或对象）的默认值，应在 `defineModel` 中使用函数进行包装，以避免意外修改和外部副作用。
 :::
 
 ### 修饰符与转换器 {#modifiers-and-transformers}
@@ -480,7 +481,7 @@ const post = await fetch(`/api/post/1`).then((r) => r.json())
 此外，被等待的表达式会自动编译成一种格式，以便在 `await` 之后保留当前组件实例上下文。
 
 :::warning 注意
-`async setup()` 必须与 [`Suspense`](/guide/built-ins/suspense.html) 一起使用，而后者目前仍是实验性功能。我们计划在未来版本中将其完善并文档化——但如果你现在就想了解，可以参考它的 [tests](https://github.com/vuejs/core/blob/main/packages/runtime-core/__tests__/components/Suspense.spec.ts) 来看看它是如何工作的。
+`async setup()` 必须与 [`Suspense`](/guide/built-ins/suspense.html) 一起使用，而后者目前仍是实验性功能。我们计划在未来版本中将其完善并文档化——但如果你现在就想了解，可以参考它的 [测试](https://github.com/vuejs/core/blob/main/packages/runtime-core/__tests__/components/Suspense.spec.ts) 来看看它是如何工作的。
 :::
 
 ## 导入语句 {#imports-statements}
@@ -547,4 +548,4 @@ ref<ComponentExposed<typeof genericComponent>>();
 ## 限制 {#restrictions}
 
 - 由于模块执行语义的差异，`<script setup>` 内的代码依赖于 SFC 的上下文。将其移动到外部 `.js` 或 `.ts` 文件时，可能会让开发者和工具都感到困惑。因此，**`<script setup>`** 不能与 `src` 属性一起使用。
-- `<script setup>` 不支持 In-DOM Root Component Template。([相关讨论](https://github.com/vuejs/core/issues/8391))
+- `<script setup>` 不支持 In-DOM Root Component Template。([相关讨论](https://github.com/vuejs/core/issues/8391))。

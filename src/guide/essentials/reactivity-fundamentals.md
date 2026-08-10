@@ -224,7 +224,7 @@ refs 的另一个优点是，与普通变量不同，你可以把 ref 传入函�
 
 ## 声明方法 \* {#declaring-methods}
 
-<VueSchoolLink href="https://vueschool.io/lessons/methods-in-vue-3" title="免费的 Vue.js Methods 课程"/>
+<VueSchoolLink href="https://vueschool.io/lessons/methods-in-vue-3" title="免费的 Vue.js 方法课程"/>
 
 要向组件实例添加方法，我们使用 `methods` 选项。它应该是一个包含所需方法的对象：
 
@@ -380,7 +380,7 @@ import { reactive } from 'vue'
 const state = reactive({ count: 0 })
 ```
 
-> 另见：[Typing Reactive](/guide/typescript/composition-api#typing-reactive) <sup class="vt-badge ts" />
+> 另见：[响应式对象类型标注](/guide/typescript/composition-api#typing-reactive) <sup class="vt-badge ts" />
 
 在模板中的用法：
 
@@ -394,7 +394,7 @@ const state = reactive({ count: 0 })
 
 `reactive()` 会深层转换对象：嵌套对象在被访问时也会被 `reactive()` 包裹。当 `ref()` 的值是一个对象时，内部也会调用它。类似于浅层 `ref`，也有 [`shallowReactive()`](/api/reactivity-advanced#shallowreactive) API 可用于关闭深层响应性。
 
-### Reactive Proxy vs. Original \*\* {#reactive-proxy-vs-original-1}
+### 响应式代理与原始对象 \*\* {#reactive-proxy-vs-original-1}
 
 需要注意的是，`reactive()` 返回的是原始对象的 [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)，它与原始对象并不相等：
 
@@ -579,8 +579,8 @@ export default {
 ```js
 export default {
   created() {
-    // 现在每个实例都有自己的一份防抖处理器副本
-    this.debouncedClick = _.debounce(this.click, 500)
+    // 现在每个实例都有自己独立的防抖处理函数副本
+    this.debouncedClick = debounce(this.click, 500)
   },
   unmounted() {
     // 当组件被移除时

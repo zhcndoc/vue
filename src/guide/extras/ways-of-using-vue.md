@@ -33,7 +33,7 @@ SPA 通常需要后端暴露 API 端点——但你也可以将 Vue 与 [Inertia
 
 Vue 提供一流的 API，可在服务器上将 Vue 应用“渲染”为 HTML 字符串。这使得服务器可以返回已经渲染好的 HTML，让最终用户在 JavaScript 下载的同时立即看到内容。随后，Vue 会在客户端对应用进行“激活”，使其具备交互能力。这被称为[服务端渲染（SSR）](/guide/scaling-up/ssr)，它能显著提升诸如[最大内容绘制（LCP）](https://web.dev/lcp/)等核心网页指标。
 
-基于这一范式，还有更高层的 Vue 框架，例如 [Nuxt](https://nuxt.com/)，可以让你使用 Vue 和 JavaScript 开发全栈应用。
+此外，还有更高层次的 [Vue 框架](/guide/quick-start#frameworks)，它们构建于这一范式之上，并为开发全栈应用提供了内置的 SSR 支持。
 
 ## JAMStack / SSG {#jamstack-ssg}
 
@@ -47,7 +47,7 @@ SSG 有两种形式：单页和多页。这两种形式都会将站点预渲染�
 
 如果你预计会有较复杂的交互、较长的会话时长，或者需要在导航之间保留元素 / 状态，那么单页 SSG 更适合。否则，多页 SSG 会是更好的选择。
 
-Vue 团队还维护着一个名为 [VitePress](https://vitepress.dev/) 的静态站点生成器，它驱动着你现在正在阅读的这个网站！VitePress 同时支持这两种 SSG 形式。[Nuxt](https://nuxt.com/) 也支持 SSG。你甚至可以在同一个 Nuxt 应用中为不同路由混合使用 SSR 和 SSG。
+Vue 团队维护着一个名为 [VitePress](https://vitepress.dev/) 的静态站点生成器。你现在阅读的网站正是由它驱动的，并且它同时支持两种 SSG 形式！此外，也请务必了解其他通常支持 SSG 的 [Vue 框架](/guide/quick-start#frameworks)。
 
 ## 超越 Web {#beyond-the-web}
 

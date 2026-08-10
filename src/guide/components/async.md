@@ -98,7 +98,7 @@ const AsyncComp = defineAsyncComponent({
 
   // 加载失败时使用的组件
   errorComponent: ErrorComponent,
-  // 如果提供了超时并且超过该时间，则会显示错误组件。
+  // 如果提供了超时时间并且超过该时间，则会显示错误组件。
   // 默认值：Infinity。
   timeout: 3000
 })
@@ -116,7 +116,7 @@ const AsyncComp = defineAsyncComponent({
 
 - Vue 提供了若干内置水合策略。这些内置策略需要分别导入，这样在未使用时才能被 tree-shaking。
 
-- 这种设计有意保持底层，以提供灵活性。未来，编译器语法糖可以在核心层或更高层级的解决方案（例如 Nuxt）之上构建。
+- 此设计有意保持较低层级，以提供灵活性。未来可能会在核心中，或在更高层级的解决方案（例如 [Vue 框架](/guide/quick-start#frameworks)）中基于此构建编译器语法糖。
 
 ### 在空闲时水合 {#hydrate-on-idle}
 

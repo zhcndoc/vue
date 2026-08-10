@@ -41,25 +41,25 @@ Vue.js 是一个采用 MIT 许可证的开源项目，完全可以免费使用�
 ## 等级权益 {#tier-benefits}
 
 - **全球特别赞助商**：
-  - 全球仅限 **一** 位赞助商。<span v-if="!data?.special">目前空缺。[联系我们](mailto:sponsor@vuejs.org?subject=Vue.js%20special%20sponsor%20inquiry)！</span><span v-else>（目前已满）</span>
-  - （独占）在 [vuejs.org](/) 首页首屏展示徽标。
-  - （独占）通过 [Vue 官方 X 账号](https://x.com/vuejs)（32 万关注者）对重大产品发布进行特别致谢和定期转发。
-  - 在所有低于该等级的位置中拥有最醒目的徽标展示。
-- **铂金（USD$2,000/月）**：
-  - 在 [vuejs.org](/) 首页显著展示徽标。
-  - 在所有内容页的侧边栏中显著展示徽标。
-  - 在 [`vuejs/core`](https://github.com/vuejs/core) 和 [`vuejs/vue`](https://github.com/vuejs/core) 的 README 中显著展示徽标。
+  - 全球仅限 **一位** 赞助商。<span v-if="!data?.special">目前空缺。[联系我们](mailto:sponsor@vuejs.org?subject=Vue.js%20特别赞助商咨询)！</span><span v-else>（目前已有赞助商）</span>
+  - （独家）在 [vuejs.org](/) 首页首屏展示 Logo。
+  - （独家）通过 [Vue 官方 X 账号](https://x.com/vuejs)（32 万粉丝）特别致谢，并定期转发重大产品发布消息。
+  - 在以下所有等级所列位置中享有最显著的 Logo 展示位置。
+- **白金（USD$2,000/月）**：
+  - 在 [vuejs.org](/) 首页显著展示 Logo。
+  - 在所有内容页面的侧边栏显著展示 Logo。
+  - 在 [`vuejs/core`](https://github.com/vuejs/core) 和 [`vuejs/vue`](https://github.com/vuejs/vue) 的 README 中显著展示 Logo。
 - **黄金（USD$500/月）**：
-  - 在 [vuejs.org](/) 首页以大尺寸展示徽标。
-  - 在 `vuejs/core` 和 `vuejs/vue` 的 README 中以大尺寸展示徽标。
+  - 在 [vuejs.org](/) 首页大幅展示 Logo。
+  - 在 `vuejs/core` 和 `vuejs/vue` 的 README 中大幅展示 Logo。
 - **白银（USD$250/月）**：
-  - 在 `vuejs/core` 和 `vuejs/vue` 的 `BACKERS.md` 文件中以中等尺寸展示徽标。
+  - 在 `vuejs/core` 和 `vuejs/vue` 的 `BACKERS.md` 文件中以中等大小展示 Logo。
 - **青铜（USD$100/月）**：
-  - 在 `vuejs/core` 和 `vuejs/vue` 的 `BACKERS.md` 文件中以小尺寸展示徽标。
+  - 在 `vuejs/core` 和 `vuejs/vue` 的 `BACKERS.md` 文件中以小尺寸展示 Logo。
 - **慷慨支持者（USD$50/月）**：
-  - 名字列在 `vuejs/core` 和 `vuejs/vue` 的 `BACKERS.md` 文件中，位于其他个人支持者之上。
+  - 在 `vuejs/core` 和 `vuejs/vue` 的 `BACKERS.md` 文件中列出姓名，排在其他个人支持者之前。
 - **个人支持者（USD$5/月）**：
-  - 名字列在 `vuejs/core` 和 `vuejs/vue` 的 `BACKERS.md` 文件中。
+  - 在 `vuejs/core` 和 `vuejs/vue` 的 `BACKERS.md` 文件中列出姓名。
 
 ## 当前赞助商 {#current-sponsors}
 

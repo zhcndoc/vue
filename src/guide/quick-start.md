@@ -23,7 +23,7 @@ import { VTCodeGroup, VTCodeGroupTab } from '@vue/theme'
 :::tip 前置条件
 
 - 熟悉命令行
-- 安装 [Node.js](https://nodejs.org/) 版本 `^20.19.0 || >=22.12.0`
+- 安装 [Node.js](https://nodejs.org/) `^22.18.0 || >=24.12.0` 版本
   :::
 
 本节将介绍如何在本地机器上搭建一个 Vue [单页应用](/guide/extras/ways-of-using-vue#single-page-application-spa)。创建出的项目将使用基于 [Vite](https://vite.dev/) 的构建配置，并允许我们使用 Vue [单文件组件](/guide/scaling-up/sfc)（SFC）。
@@ -59,20 +59,20 @@ $ bun create vue@latest
 该命令将安装并执行 [create-vue](https://github.com/vuejs/create-vue)，这是 Vue 官方的项目脚手架工具。随后你会看到一些可选功能的提示，例如 TypeScript 和测试支持：
 
 <div class="language-sh"><pre><code><span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">项目名称：<span style="color:#888;">… <span style="color:#89DDFF;">&lt;</span><span style="color:#888;">your-project-name</span><span style="color:#89DDFF;">&gt;</span></span></span>
-<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">添加 TypeScript？<span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Yes</span></span>
-<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">添加 JSX 支持？<span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Yes</span></span>
-<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">为单页应用开发添加 Vue Router？<span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Yes</span></span>
-<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">添加 Pinia 用于状态管理？<span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Yes</span></span>
-<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">添加 Vitest 用于单元测试？<span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Yes</span></span>
-<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">添加端到端测试方案？<span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Cypress / Nightwatch / Playwright</span></span>
-<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">添加 ESLint 进行代码质量检查？<span style="color:#888;">… No / <span style="color:#89DDFF;text-decoration:underline">Yes</span></span></span>
-<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">添加 Prettier 进行代码格式化？<span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Yes</span></span>
-<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">添加用于调试的 Vue DevTools 7 扩展？（实验性）<span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">No</span> / Yes</span></span>
+<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">添加 TypeScript？<span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">否</span> / 是</span></span>
+<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">添加 JSX 支持？<span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">否</span> / 是</span></span>
+<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">为单页应用开发添加 Vue Router？<span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">否</span> / 是</span></span>
+<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">添加 Pinia 用于状态管理？<span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">否</span> / 是</span></span>
+<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">添加 Vitest 用于单元测试？<span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">否</span> / 是</span></span>
+<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">添加端到端测试方案？<span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">否</span> / Cypress / Nightwatch / Playwright</span></span>
+<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">添加 ESLint 进行代码质量检查？<span style="color:#888;">… 否 / <span style="color:#89DDFF;text-decoration:underline">是</span></span></span>
+<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">添加 Prettier 进行代码格式化？<span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">否</span> / 是</span></span>
+<span style="color:var(--vt-c-green);">✔</span> <span style="color:#A6ACCD;">添加用于调试的 Vue DevTools 7 扩展？（实验性）<span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">否</span> / 是</span></span>
 <span></span>
 <span style="color:#A6ACCD;">正在 ./<span style="color:#89DDFF;">&lt;</span><span style="color:#888;">your-project-name</span><span style="color:#89DDFF;">&gt;</span> 中搭建项目...</span>
 <span style="color:#A6ACCD;">完成。</span></code></pre></div>
 
-如果你不确定某个选项，暂时直接按回车选择 `No` 即可。项目创建完成后，按照说明安装依赖并启动开发服务器：
+如果你不确定某个选项，暂时直接按回车选择 `否` 即可。项目创建完成后，按照说明安装依赖并启动开发服务器：
 
 ::: code-group
 
@@ -135,7 +135,7 @@ $ bun run build
 
 这会在项目的 `./dist` 目录中生成适用于生产环境的构建版本。查看 [生产部署指南](/guide/best-practices/production-deployment) 以了解更多关于将应用发布到生产环境的信息。
 
-[下一步 >](#next-steps)
+[下一步 >](#next-steps)。
 
 ## 从 CDN 使用 Vue {#using-vue-from-cdn}
 
@@ -396,6 +396,24 @@ export default {
 要启动本地 HTTP 服务器，首先确保你已安装 [Node.js](https://nodejs.org/en/)，然后在命令行中、HTML 文件所在的同一目录下运行 `npx serve`。你也可以使用任何其他能够以正确 MIME 类型提供静态文件的 HTTP 服务器。
 
 你可能已经注意到，导入的组件模板是以内联 JavaScript 字符串的形式写入的。如果你使用 VS Code，可以安装 [es6-string-html](https://marketplace.visualstudio.com/items?itemName=Tobermory.es6-string-html) 扩展，并在字符串前添加 `/*html*/` 注释，从而为其提供语法高亮。
+
+## 框架 {#frameworks}
+
+有一些 Vue 框架开箱即用地支持 [SSR](/guide/scaling-up/ssr) 和其他功能：
+- [Nuxt](https://nuxt.com/)
+- [Vike](https://vike.dev/)
+- [Astro](https://astro.build/)
+- [Quasar](https://quasar.dev/)
+
+:::tip
+通常建议仅在需要 SSR 时使用框架。
+
+如果不需要 SSR，可以直接使用 [Vite](https://vite.dev/)（上方的[创建 Vue 应用](#creating-a-vue-application)部分就是使用它搭建的）。
+:::
+
+:::info
+Vue 框架通常在底层使用 Vite，因此如果不需要 SSR，直接使用 Vite 而不是 Vue 框架可以简化设置。不过，框架还支持一些额外功能，例如 UI 主题，这也可能成为选择 Vue 框架而不是仅使用 Vite 的理由。
+:::
 
 ## 下一步 {#next-steps}
 

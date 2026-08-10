@@ -26,7 +26,7 @@
 
 `<slot>` 元素是一个 **插槽出口**，它表示父组件提供的 **插槽内容** 应该被渲染到哪里。
 
-![Diagram showing slot content from the parent being injected into the slot outlet in the child component](./images/slots.png)
+![显示父组件中的插槽内容被注入子组件插槽出口的示意图](./images/slots.png)
 
 <!-- https://www.figma.com/file/LjKTYVL97Ck6TEmBbstavX/slot -->
 
@@ -112,7 +112,7 @@ Vue 组件的插槽机制受到了 [原生 Web Components 的 `<slot>` 元素](h
 </button>
 ```
 
-如果父组件没有为插槽提供任何内容，我们可能希望在 `<button>` 内部渲染文本 "Submit"。要将 "Submit" 设为备用内容，可以把它放在 `<slot>` 标签之间：
+如果父组件没有为插槽提供任何内容，我们可能希望在 `<button>` 内部渲染文本“提交”。要将“提交”设为备用内容，可以把它放在 `<slot>` 标签之间：
 
 ```vue-html{3}
 <button type="submit">
@@ -128,22 +128,22 @@ Vue 组件的插槽机制受到了 [原生 Web Components 的 `<slot>` 元素](h
 <SubmitButton />
 ```
 
-这将渲染备用内容 "Submit"：
+这将渲染备用内容“提交”：
 
 ```html
-<button type="submit">Submit</button>
+<button type="submit">提交</button>
 ```
 
 但如果我们提供内容：
 
 ```vue-html
-<SubmitButton>Save</SubmitButton>
+<SubmitButton>保存</SubmitButton>
 ```
 
 那么渲染的将是提供的内容：
 
 ```html
-<button type="submit">Save</button>
+<button type="submit">保存</button>
 ```
 
 <div class="composition-api">
@@ -207,7 +207,7 @@ Vue 组件的插槽机制受到了 [原生 Web Components 的 `<slot>` 元素](h
 
 `v-slot` 还有一个专用简写 `#`，因此 `<template v-slot:header>` 可以简写为 `<template #header>`。可以把它理解为“将这个模板片段渲染到子组件的 ‘header’ 插槽中”。
 
-![Diagram showing multiple named slots in a layout component, with content from the parent being directed to the corresponding header, main, and footer slots](./images/named-slots.png)
+![展示布局组件中多个具名插槽的图示，父组件中的内容被分别传递到对应的 header、main 和 footer 插槽](./images/named-slots.png)
 
 <!-- https://www.figma.com/file/2BhP8gVZevttBu9oUmUUyz/named-slot -->
 
@@ -350,35 +350,38 @@ function BaseLayout(slots) {
 
 不过，在某些情况下，插槽内容同时使用父作用域和子作用域中的数据会很有用。为此，我们需要一种方式，让子组件在渲染插槽时向插槽传递数据。
 
-事实上，我们完全可以这么做——就像向组件传递 props 一样，我们可以向插槽出口传递属性：
+实际上，我们可以做到这一点——我们可以像向组件传递 props 一样，向插槽出口传递属性。父模板通过 `v-slot` 接收插槽 props，而子模板则在渲染插槽出口时向其传递 props：
 
 ```vue-html
-<!-- <MyComponent> 模板 -->
-<div>
-  <slot :text="greetingMessage" :count="1"></slot>
-</div>
+<!-- 父模板（用法） -->
+<ChildComponent v-slot="receivedProps">
+  {{ receivedProps.text }} {{ receivedProps.count }}
+</ChildComponent>
 ```
-
-接收插槽 props 的方式，在单个默认插槽和具名插槽之间会略有不同。我们先展示如何通过直接在子组件标签上使用 `v-slot` 来接收单个默认插槽的 props：
 
 ```vue-html
-<MyComponent v-slot="slotProps">
-  {{ slotProps.text }} {{ slotProps.count }}
-</MyComponent>
+<!-- 子模板（插槽定义） -->
+<!-- 使用 props 进行渲染！ -->
+<slot
+  text="hello"
+  :count="1"
+/>
 ```
 
-![图示展示了一个作用域插槽，其中子组件将数据传回给父组件提供的插槽内容](./images/scoped-slots.svg)
+使用单个默认插槽和使用具名插槽时，接收插槽 props 的方式略有不同。上面的示例使用单个默认插槽接收 props，方法是直接在 `ChildComponent` 标签上使用 `v-slot`。
+
+![显示子组件将数据传回父组件所提供插槽内容的作用域插槽示意图](./images/scoped-slots.svg)
 
 <!-- https://www.figma.com/file/QRneoj8eIdL1kw3WQaaEyc/scoped-slot -->
 
 <div class="composition-api">
 
-[在 Playground 中试试](https://play.vuejs.org/#eNp9kMEKgzAMhl8l9OJlU3aVOhg7C3uAXsRlTtC2tFE2pO++dA5xMnZqk+b/8/2dxMnadBxQ5EL62rWWwCMN9qh021vjCMrn2fBNoya4OdNDkmarXhQnSstsVrOOC8LedhVhrEiuHca97wwVSsTj4oz1SvAUgKJpgqWZEj4IQoCvZm0Gtgghzss1BDvIbFkqdmID+CNdbbQnaBwitbop0fuqQSgguWPXmX+JePe1HT/QMtJBHnE51MZOCcjfzPx04JxsydPzp2Szxxo7vABY1I/p)
+[在 Playground 中试试](https://play.vuejs.org/#eJxlj00Kg0AMha8SsnHTKt2KDhQv0ANkUzTFgfljJkpBvHsZhYK6fS+878uCzxDKeWKssUl91EEgsUxBkdM2+CjQjdoMnbfBO3YCn+gtFGV1jPNEQa6p9g1FjlwjbIN5CytyAM1pZ74n46UljNyznnl4RR8S4XYMsCxwKErhr8C6XoveTy43G+SkpbLSXwNveLXOjx9Fs9cukZkt4cjGeMI9qzdeS/jYk+rEWH9AQHet)
 
 </div>
 <div class="options-api">
 
-[在 Playground 中试试](https://play.vuejs.org/#eNqFkNFqxCAQRX9l8CUttAl9DbZQ+rzQD/AlJLNpwKjoJGwJ/nvHpAnusrAg6FzHO567iE/nynlCUQsZWj84+lBmGJ31BKffL8sng4bg7O0IRVllWnpWKAOgDF7WBx2em0kTLElt975QbwLkhkmIyvCS1TGXC8LR6YYwVSTzH8yvQVt6VyJt3966oAR38XhaFjjEkvBCECNcia2d2CLyOACZQ7CDrI6h4kXcAF7lcg+za6h5et4JPdLkzV4B9B6RBtOfMISmxxqKH9TarrGtATxMgf/bDfM/qExEUCdEDuLGXAmoV06+euNs2JK7tyCrzSNHjX9aurQf)
+[在 Playground 中试试](https://play.vuejs.org/#eJxlkMEKgzAMhl8l5LLLpuwqKoy9wB4gl6GRCTUtNYogffdRywbq9f+Tfl+64sO5bJ4YCyzHxvdOa5J+cNYrPD+9aZ92cFZYFDpvB7hk+T6OyxcSEl62pZa792QUVhKA5jc1FimAw6MxCySBpMz/eJJSeXDmrVzHgfIgMt9GY7Ui9NxwP3P78taNhHUirCvsikx5UQjhXDR2kthskMNddVT6a+AVz2fHP9uLRq8kEZkV4YeNsYQpKzZeRXhPSX5ghC8NDY0G)
 
 </div>
 
@@ -387,35 +390,32 @@ function BaseLayout(slots) {
 你可以把作用域插槽看作传入子组件的一个函数。然后子组件再调用它，并把 props 作为参数传入：
 
 ```js
-MyComponent({
-  // 传入默认插槽，但形式是一个函数
-  default: (slotProps) => {
-    return `${slotProps.text} ${slotProps.count}`
+ChildComponent({
+  // 传递默认插槽，但以函数的形式
+  default: (receivedProps) => {
+    return `${receivedProps.text} ${receivedProps.count}`
   }
 })
 
-function MyComponent(slots) {
-  const greetingMessage = 'hello'
-  return `<div>${
-    // 使用 props 调用插槽函数！
-    slots.default({ text: greetingMessage, count: 1 })
-  }</div>`
+function ChildComponent(slots) {
+  // 使用 props 调用插槽函数！
+  return slots.default({ text: 'hello', count: 1 })
 }
 ```
 
 实际上，这与作用域插槽的编译方式非常接近，也与你在手写 [渲染函数](/guide/extras/render-function) 中使用作用域插槽的方式一致。
 
-注意 `v-slot="slotProps"` 与插槽函数签名的对应关系。和函数参数一样，我们也可以在 `v-slot` 中使用解构：
+注意，`v-slot="receivedProps"` 与插槽函数的签名相匹配。就像函数参数一样，我们可以在 `v-slot` 中使用解构：
 
 ```vue-html
-<MyComponent v-slot="{ text, count }">
+<ChildComponent v-slot="{ text, count }">
   {{ text }} {{ count }}
-</MyComponent>
+</ChildComponent>
 ```
 
 ### 具名作用域插槽 {#named-scoped-slots}
 
-具名作用域插槽的工作方式类似——插槽 props 可以作为 `v-slot` 指令的值来访问：`v-slot:name="slotProps"`。使用简写时，看起来像这样：
+具名作用域插槽的工作方式类似——插槽 props 可以作为 `v-slot` 指令的值进行访问：`v-slot:name="receivedProps"`。使用简写时如下所示：
 
 ```vue-html
 <MyComponent>
@@ -436,7 +436,7 @@ function MyComponent(slots) {
 向具名插槽传递 props：
 
 ```vue-html
-<slot name="header" message="hello"></slot>
+<slot name="header" message="hello" />
 ```
 
 请注意，插槽的 `name` 不会包含在 props 中，因为它是保留属性——因此得到的 `headerProps` 会是 `{ message: 'hello' }`。
@@ -446,7 +446,7 @@ function MyComponent(slots) {
 ```vue-html
 <!-- <MyComponent> 模板 -->
 <div>
-  <slot :message="hello"></slot>
+  <slot message="hello" />
   <slot name="footer" />
 </div>
 ```
@@ -486,7 +486,7 @@ function MyComponent(slots) {
   <template #item="{ body, username, likes }">
     <div class="item">
       <p>{{ body }}</p>
-      <p>by {{ username }} | {{ likes }} likes</p>
+      <p>作者：{{ username }} | {{ likes }} 个赞</p>
     </div>
   </template>
 </FancyList>
@@ -497,7 +497,7 @@ function MyComponent(slots) {
 ```vue-html
 <ul>
   <li v-for="item in items">
-    <slot name="item" v-bind="item"></slot>
+    <slot name="item" v-bind="item" />
   </li>
 </ul>
 ```
